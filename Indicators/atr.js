@@ -1,6 +1,6 @@
 registerIndicator(
     "atr", "Average true range", function (context) {
-		var dataInputClose = getDataInput(context, 0)
+        var dataInputClose = getDataInput(context, 0)
 		var dataInputHigh = getDataInput(context, 1)
 		var dataInputLow = getDataInput(context, 2)
 		var tmpLine = getDataOutput(context, "tmp")
@@ -11,6 +11,7 @@ registerIndicator(
 		var start = getCalculatedLength(context)
 		var high = null
 		var low = null
+		var prevClose = null
 
 		if (start > 0) {
 			start--
@@ -22,7 +23,7 @@ registerIndicator(
 		while (start < dataInputClose.length) {
 			high = dataInputHigh[start]
 			low = dataInputLow[start]
-			var prevClose = dataInputClose[start - 1]
+			prevClose = dataInputClose[start - 1]
 
 			tmpLine[start] = Math.max(high, prevClose) - Math.min(low, prevClose)
 
