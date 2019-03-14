@@ -1,6 +1,6 @@
 registerIndicator(
     "atr", "Average true range", function (context) {
-        var dataInputClose = getDataInput(context, 0)
+		var dataInputClose = getDataInput(context, 0)
 		var dataInputHigh = getDataInput(context, 1)
 		var dataInputLow = getDataInput(context, 2)
 		var tmpLine = getDataOutput(context, "tmp")
@@ -8,56 +8,35 @@ registerIndicator(
 
 		var period = getIndiParameter(context, "period")
 
-		var start = getCalculatedLength(context)
+		var calculatedLength = getCalculatedLength(context)
+		var i = calculatedLength
 		var high = null
 		var low = null
 		var prevClose = null
 
-		if (start > 0) {
-			start--
+		if (i > 0) {
+			i--
 		} else {
-			tmpLine[start] = 0
-			start = 1
+			tmpLine[i] = 0
+			i = 1
 		}
 
-		while (start < dataInputClose.length) {
-			high = dataInputHigh[start]
-			low = dataInputLow[start]
-			prevClose = dataInputClose[start - 1]
+		while (i < dataInputClose.length) {
+			high = dataInputHigh[i]
+			low = dataInputLow[i]
+			prevClose = dataInputClose[i - 1]
 
-			tmpLine[start] = Math.max(high, prevClose) - Math.min(low, prevClose)
+			tmpLine[i] = Math.max(high, prevClose) - Math.min(low, prevClose)
 
-			start++
+			i++
 		}
 
-		start = getCalculatedLength(context)
-
-		if (start > 0) {
-			start--
-		} else {
-			for (var i = 0; i < period - 1; i++) {
-				dataOutput[i] = 0
-			}
-
-			start = period - 1
-		}
-
-		var sum = 0
-
-		for (var i = start - period + 1; i < start; i++) {
-			sum += tmpLine[i]
-		}
-
-		for (var i = start; i < dataInputClose.length; i++) {
-			sum += tmpLine[i]
-			dataOutput[i] = sum / period
-			sum -= tmpLine[i - period + 1]
-		}
+		sma(tmpLine, dataOutput, calculatedLength, period)
 	},[{
 		name: "period",
 		value: 14,
 		required: true,
-		type: PARAMETER_TYPE.NUMBER,
+		type: PARAMETER_TYPE.INTEGER,
 		range: [1, 100]
 	}],
 	[{

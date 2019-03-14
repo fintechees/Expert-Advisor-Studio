@@ -9,17 +9,18 @@ registerIndicator(
 		var af = acceleration
 		var afMax = getIndiParameter(context, "afMax")
 
-		var start = getCalculatedLength(context)
+		var calculatedLength = getCalculatedLength(context)
+		var i = calculatedLength
 
-		if (start > 0) {
-			start--
+		if (i > 0) {
+			i--
 		} else {
-			dataOutput[start] = 0
-			start = 1
+			dataOutput[i] = 0
+			i = 1
 		}
 
-		var prevH = dataInputHigh[start - 1]
-		var prevL = dataInputLow[start - 1]
+		var prevH = dataInputHigh[i - 1]
+		var prevL = dataInputLow[i - 1]
 		var currH = null
 		var currL = null
 
@@ -27,23 +28,23 @@ registerIndicator(
 		var ep = prevH
 		var sar = prevL
 
-		while (start < dataInputHigh.length) {
-			currH = dataInputHigh[start]
-			currL = dataInputLow[start]
+		while (i < dataInputHigh.length) {
+			currH = dataInputHigh[i]
+			currL = dataInputLow[i]
 
 			if (isLong) {
 				if (currL <= sar) {
 					isLong = false
 					sar = Math.max(ep, currH, prevH)
 
-					dataOutput[start] = sar
+					dataOutput[i] = sar
 
 					af = acceleration
 					ep = currL
 					sar = sar + af * (ep - sar)
 					sar = Math.max(sar, currH, prevH)
 				} else {
-					dataOutput[start] = sar
+					dataOutput[i] = sar
 
 					if (currH > ep) {
 						ep = currH
@@ -60,14 +61,14 @@ registerIndicator(
 					isLong = true
 					sar = Math.min(ep, currL, prevL)
 
-					dataOutput[start] = sar
+					dataOutput[i] = sar
 
 					af = acceleration
 					ep = currH
 					sar = sar + af * (ep - sar)
 					sar = Math.min(sar, currL, prevL)
 				}else{
-					dataOutput[start] = sar
+					dataOutput[i] = sar
 
 					if (currL < ep) {
 						ep = currL
@@ -80,7 +81,7 @@ registerIndicator(
 					sar = Math.max(sar, currH, prevH)
 				}
 			}
-			start++
+			i++
 
 			prevH = currH
 			prevL = currL
