@@ -3,8 +3,8 @@ registerIndicator(
 		var dataInput = getDataInput(context, 0)
 		var dataFEMA = getDataOutput(context, "fastEMA")
 		var dataSEMA = getDataOutput(context, "slowEMA")
-		var dataOutputMain = getDataOutput(context, "macdMain")
-		var dataOutputSignal = getDataOutput(context, "macdSignal")
+		var dataOutputMain = getDataOutput(context, "main")
+		var dataOutputSignal = getDataOutput(context, "signal")
 
 		var fEMA = getIndiParameter(context, "fasteEMA")
 		var fSmthFctr = 2.0 / (fEMA + 1)
@@ -64,12 +64,12 @@ registerIndicator(
 		name: "slowEMA",
 		visible: false
 	},{
-        name: "macdMain",
+        name: "main",
         visible: true,
         renderType: RENDER_TYPE.HISTOGRAM,
         color: "#4EC2B4"
     },{
-        name: "macdSignal",
+        name: "signal",
         visible: true,
         renderType: RENDER_TYPE.LINE,
         color: "white"

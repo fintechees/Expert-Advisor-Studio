@@ -1,7 +1,7 @@
 registerIndicator(
     "smma", "Smoothed moving average", function (context) {
         var dataInput = getDataInput(context, 0)
-        var dataOutput = getDataOutput(context, "ema")
+        var dataOutput = getDataOutput(context, "smma")
         var period = getIndiParameter(context, "period")
 
         var calculatedLength = getCalculatedLength(context)
@@ -29,7 +29,7 @@ registerIndicator(
         index: 0
     }],
     [{
-        name: "ema",
+        name: "smma",
         visible: true,
         renderType: RENDER_TYPE.LINE,
         color: "steelblue"
