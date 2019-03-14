@@ -38,8 +38,9 @@ function sma (dataInput, dataOutput, calculatedLength, period) {
 	}
 }
 
-function ema (dataInput, dataOutput, calculatedLength, smoothFactor) {
+function ema (dataInput, dataOutput, calculatedLength, period) {
 	var i = calculatedLength
+	var smthFctr = 2.0 / (period + 1)
 
 	if (i == 0) {
 		dataOutput[0] = dataInput[0]

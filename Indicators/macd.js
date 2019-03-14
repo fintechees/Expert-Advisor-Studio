@@ -1,15 +1,13 @@
 registerIndicator(
     "macd", "MACD", function (context) {
-		var dataInput = getDataInput(context, 0)
+        var dataInput = getDataInput(context, 0)
 		var dataFEMA = getDataOutput(context, "fastEMA")
 		var dataSEMA = getDataOutput(context, "slowEMA")
 		var dataOutputMain = getDataOutput(context, "main")
 		var dataOutputSignal = getDataOutput(context, "signal")
 
 		var fEMA = getIndiParameter(context, "fasteEMA")
-		var fSmthFctr = 2.0 / (fEMA + 1)
 		var sEMA = getIndiParameter(context, "slowEMA")
-		var sSmthFctr = 2.0 / (sEMA + 1)
 		var sgnlSMA = getIndiParameter(context, "signalSMA")
 
 		var calculatedLength = getCalculatedLength(context)
@@ -25,8 +23,8 @@ registerIndicator(
 			i--
 		}
 
-		ema(dataInput, dataFEMA, calculatedLength, fSmthFctr)
-		ema(dataInput, dataSEMA, calculatedLength, sSmthFctr)
+		ema(dataInput, dataFEMA, calculatedLength, fEMA)
+		ema(dataInput, dataSEMA, calculatedLength, sEMA)
 
 		while (i < dataInput.length) {
 			dataOutputMain[i] = dataFEMA[i] - dataSEMA[i]

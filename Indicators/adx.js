@@ -1,6 +1,6 @@
 registerIndicator(
     "adx", "Average directional index", function (context) {
-		var dataInputClose = getDataInput(context, 0)
+        var dataInputClose = getDataInput(context, 0)
 		var dataInputHigh = getDataInput(context, 1)
 		var dataInputLow = getDataInput(context, 2)
 
@@ -13,7 +13,6 @@ registerIndicator(
 		var dataOutputMinusDi = getDataOutput(context, "minusDi")
 
 		var period = getIndiParameter(context, "period")
-		var smthFctr = 2.0 / (period + 1)
 
 		var calculatedLength = getCalculatedLength(context)
 		var i = calculatedLength
@@ -73,8 +72,8 @@ registerIndicator(
 			i++
 		}
 
-		ema(plusSdiTmp, dataOutputPlusDi, calculatedLength, smthFctr)
-		ema(minusSdiTmp, dataOutputMinusDi, calculatedLength, smthFctr)
+		ema(plusSdiTmp, dataOutputPlusDi, calculatedLength, period)
+		ema(minusSdiTmp, dataOutputMinusDi, calculatedLength, period)
 
 		i = calculatedLength
 		if (i > 0) {
@@ -93,7 +92,7 @@ registerIndicator(
 			i++
 		}
 
-		ema(tmpLine, dataOutputAdx, calculatedLength, smthFctr)
+		ema(tmpLine, dataOutputAdx, calculatedLength, period)
 	},[{
 		name: "period",
 		value: 14,
