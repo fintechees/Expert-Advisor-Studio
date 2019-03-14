@@ -5,14 +5,14 @@ registerIndicator(
 
 		var period = getIndiParameter(context, "period")
 
-		var start = getCalculatedLength(context)
+		var calculatedLength = getCalculatedLength(context)
 
-		var ptr
-		var ptr2
+		var ptr = null
+		var ptr2 = null
 
-		if (start > 0) {
-			ptr = start - 1
-			ptr2 = start - period
+		if (calculatedLength > 0) {
+			ptr = calculatedLength - 1
+			ptr2 = calculatedLength - period
 		} else {
 			for (var i = 0; i < period - 1; i++) {
 				dataOutput[i] = 0
@@ -22,50 +22,50 @@ registerIndicator(
 			ptr2 = 1
 		}
 
-		var diff
-		var gain
-		var loss
+		var diff = null
+		var gain = null
+		var loss = null
 		var gainSum = 0
 		var lossSum = 0
-		var prevGain
-		var prevLoss
+		var prevGain = null
+		var prevLoss = null
 
-		while(ptr2 <= ptr){
+		while (ptr2 <= ptr) {
 			diff = dataInput[ptr2] - dataInput[ptr2 - 1]
-			if(0 < diff){
+			if (0 < diff) {
 				gainSum += diff
-			}else{
+			} else {
 				lossSum -= diff
 			}
 			ptr2++
 		}
 		gain = gainSum / period
 		loss = lossSum / period
-		if(0 == (gain + loss)){
+		if (0 == (gain + loss)) {
 			dataOutput[ptr] = 0
-		}else{
+		} else {
 			dataOutput[ptr] = 100 * gain / (gain + loss)
 		}
 		prevGain = gain
 		prevLoss = loss
 		ptr++
 
-		while(ptr <= dataInput.length - 1){
+		while (ptr < dataInput.length) {
 			gain = prevGain * (period - 1)
 			loss = prevLoss * (period - 1)
 
 			diff = dataInput[ptr] - dataInput[ptr - 1]
-			if(0 < diff){
+			if (0 < diff) {
 				gain += diff
-			}else{
+			} else {
 				loss -= diff
 			}
 			gain = gain / period
 			loss = loss / period
 
-			if(0 == (gain + loss)){
+			if (0 == (gain + loss)) {
 				dataOutput[ptr] = 0
-			}else{
+			} else {
 				dataOutput[ptr] = 100 * gain / (gain + loss)
 			}
 			prevGain = gain
@@ -77,7 +77,7 @@ registerIndicator(
 		name: "period",
 		value: 14,
 		required: true,
-		type: PARAMETER_TYPE.NUMBER,
+		type: PARAMETER_TYPE.INTEGER,
 		range: [1, 100]
 	}],
 	[{

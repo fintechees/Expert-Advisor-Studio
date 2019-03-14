@@ -1,48 +1,38 @@
 registerIndicator(
-"sma",
-"Simple moving average",
-function (context) {
-			var dataInput = getDataInput(context, 0)
-			var dataOutput = getDataOutput(context, "sma")
-			var period = getIndiParameter(context, "period")
+	"sma", "Simple moving average", function (context) {
+		var dataInput = getDataInput(context, 0)
+		var dataOutput = getDataOutput(context, "sma")
+		var period = getIndiParameter(context, "period")
+		var shift = getIndiParameter(context, "shift")
 
-			var start = getCalculatedLength(context)
+		var calculatedLength = getCalculatedLength(context)
 
-			if (start > 0) {
-				start--
-			} else {
-				for (var i = 0; i < period - 1; i++) {
-					dataOutput[i] = 0
-				}
+		sma(dataInput, dataOutput, calculatedLength, period)
 
-				start = period - 1
-			}
-
-			var sum = 0
-
-			for (var i = start - period + 1; i < start; i++) {
-				sum += dataInput[i]
-			}
-
-			for (var i = start; i < dataInput.length; i++) {
-				sum += dataInput[i]
-				dataOutput[i] = sum / period
-				sum -= dataInput[i - period + 1]
-			}
-		},
-[{
-	name: "period",
-	value: 5,
-	required: true,
-	type: "Number",
-	range: [1, 100]
-}], [{
-	name: "Close",
-	index: 0
-}], [{
-	name: "sma",
-	visible: true,
-	renderType: "Line",
-	color: "steelblue"
-}],
-"CHART_WINDOW")
+		if (shift != null) {
+			setShift(dataOutput, shift)
+		}
+	},[{
+		name: "period",
+		value: 5,
+		required: true,
+		type: PARAMETER_TYPE.INTEGER,
+		range: [1, 100]
+	},{
+		name: "shift",
+		value: 0,
+		required: false,
+		type: PARAMETER_TYPE.INTEGER,
+		range: [-30, 30]
+	}],
+	[{
+		name: DATA_NAME.CLOSE,
+		index: 0
+	}],
+	[{
+		name: "sma",
+		visible: true,
+		renderType: RENDER_TYPE.LINE,
+		color: "steelblue"
+	}],
+	WHERE_TO_RENDER.CHART_WINDOW)

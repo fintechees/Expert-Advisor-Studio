@@ -1,14 +1,12 @@
 registerIndicator(
-    "ema", "Exponential moving average", function (context) {
+    "lwma", "Linear weighted moving average", function (context) {
 		var dataInput = getDataInput(context, 0)
 		var dataOutput = getDataOutput(context, "ema")
 		var period = getIndiParameter(context, "period")
-		var smthFctr = 2.0 / (period + 1)
-		var shift = getIndiParameter(context, "shift")
 
 		var calculatedLength = getCalculatedLength(context)
 
-		ema(dataInput, dataOutput, calculatedLength, smthFctr)
+		lwma(dataInput, dataOutput, calculatedLength, period)
 
 		if (shift != null) {
 			setShift(dataOutput, shift)
