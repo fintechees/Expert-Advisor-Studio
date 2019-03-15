@@ -9,8 +9,8 @@ registerIndicator(
 
 		sma(dataInput, dataOutput, calculatedLength, period)
 
-		if (shift != null) {
-			setShift(dataOutput, shift)
+		if (shift != null && calculatedLength == 0) {
+			setIndiShift(context, "sma", shift)
 		}
 	},[{
 		name: "period",

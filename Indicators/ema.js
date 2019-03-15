@@ -1,6 +1,6 @@
 registerIndicator(
     "ema", "Exponential moving average", function (context) {
-		var dataInput = getDataInput(context, 0)
+        var dataInput = getDataInput(context, 0)
 		var dataOutput = getDataOutput(context, "ema")
 		var period = getIndiParameter(context, "period")
 		var shift = getIndiParameter(context, "shift")
@@ -9,8 +9,8 @@ registerIndicator(
 
 		ema(dataInput, dataOutput, calculatedLength, period)
 
-		if (shift != null) {
-			setShift(dataOutput, shift)
+		if (shift != null && calculatedLength == 0) {
+			setIndiShift(context, "ema", shift)
 		}
 	},[{
 		name: "period",

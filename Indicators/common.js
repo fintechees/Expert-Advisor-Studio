@@ -1,17 +1,3 @@
-function setShift(dataOutput, shift) {
-	if (shift > 0) {
-		var arr = new Array(shift)
-		arr.map(function (x, i) {return 0})
-		dataOutput.splice(dataOutput.length - shift, shift)
-		arr.concat(dataOutput)
-	} else if (shift < 0) {
-		var arr = new Array(-shift)
-		arr.map(function (x, i) {return 0})
-		dataOutput.splice(0, -shift)
-		dataOutput.concat(arr)
-	}
-}
-
 function sma (dataInput, dataOutput, calculatedLength, period) {
 	var i = calculatedLength
 
