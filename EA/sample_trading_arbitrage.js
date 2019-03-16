@@ -24,8 +24,18 @@ registerEA(
 		window.acc2 = acc2
 	},
 	function (context) { // Deinit()
+		delete window.currTime
 	},
 	function (context) { // OnTick()
+		var currTime = new Date().getTime()
+		if (typeof window.currTime == "undefined") {
+			window.currTime = currTime
+		} else if (window.currTime <= currTime - 1000) {
+			window.currTime = currTime
+		} else {
+			return
+		}
+
 		var acc1 = window.acc1
 		var acc2 = window.acc2
 
@@ -99,4 +109,5 @@ registerEA(
 				closeTrade(acc1.brokerName, acc1.accountId, acc1TradeId)
 			}
 		}
-	})
+	}
+)
