@@ -70,6 +70,6 @@ registerIndicator(
         name: "signal",
         visible: true,
         renderType: RENDER_TYPE.LINE,
-        color: "black"
+        color: "#CCCCCC"
     }],
 	WHERE_TO_RENDER.SEPARATE_WINDOW)
