@@ -123,7 +123,7 @@ registerIndicator(
         name: "adx",
         visible: true,
         renderType: RENDER_TYPE.DASHARRAY,
-        color: "black"
+        color: "#CCCCCC"
     },{
         name: "plusDi",
         visible: true,
