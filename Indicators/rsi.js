@@ -2,10 +2,14 @@ registerIndicator(
     "rsi", "Relative strength index", function (context) {
 		var dataInput = getDataInput(context, 0)
 		var dataOutput = getDataOutput(context, "rsi")
+		var dataOutputHL = getDataOutput(context, "rsiHighLevel")
+		var dataOutputLL = getDataOutput(context, "rsiLowLevel")
 		var gainTmp = getDataOutput(context, "gainTmp")
 		var lossTmp = getDataOutput(context, "lossTmp")
 
 		var period = getIndiParameter(context, "period")
+		var highLevel = getIndiParameter(context, "highLevel")
+		var lowLevel = getIndiParameter(context, "lowLevel")
 
 		var calculatedLength = getCalculatedLength(context)
 
@@ -24,6 +28,8 @@ registerIndicator(
 		} else {
 			for (var i = 0; i < period; i++) {
 				dataOutput[i] = 0
+				dataOutputHL[i] = highLevel
+				dataOutputLL[i] = lowLevel
 			}
 
 			ptr = period
@@ -45,6 +51,8 @@ registerIndicator(
 			} else {
 				dataOutput[ptr] = 100 * gain / (gain + loss)
 			}
+			dataOutputHL[ptr] = highLevel
+			dataOutputLL[ptr] = lowLevel
 			gainTmp[ptr] = gain
 			lossTmp[ptr] = loss
 			ptr++
@@ -68,6 +76,8 @@ registerIndicator(
 			} else {
 				dataOutput[ptr] = 100 * gain / (gain + loss)
 			}
+			dataOutputHL[ptr] = highLevel
+			dataOutputLL[ptr] = lowLevel
 			gainTmp[ptr] = gain
 			lossTmp[ptr] = loss
 			ptr++
@@ -75,6 +85,18 @@ registerIndicator(
 	},[{
 		name: "period",
 		value: 14,
+		required: true,
+		type: PARAMETER_TYPE.INTEGER,
+		range: [1, 100]
+	},{
+		name: "highLevel",
+		value: 70,
+		required: true,
+		type: PARAMETER_TYPE.INTEGER,
+		range: [1, 100]
+	},{
+		name: "lowLevel",
+		value: 30,
 		required: true,
 		type: PARAMETER_TYPE.INTEGER,
 		range: [1, 100]
@@ -88,6 +110,16 @@ registerIndicator(
 		visible: true,
 		renderType: RENDER_TYPE.LINE,
 		color: "steelblue"
+	},{
+		name: "rsiHighLevel",
+		visible: true,
+		renderType: RENDER_TYPE.DASHARRAY,
+		color: "#AAAAAA"
+	},{
+		name: "rsiLowLevel",
+		visible: true,
+		renderType: RENDER_TYPE.DASHARRAY,
+		color: "#AAAAAA"
 	},{
         name: "gainTmp",
         visible: false
