@@ -1,5 +1,5 @@
 registerIndicator(
-    "rsi", "Relative strength index", function (context) {
+    "rsi", "Relative strength index(v1.0)", function (context) {
 		var dataInput = getDataInput(context, 0)
 		var dataOutput = getDataOutput(context, "rsi")
 		var dataOutputHL = getDataOutput(context, "rsiHighLevel")
@@ -91,13 +91,13 @@ registerIndicator(
 	},{
 		name: "highLevel",
 		value: 70,
-		required: true,
+		required: false,
 		type: PARAMETER_TYPE.INTEGER,
 		range: [1, 100]
 	},{
 		name: "lowLevel",
 		value: 30,
-		required: true,
+		required: false,
 		type: PARAMETER_TYPE.INTEGER,
 		range: [1, 100]
 	}],
