@@ -1,5 +1,5 @@
 registerIndicator(
-    "atr", "Average true range", function (context) {
+    "atr", "Average true range(v1.0)", function (context) {
 		var dataInputClose = getDataInput(context, 0)
 		var dataInputHigh = getDataInput(context, 1)
 		var dataInputLow = getDataInput(context, 2)
