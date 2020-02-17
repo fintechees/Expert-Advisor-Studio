@@ -1,5 +1,5 @@
 registerIndicator(
-    "macd", "MACD", function (context) {
+    "macd", "MACD(v1.0)", function (context) {
         var dataInput = getDataInput(context, 0)
 		var dataFEMA = getDataOutput(context, "fastEMA")
 		var dataSEMA = getDataOutput(context, "slowEMA")
