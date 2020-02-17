@@ -1,6 +1,6 @@
 registerEA(
 	"sample_trading_arbitrage",
-	"Two accounts signed up on the different servers are required to trade arbitrage. Additionally please make sure that you have signed in to both accounts and logged out from the accounts in investor mode.",
+	"Two accounts signed up on the different servers are required to trade arbitrage. Additionally please make sure that you have signed in to both accounts and logged out from the accounts in investor mode.(v1.0)",
 	[],// parameters
 	function (context) { // Init()
 		var account1 = getAccount(context, 0)
