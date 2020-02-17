@@ -1,6 +1,6 @@
 registerEA(
 	"sample_using_sma",
-	"A test EA based on sma",
+	"A test EA based on sma(v1.0)",
 	[{ // parameters
 		name: "period",
 		value: 20,
