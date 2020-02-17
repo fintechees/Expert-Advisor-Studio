@@ -1,5 +1,5 @@
 registerIndicator(
-    "stochastic", "Stochastic oscillator", function (context) {
+    "stochastic", "Stochastic oscillator(v1.0)", function (context) {
 		var dataInputClose = getDataInput(context, 0)
 		var dataInputHigh = getDataInput(context, 1)
 		var dataInputLow = getDataInput(context, 2)
