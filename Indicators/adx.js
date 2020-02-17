@@ -1,5 +1,5 @@
 registerIndicator(
-    "adx", "Average directional index", function (context) {
+    "adx", "Average directional index(v1.0)", function (context) {
         var dataInputClose = getDataInput(context, 0)
 		var dataInputHigh = getDataInput(context, 1)
 		var dataInputLow = getDataInput(context, 2)
