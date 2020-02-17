@@ -1,5 +1,5 @@
 registerIndicator(
-    "alligator", "A series of Bill Williams' indicators", function (context) {
+    "alligator", "A series of Bill Williams' indicators(v1.0)", function (context) {
 		var dataInput = getDataInput(context, 0)
 		var dataOutputJaws = getDataOutput(context, "jaws")
 		var dataOutputTeeth = getDataOutput(context, "teeth")
