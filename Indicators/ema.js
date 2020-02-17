@@ -1,5 +1,5 @@
 registerIndicator(
-    "ema", "Exponential moving average", function (context) {
+    "ema", "Exponential moving average(v1.0)", function (context) {
         var dataInput = getDataInput(context, 0)
 		var dataOutput = getDataOutput(context, "ema")
 		var period = getIndiParameter(context, "period")
