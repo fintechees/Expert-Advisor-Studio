@@ -1,5 +1,5 @@
 registerIndicator(
-    "sar", "Parabolic SAR", function (context) {
+    "sar", "Parabolic SAR(v1.0)", function (context) {
 		var dataInputHigh = getDataInput(context, 0)
 		var dataInputLow = getDataInput(context, 1)
 
