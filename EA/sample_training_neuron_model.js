@@ -1,6 +1,6 @@
 registerEA(
 	"sample_training_neuron_model",
-	"A test EA to train neuron model",
+	"A test EA to train neuron model(v1.0)",
 	[{ // parameters
 		name: "period",
 		value: 20,
