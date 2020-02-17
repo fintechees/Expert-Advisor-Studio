@@ -1,5 +1,5 @@
 registerIndicator(
-    "smma", "Smoothed moving average", function (context) {
+    "smma", "Smoothed moving average(v1.0)", function (context) {
         var dataInput = getDataInput(context, 0)
 		var dataOutput = getDataOutput(context, "smma")
 		var period = getIndiParameter(context, "period")
