@@ -96,7 +96,7 @@ registerEA(
 
 		// We use localstorage.reservedZone to store the neural network network.
 		// Please don't change the name "reservedZone" or your data stored in this zone will be removed while the version is updated.
-		if (typeof localStorage.reservedZone != "undefined") {
+		if (typeof localStorage.reservedZone == "undefined") {
 			localStorage.reservedZone = JSON.stringify({sample_training_neuron_model: myPerceptron.toJSON()})
 		} else {
 			var reservedZone = JSON.parse(localStorage.reservedZone)
