@@ -1,6 +1,6 @@
 registerEA(
 	"sample_run_neuron_model",
-	"A test EA to run neuron model(v1.0)",
+	"A test EA to run neuron model(v1.01)",
 	[{ // parameters
 		name: "period",
 		value: 20,
@@ -27,9 +27,13 @@ registerEA(
 		range: [0, 100]
 	}],
 	function (context) { // Init()
-		if (typeof localStorage.sample_training_neuron_model == "undefined") return
+		// We use localstorage.reservedZone to store the neural network network.
+		// Please don't change the name "reservedZone" or your data stored in this zone will be removed while the version is updated.
+		if (typeof localStorage.reservedZone == "undefined") return
 
-		window.myPerceptron = synaptic.Network.fromJSON(JSON.parse(localStorage.sample_training_neuron_model))
+		var reservedZone = JSON.parse(localStorage.reservedZone)
+		if (typeof reservedZone.sample_training_neuron_model == "undefined") return
+		window.myPerceptron = synaptic.Network.fromJSON(reservedZone.sample_training_neuron_model)
 
 		var account = getAccount(context, 0)
 		var brokerName = getBrokerNameOfAccount(account)
