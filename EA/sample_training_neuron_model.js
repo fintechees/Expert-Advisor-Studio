@@ -1,6 +1,6 @@
 registerEA(
 	"sample_training_neuron_model",
-	"A test EA to train neuron model(v1.0)",
+	"A test EA to train neuron model(v1.01)",
 	[{ // parameters
 		name: "period",
 		value: 20,
@@ -93,7 +93,17 @@ registerEA(
 		}
 
 		myTrainer.train(trainingSet)
-		localStorage.sample_training_neuron_model = JSON.stringify(myPerceptron.toJSON())
+
+		// We use localstorage.reservedZone to store the neural network network.
+		// Please don't change the name "reservedZone" or your data stored in this zone will be removed while the version is updated.
+		if (typeof localStorage.reservedZone != "undefined") {
+			localStorage.reservedZone = JSON.stringify({sample_training_neuron_model: myPerceptron.toJSON()})
+		} else {
+			var reservedZone = JSON.parse(localStorage.reservedZone)
+			reservedZone.sample_training_neuron_model = myPerceptron.toJSON()
+			localStorage.reservedZone = JSON.stringify(reservedZone)
+		}
+
 		printMessage(longCount + ", " + shortCount)
 		printMessage(JSON.stringify(trainingSet))
 		printMessage(JSON.stringify(myPerceptron.toJSON()))
