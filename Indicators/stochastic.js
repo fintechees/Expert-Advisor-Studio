@@ -1,5 +1,5 @@
 registerIndicator(
-    "stochastic", "Stochastic oscillator(v1.0)", function (context) {
+    "stochastic", "Stochastic oscillator(v1.01)", function (context) {
 		var dataInputClose = getDataInput(context, 0)
 		var dataInputHigh = getDataInput(context, 1)
 		var dataInputLow = getDataInput(context, 2)
@@ -24,7 +24,7 @@ registerIndicator(
 		} else {
 			ptr = maxParam - 1
 
-			for (var i = 1; i <= maxParam - 1; i++) {
+			for (var i = 1; i < maxParam; i++) {
 				dataOutputMain[ptr - i] = 0
 				highestTmp[ptr - i] = 0
 				lowestTmp[ptr - i] = 0
