@@ -1,6 +1,6 @@
 registerEA(
 	"sample_run_neuron_model",
-	"A test EA to run neuron model(v1.01)",
+	"A test EA to run neuron model(v1.02)",
 	[{ // parameters
 		name: "period",
 		value: 20,
@@ -50,6 +50,9 @@ registerEA(
 	},
 	function (context) { // Deinit()
 		delete window.currTime
+		delete window.chartHandle
+		delete window.indiHandle
+		delete window.myPerceptron
 	},
 	function (context) { // OnTick()
 		var arrTime = getData(context, window.chartHandle, DATA_NAME.TIME)
