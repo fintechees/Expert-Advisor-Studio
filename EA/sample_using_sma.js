@@ -1,6 +1,6 @@
 registerEA(
 	"sample_using_sma",
-	"A test EA based on sma(v1.0)",
+	"A test EA based on sma(v1.01)",
 	[{ // parameters
 		name: "period",
 		value: 20,
@@ -24,6 +24,8 @@ registerEA(
 	},
 	function (context) { // Deinit()
 		delete window.currTime
+		delete window.chartHandle
+		delete window.indiHandle
 	},
 	function (context) { // OnTick()
 		var arrTime = getData(context, window.chartHandle, DATA_NAME.TIME)
