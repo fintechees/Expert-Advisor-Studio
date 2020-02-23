@@ -1,6 +1,6 @@
 registerEA(
 	"sample_training_neuron_model",
-	"A test EA to train neuron model(v1.01)",
+	"A test EA to train neuron model(v1.02)",
 	[{ // parameters
 		name: "period",
 		value: 20,
@@ -107,6 +107,9 @@ registerEA(
 		printMessage(longCount + ", " + shortCount)
 		printMessage(JSON.stringify(trainingSet))
 		printMessage(JSON.stringify(myPerceptron.toJSON()))
+
+		delete window.chartHandle
+		delete window.indiHandle
 	},
 	function (context) { // OnTick()
 	}
