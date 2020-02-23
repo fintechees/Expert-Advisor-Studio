@@ -1,6 +1,6 @@
 registerEA(
 	"sample_trading_arbitrage",
-	"Two accounts signed up on the different servers are required to trade arbitrage. Additionally please make sure that you have signed in to both accounts and logged out from the accounts in investor mode.(v1.0)",
+	"Two accounts signed up on the different servers are required to trade arbitrage. Additionally please make sure that you have signed in to both accounts and logged out from the accounts in investor mode.(v1.01)",
 	[],// parameters
 	function (context) { // Init()
 		var account1 = getAccount(context, 0)
@@ -25,6 +25,8 @@ registerEA(
 	},
 	function (context) { // Deinit()
 		delete window.currTime
+		delete window.acc1
+		delete window.acc2
 	},
 	function (context) { // OnTick()
 		var currTime = new Date().getTime()
