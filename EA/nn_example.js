@@ -46,7 +46,6 @@ function (context) { // Deinit()
 	}
 
 	var error = 0
-	var num = 0
 
 	error += nn(1, 1)
 	error += 1 - nn(1, 0)
