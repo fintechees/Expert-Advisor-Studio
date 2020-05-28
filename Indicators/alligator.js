@@ -1,5 +1,5 @@
 registerIndicator(
-    "alligator", "A series of Bill Williams' indicators(v1.0)", function (context) {
+    "alligator", "A series of Bill Williams' indicators(v1.01)", function (context) {
 		var dataInput = getDataInput(context, 0)
 		var dataOutputJaws = getDataOutput(context, "jaws")
 		var dataOutputTeeth = getDataOutput(context, "teeth")
@@ -49,7 +49,7 @@ registerIndicator(
 		value: 8,
 		required: true,
 		type: PARAMETER_TYPE.INTEGER,
-		range: [0, 30]
+		range: [-30, 30]
 	},{
 		name: "teethPeriod",
 		value: 8,
@@ -61,7 +61,7 @@ registerIndicator(
 		value: 5,
 		required: true,
 		type: PARAMETER_TYPE.INTEGER,
-		range: [0, 30]
+		range: [-30, 30]
 	},{
 		name: "lipsPeriod",
 		value: 5,
@@ -73,7 +73,7 @@ registerIndicator(
 		value: 3,
 		required: true,
 		type: PARAMETER_TYPE.INTEGER,
-		range: [0, 30]
+		range: [-30, 30]
 	},{
 		name: "method",
 		value: "smma",
