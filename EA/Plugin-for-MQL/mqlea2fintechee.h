@@ -1294,17 +1294,6 @@ void setParamString (int uid, const char* param) {
   setParam(uid, parameter);
 }
 EMSCRIPTEN_KEEPALIVE
-void onTick (int uid, int barNum, double ask, double bid) {
-  iFintecheeUID = uid;
-  Bars = barNum;
-  Ask = ask;
-  Bid = bid;
-  OnTick();
-  if (paramHandleList[uid].bInit) {
-    paramHandleList[uid].bInit = false;
-  }
-}
-EMSCRIPTEN_KEEPALIVE
 void setjPrint (void (*f) (int, const char*)) {
   jPrint = f;
 }
