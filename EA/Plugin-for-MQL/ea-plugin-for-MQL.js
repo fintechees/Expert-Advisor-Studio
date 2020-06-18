@@ -205,6 +205,10 @@
 								var obj = window.mqlEAsBuffer[uid + ""]
 								return parseInt(getId(obj.orderOrTrade))
 							}, "ii")
+							var jOrderMagicNumber = Module.addFunction(function (uid) {
+								var obj = window.mqlEAsBuffer[uid + ""]
+								return parseInt(getMagicNumber(obj.orderOrTrade))
+							}, "ii")
 							var jPrint = Module.addFunction(function (uid, s) {
 								var obj = window.mqlEAsBuffer[uid + ""]
 								printMessage(window.mqlEAs[obj.name].module.UTF8ToString(s))
@@ -973,6 +977,7 @@
 								setjOrderProfit: Module.cwrap('setjOrderProfit', null, ['number']),
 								setjOrderSymbol: Module.cwrap('setjOrderSymbol', null, ['number']),
 								setjOrderTicket: Module.cwrap('setjOrderTicket', null, ['number']),
+								setjOrderMagicNumber: Module.cwrap('setjOrderMagicNumber', null, ['number']),
 								setjiTimeInit: Module.cwrap('setjiTimeInit', null, ['number']),
 								setjiTime: Module.cwrap('setjiTime', null, ['number']),
 								setjiOpenInit: Module.cwrap('setjiOpenInit', null, ['number']),
@@ -1063,6 +1068,7 @@
 							window.mqlEAs[definition.name].setjOrderProfit(jOrderProfit)
 							window.mqlEAs[definition.name].setjOrderSymbol(jOrderSymbol)
 							window.mqlEAs[definition.name].setjOrderTicket(jOrderTicket)
+							window.mqlEAs[definition.name].setjOrderMagicNumber(jOrderMagicNumber)
 							window.mqlEAs[definition.name].setjiTimeInit(jiTimeInit)
 							window.mqlEAs[definition.name].setjiTime(jiTime)
 							window.mqlEAs[definition.name].setjiOpenInit(jiOpenInit)
