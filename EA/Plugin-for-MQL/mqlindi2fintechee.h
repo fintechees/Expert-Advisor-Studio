@@ -16,6 +16,8 @@
 #include <emscripten.h>
 using namespace std;
 
+typedef long datetime;
+
 enum ENUM_TIMEFRAMES {
   PERIOD_CURRENT = 0,
   PERIOD_M1 = 1,
@@ -80,6 +82,8 @@ int TIME_SECONDS = 1;
 int Green = 0;
 int Red = 0;
 int Violet = 0;
+int White = 0;
+int Yellow = 0;
 
 int EMPTY = -1;
 int EMPTY_VALUE = 0x7FFFFFFF;
@@ -220,11 +224,17 @@ double (*jiWPR) (int, int, int);
 void Sleep (int  milliseconds) {
   sleep(milliseconds / 1000);
 }
-const char* GetLastError () {
+int GetLastError () {
+  return 0;
+}
+string ErrorDescription (int code) {
   return "";
 }
 bool IsStopped () {
   return false;
+}
+bool RefreshRates () {
+  return true;
 }
 double MathAbs (double val) {
   return abs(val);
@@ -417,6 +427,9 @@ long TimeCurrent () {
   return chrono::system_clock::to_time_t(chrono::system_clock::now());
 }
 long TimeGMT () {
+  return TimeCurrent();
+}
+long CurTime () {
   return TimeCurrent();
 }
 int Day () {
@@ -875,6 +888,27 @@ int ArrayResize (bool** array, int new_size, int reserve_size) {
   } else {
     return -1;
   }
+}
+int ArrayResize (char** array, int new_size) {
+  return ArrayResize(array, new_size, 0);
+}
+int ArrayResize (short** array, int new_size) {
+  return ArrayResize(array, new_size, 0);
+}
+int ArrayResize (int** array, int new_size) {
+  return ArrayResize(array, new_size, 0);
+}
+int ArrayResize (long** array, int new_size) {
+  return ArrayResize(array, new_size, 0);
+}
+int ArrayResize (float** array, int new_size) {
+  return ArrayResize(array, new_size, 0);
+}
+int ArrayResize (double** array, int new_size) {
+  return ArrayResize(array, new_size, 0);
+}
+int ArrayResize (bool** array, int new_size) {
+  return ArrayResize(array, new_size, 0);
 }
 bool ArraySort (char* array, int count, int start, int direction) {
   if (count > 0) {
