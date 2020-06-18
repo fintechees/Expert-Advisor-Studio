@@ -16,6 +16,8 @@
 #include <emscripten.h>
 using namespace std;
 
+typedef long datetime;
+
 enum ENUM_TIMEFRAMES {
   PERIOD_CURRENT = 0,
   PERIOD_M1 = 1,
@@ -92,6 +94,8 @@ int TIME_SECONDS = 1;
 int Green = 0;
 int Red = 0;
 int Violet = 0;
+int White = 0;
+int Yellow = 0;
 
 int EMPTY = -1;
 int EMPTY_VALUE = 0x7FFFFFFF;
@@ -216,6 +220,7 @@ double (*jOrderLots) (int);
 double (*jOrderProfit) (int);
 const char* (*jOrderSymbol) (int);
 int (*jOrderTicket) (int);
+int (*jOrderMagicNumber) (int);
 int (*jiTimeInit) (int, const char*, const char*);
 int (*jiTime) (int, int, int);
 int (*jiOpenInit) (int, const char*, const char*);
@@ -279,7 +284,7 @@ double (*jiWPR) (int, int, int);
 int (*jARROW_CHECKCreate) (int, long, const char*, long, double);
 int (*jARROW_CHECKDelete) (int, const char*);
 
-EM_JS(int, jOrderSend, (int uid, string symbol, const char* cmd, double volume, double price, int slippage, double stoploss, double takeprofit, const char* comment, int magic, int expiration, int arrow_color), {
+EM_JS(int, jOrderSend, (int uid, string symbol, const char* cmd, double volume, double price, int slippage, double stoploss, double takeprofit, string comment, int magic, int expiration, int arrow_color), {
    return Asyncify.handleSleep(function (wakeUp) {
     try {
       var symbolName = UTF8ToString(symbol);
@@ -302,7 +307,7 @@ EM_JS(int, jOrderSend, (int uid, string symbol, const char* cmd, double volume, 
   });
 });
 
-EM_JS(int, jOrderModify, (int uid, int ticket, double volume, double price, int slippage, double stoploss, double takeprofit, const char* comment, int expiration, int arrow_color), {
+EM_JS(int, jOrderModify, (int uid, int ticket, double volume, double price, int slippage, double stoploss, double takeprofit, string comment, int expiration, int arrow_color), {
   return Asyncify.handleSleep(function (wakeUp) {
     try {
       const cmmnt = UTF8ToString(comment);
@@ -376,11 +381,23 @@ EM_JS(int, jOrderDelete, (int uid, int ticket, int arrow_color), {
 void Sleep (int  milliseconds) {
   sleep(milliseconds / 1000);
 }
-const char* GetLastError () {
+int GetLastError () {
+  return 0;
+}
+string ErrorDescription (int code) {
   return "";
 }
 bool IsStopped () {
   return false;
+}
+bool IsTradeAllowed () {
+  return true;
+}
+bool IsTradeAllowed (const string symbol, long tested_time) {
+  return true;
+}
+bool RefreshRates () {
+  return true;
 }
 double MathAbs (double val) {
   return abs(val);
@@ -573,6 +590,9 @@ long TimeCurrent () {
   return chrono::system_clock::to_time_t(chrono::system_clock::now());
 }
 long TimeGMT () {
+  return TimeCurrent();
+}
+long CurTime () {
   return TimeCurrent();
 }
 int Day () {
@@ -1032,6 +1052,27 @@ int ArrayResize (bool** array, int new_size, int reserve_size) {
     return -1;
   }
 }
+int ArrayResize (char** array, int new_size) {
+  return ArrayResize(array, new_size, 0);
+}
+int ArrayResize (short** array, int new_size) {
+  return ArrayResize(array, new_size, 0);
+}
+int ArrayResize (int** array, int new_size) {
+  return ArrayResize(array, new_size, 0);
+}
+int ArrayResize (long** array, int new_size) {
+  return ArrayResize(array, new_size, 0);
+}
+int ArrayResize (float** array, int new_size) {
+  return ArrayResize(array, new_size, 0);
+}
+int ArrayResize (double** array, int new_size) {
+  return ArrayResize(array, new_size, 0);
+}
+int ArrayResize (bool** array, int new_size) {
+  return ArrayResize(array, new_size, 0);
+}
 bool ArraySort (char* array, int count, int start, int direction) {
   if (count > 0) {
     if (direction == MODE_DESCEND) {
@@ -1392,6 +1433,10 @@ void setjOrderSymbol (const char* (*f) (int)) {
 EMSCRIPTEN_KEEPALIVE
 void setjOrderTicket (int (*f) (int)) {
   jOrderTicket = f;
+}
+EMSCRIPTEN_KEEPALIVE
+void setjOrderMagicNumber (int (*f) (int)) {
+  jOrderMagicNumber = f;
 }
 EMSCRIPTEN_KEEPALIVE
 void setjiTimeInit (int (*f) (int, const char*, const char*)) {
@@ -1795,6 +1840,11 @@ string OrderSymbol() {
 int OrderTicket() {
   if (paramHandleList[iFintecheeUID].bInit) return -1;
   return jOrderTicket(iFintecheeUID);
+}
+
+int OrderMagicNumber() {
+  if (paramHandleList[iFintecheeUID].bInit) return -1;
+  return jOrderMagicNumber(iFintecheeUID);
 }
 
 template <class Type, class... Types>
@@ -2284,7 +2334,7 @@ bool ObjectDelete (long chart_id, const char* object_name) {
   return ObjectDelete(object_name);
 }
 
-int OrderSend (string symbol, int cmd, double volume, double price, int slippage, double stoploss, double takeprofit, const char* comment, int magic, int expiration, int arrow_color) {
+int OrderSend (string symbol, int cmd, double volume, double price, int slippage, double stoploss, double takeprofit, string comment, int magic, int expiration, int arrow_color) {
   if (paramHandleList[iFintecheeUID].bInit) return -1;
   if (cmd == OP_BUY || cmd == OP_SELL) {
     return jOrderSend(iFintecheeUID, symbol, convertCmd(cmd), volume, 0, slippage, stoploss, takeprofit, comment, magic, expiration, arrow_color);
@@ -2292,7 +2342,7 @@ int OrderSend (string symbol, int cmd, double volume, double price, int slippage
     return jOrderSend(iFintecheeUID, symbol, convertCmd(cmd), volume, price, slippage, stoploss, takeprofit, comment, magic, expiration, arrow_color);
   }
 }
-int OrderSend (long symbol, int cmd, double volume, double price, int slippage, double stoploss, double takeprofit, const char* comment, int magic, int expiration, int arrow_color) {
+int OrderSend (long symbol, int cmd, double volume, double price, int slippage, double stoploss, double takeprofit, string comment, int magic, int expiration, int arrow_color) {
   if (paramHandleList[iFintecheeUID].bInit) return -1;
   return OrderSend("", cmd, volume, price, slippage, stoploss, takeprofit, comment, magic, expiration, arrow_color);
 }
