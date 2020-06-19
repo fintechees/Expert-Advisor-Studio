@@ -170,6 +170,18 @@ const char* convertMAMethod (int ma_method) {
 
 void (*jPrint) (int, const char*);
 void (*jSetIndexShift) (int, const char*, int);
+int (*jiTimeInit) (int, const char*, const char*);
+datetime (*jiTime) (int, int, int);
+int (*jiOpenInit) (int, const char*, const char*);
+double (*jiOpen) (int, int, int);
+int (*jiHighInit) (int, const char*, const char*);
+double (*jiHigh) (int, int, int);
+int (*jiLowInit) (int, const char*, const char*);
+double (*jiLow) (int, int, int);
+int (*jiCloseInit) (int, const char*, const char*);
+double (*jiClose) (int, int, int);
+int (*jiVolumeInit) (int, const char*, const char*);
+long (*jiVolume) (int, int, int);
 int (*jiACInit) (int, const char*, const char*);
 double (*jiAC) (int, int, int);
 int (*jiADXInit) (int, const char*, const char*, int, int);
@@ -356,7 +368,7 @@ string IntegerToString (long number, int str_len, unsigned short fill_symbol) {
 string ShortToString (unsigned short symbol_code) {
   return to_string(symbol_code);
 }
-string TimeToString (long value, int mode) {
+string TimeToString (datetime value, int mode) {
   time_t tim = value;
   tm * ptm = localtime(&tim);
   if (mode == 7 || mode == 5) {
@@ -381,13 +393,13 @@ string TimeToString (long value, int mode) {
     return string(buffer);
   }
 }
-string TimeToString (long value) {
+string TimeToString (datetime value) {
   return TimeToString(value, 5);
 }
-string TimeToStr (long value, int mode) {
+string TimeToStr (datetime value, int mode) {
   return TimeToString(value, mode);
 }
-string TimeToStr (long value) {
+string TimeToStr (datetime value) {
   return TimeToString(value, 5);
 }
 double NormalizeDouble (double value, int digits) {
@@ -405,7 +417,7 @@ int StringToInteger (string value) {
 int StrToInteger (string value) {
   return StringToInteger(value);
 }
-long StringToTime (string value) {
+datetime StringToTime (string value) {
   struct tm tm;
   if (value.length() == 19) {
     strptime(value.c_str(), "%Y.%m.%d %H:%M:%S", &tm);
@@ -420,16 +432,16 @@ long StringToTime (string value) {
     return 0;
   }
 }
-long StrToTime (string value) {
+datetime StrToTime (string value) {
   return StringToTime(value);
 }
-long TimeCurrent () {
+datetime TimeCurrent () {
   return chrono::system_clock::to_time_t(chrono::system_clock::now());
 }
-long TimeGMT () {
+datetime TimeGMT () {
   return TimeCurrent();
 }
-long CurTime () {
+datetime CurTime () {
   return TimeCurrent();
 }
 int Day () {
@@ -467,42 +479,42 @@ int Seconds () {
   struct tm *aTime = localtime(&theTime);
   return aTime->tm_sec;
 }
-int TimeDay (long ltime) {
+int TimeDay (datetime ltime) {
   time_t theTime = ltime;
   struct tm *aTime = localtime(&theTime);
   return aTime->tm_mday;
 }
-int TimeDayOfWeek (long ltime) {
+int TimeDayOfWeek (datetime ltime) {
   time_t theTime = ltime;
   struct tm *aTime = localtime(&theTime);
   return aTime->tm_wday;
 }
-int TimeDayOfYear (long ltime) {
+int TimeDayOfYear (datetime ltime) {
   time_t theTime = ltime;
   struct tm *aTime = localtime(&theTime);
   return aTime->tm_yday + 1;
 }
-int TimeHour (long ltime) {
+int TimeHour (datetime ltime) {
   time_t theTime = ltime;
   struct tm *aTime = localtime(&theTime);
   return aTime->tm_hour;
 }
-int TimeMinute (long ltime) {
+int TimeMinute (datetime ltime) {
   time_t theTime = ltime;
   struct tm *aTime = localtime(&theTime);
   return aTime->tm_min;
 }
-int TimeMonth (long ltime) {
+int TimeMonth (datetime ltime) {
   time_t theTime = ltime;
   struct tm *aTime = localtime(&theTime);
   return aTime->tm_mon + 1;
 }
-int TimeSeconds (long ltime) {
+int TimeSeconds (datetime ltime) {
   time_t theTime = ltime;
   struct tm *aTime = localtime(&theTime);
   return aTime->tm_sec;
 }
-int TimeYear (long ltime) {
+int TimeYear (datetime ltime) {
   time_t theTime = ltime;
   struct tm *aTime = localtime(&theTime);
   return aTime->tm_year + 1900;
@@ -1212,6 +1224,54 @@ void setjSetIndexShift (void (*f) (int, const char*, int)) {
   jSetIndexShift = f;
 }
 EMSCRIPTEN_KEEPALIVE
+void setjiTimeInit (int (*f) (int, const char*, const char*)) {
+  jiTimeInit = f;
+}
+EMSCRIPTEN_KEEPALIVE
+void setjiTime (datetime (*f) (int, int, int)) {
+  jiTime = f;
+}
+EMSCRIPTEN_KEEPALIVE
+void setjiOpenInit (int (*f) (int, const char*, const char*)) {
+  jiOpenInit = f;
+}
+EMSCRIPTEN_KEEPALIVE
+void setjiOpen (double (*f) (int, int, int)) {
+  jiOpen = f;
+}
+EMSCRIPTEN_KEEPALIVE
+void setjiHighInit (int (*f) (int, const char*, const char*)) {
+  jiHighInit = f;
+}
+EMSCRIPTEN_KEEPALIVE
+void setjiHigh (double (*f) (int, int, int)) {
+  jiHigh = f;
+}
+EMSCRIPTEN_KEEPALIVE
+void setjiLowInit (int (*f) (int, const char*, const char*)) {
+  jiLowInit = f;
+}
+EMSCRIPTEN_KEEPALIVE
+void setjiLow (double (*f) (int, int, int)) {
+  jiLow = f;
+}
+EMSCRIPTEN_KEEPALIVE
+void setjiCloseInit (int (*f) (int, const char*, const char*)) {
+  jiCloseInit = f;
+}
+EMSCRIPTEN_KEEPALIVE
+void setjiClose (double (*f) (int, int, int)) {
+  jiClose = f;
+}
+EMSCRIPTEN_KEEPALIVE
+void setjiVolumeInit (int (*f) (int, const char*, const char*)) {
+  jiVolumeInit = f;
+}
+EMSCRIPTEN_KEEPALIVE
+void setjiVolume (long (*f) (int, int, int)) {
+  jiVolume = f;
+}
+EMSCRIPTEN_KEEPALIVE
 void setjiACInit (int (*f) (int, const char*, const char*)) {
   jiACInit = f;
 }
@@ -1422,8 +1482,99 @@ void Print (const Type & arg, const Types &... args) {
   jPrint(iFintecheeUID, s.str().c_str());
 }
 
+// todo
+template <class Type, class... Types>
+void Comment (const Type & arg, const Types &... args) {
+  stringstream s;
+  s << arg;
+  ((s << args), ..., (s << endl));
+  jPrint(iFintecheeUID, s.str().c_str());
+}
+
+// todo
+template <class Type, class... Types>
+void Alert (const Type & arg, const Types &... args) {
+  stringstream s;
+  s << arg;
+  ((s << args), ..., (s << endl));
+  jPrint(iFintecheeUID, s.str().c_str());
+}
+
 void SetIndexShift (const char* name, int shift) {
   jSetIndexShift(iFintecheeUID, name, shift);
+}
+
+datetime iTime (const char* symbol, int timeframe, int shift) {
+  const char* tf = convertTimeFrame(timeframe);
+  string strID = string("Chart_") + string(symbol) + string("_") + tf;
+  if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
+    int handle = jiTimeInit(iFintecheeUID, symbol, tf);
+    paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
+  }
+  return jiTime(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], shift);
+}
+datetime iTime (long symbol, int timeframe, int shift) {
+  return iTime("", timeframe, shift);
+}
+double iOpen (const char* symbol, int timeframe, int shift) {
+  const char* tf = convertTimeFrame(timeframe);
+  string strID = string("Chart_") + string(symbol) + string("_") + tf;
+  if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
+    int handle = jiOpenInit(iFintecheeUID, symbol, tf);
+    paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
+  }
+  return jiOpen(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], shift);
+}
+double iOpen (long symbol, int timeframe, int shift) {
+  return iOpen("", timeframe, shift);
+}
+double iHigh (const char* symbol, int timeframe, int shift) {
+  const char* tf = convertTimeFrame(timeframe);
+  string strID = string("Chart_") + string(symbol) + string("_") + tf;
+  if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
+    int handle = jiHighInit(iFintecheeUID, symbol, tf);
+    paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
+  }
+  return jiHigh(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], shift);
+}
+double iHigh (long symbol, int timeframe, int shift) {
+  return iHigh("", timeframe, shift);
+}
+double iLow (const char* symbol, int timeframe, int shift) {
+  const char* tf = convertTimeFrame(timeframe);
+  string strID = string("Chart_") + string(symbol) + string("_") + tf;
+  if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
+    int handle = jiLowInit(iFintecheeUID, symbol, tf);
+    paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
+  }
+  return jiLow(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], shift);
+}
+double iLow (long symbol, int timeframe, int shift) {
+  return iLow("", timeframe, shift);
+}
+double iClose (const char* symbol, int timeframe, int shift) {
+  const char* tf = convertTimeFrame(timeframe);
+  string strID = string("Chart_") + string(symbol) + string("_") + tf;
+  if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
+    int handle = jiCloseInit(iFintecheeUID, symbol, tf);
+    paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
+  }
+  return jiClose(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], shift);
+}
+double iClose (long symbol, int timeframe, int shift) {
+  return iClose("", timeframe, shift);
+}
+long iVolume (const char* symbol, int timeframe, int shift) {
+  const char* tf = convertTimeFrame(timeframe);
+  string strID = string("Chart_") + string(symbol) + string("_") + tf;
+  if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
+    int handle = jiVolumeInit(iFintecheeUID, symbol, tf);
+    paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
+  }
+  return jiVolume(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], shift);
+}
+long iVolume (long symbol, int timeframe, int shift) {
+  return iVolume("", timeframe, shift);
 }
 
 double iAC (const char* symbol, int timeframe, int shift) {
