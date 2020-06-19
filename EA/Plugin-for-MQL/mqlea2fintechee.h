@@ -96,6 +96,8 @@ int Red = 0;
 int Violet = 0;
 int White = 0;
 int Yellow = 0;
+int Blue = 0;
+int FireBrick = 0;
 
 int EMPTY = -1;
 int EMPTY_VALUE = 0x7FFFFFFF;
@@ -211,6 +213,7 @@ double (*jAccountFreeMargin) (int);
 double (*jAccountMargin) (int);
 double (*jAccountProfit) (int);
 int (*jOrdersTotal) (int);
+int (*jOrdersHistoryTotal) (int);
 int (*jOrderSelect) (int, int, int, int);
 double (*jOrderOpenPrice) (int);
 int (*jOrderType) (int);
@@ -221,67 +224,68 @@ double (*jOrderProfit) (int);
 const char* (*jOrderSymbol) (int);
 int (*jOrderTicket) (int);
 int (*jOrderMagicNumber) (int);
-int (*jiTimeInit) (int, const char*, const char*);
+datetime (*jOrderOpenTime) (int);
+int (*jiTimeInit) (int, string, const char*);
 datetime (*jiTime) (int, int, int);
-int (*jiOpenInit) (int, const char*, const char*);
+int (*jiOpenInit) (int, string, const char*);
 double (*jiOpen) (int, int, int);
-int (*jiHighInit) (int, const char*, const char*);
+int (*jiHighInit) (int, string, const char*);
 double (*jiHigh) (int, int, int);
-int (*jiLowInit) (int, const char*, const char*);
+int (*jiLowInit) (int, string, const char*);
 double (*jiLow) (int, int, int);
-int (*jiCloseInit) (int, const char*, const char*);
+int (*jiCloseInit) (int, string, const char*);
 double (*jiClose) (int, int, int);
-int (*jiVolumeInit) (int, const char*, const char*);
+int (*jiVolumeInit) (int, string, const char*);
 long (*jiVolume) (int, int, int);
-int (*jiACInit) (int, const char*, const char*);
+int (*jiACInit) (int, string, const char*);
 double (*jiAC) (int, int, int);
-int (*jiADXInit) (int, const char*, const char*, int, int);
+int (*jiADXInit) (int, string, const char*, int, int);
 double (*jiADX) (int, int, const char*, int);
-int (*jiAlligatorInit) (int, const char*, const char*, int, int, int, int, int, int, const char*, int);
+int (*jiAlligatorInit) (int, string, const char*, int, int, int, int, int, int, const char*, int);
 double (*jiAlligator) (int, int, int, int, int, const char*, int);
-int (*jiAOInit) (int, const char*, const char*);
+int (*jiAOInit) (int, string, const char*);
 double (*jiAO) (int, int, int);
-int (*jiATRInit) (int, const char*, const char*, int);
+int (*jiATRInit) (int, string, const char*, int);
 double (*jiATR) (int, int, int);
-int (*jiBearsPowerInit) (int, const char*, const char*, int, int);
+int (*jiBearsPowerInit) (int, string, const char*, int, int);
 double (*jiBearsPower) (int, int, int);
-int (*jiBandsInit) (int, const char*, const char*, int, double, int, int);
+int (*jiBandsInit) (int, string, const char*, int, double, int, int);
 double (*jiBands) (int, int, int, const char*, int);
 double (*jiBandsOnArray) (int, double*, int, int, double, int, const char*, int);
-int (*jiBullsPowerInit) (int, const char*, const char*, int, int);
+int (*jiBullsPowerInit) (int, string, const char*, int, int);
 double (*jiBullsPower) (int, int, int);
-int (*jiCCIInit) (int, const char*, const char*, int, int);
+int (*jiCCIInit) (int, string, const char*, int, int);
 double (*jiCCI) (int, int, int);
 double (*jiCCIOnArray) (int, double*, int, int, int);
-int (*jiCustomInit) (int, const char*, const char*, const char*, const char*);
+int (*jiCustomInit) (int, string, const char*, const char*, const char*);
 double (*jiCustom) (int, int, const char*, int);
-int (*jiDeMarkerInit) (int, const char*, const char*, int);
+int (*jiDeMarkerInit) (int, string, const char*, int);
 double (*jiDeMarker) (int, int, int);
-int (*jiEnvelopesInit) (int, const char*, const char*, int, const char*, int, int, double);
+int (*jiEnvelopesInit) (int, string, const char*, int, const char*, int, int, double);
 double (*jiEnvelopes) (int, int, int, const char*, int);
 double (*jiEnvelopesOnArray) (int, double*, int, int, const char*, int, double, const char*, int);
-int (*jiFractalsInit) (int, const char*, const char*);
+int (*jiFractalsInit) (int, string, const char*);
 double (*jiFractals) (int, int, const char*, int);
-int (*jiIchimokuInit) (int, const char*, const char*, int, int, int);
+int (*jiIchimokuInit) (int, string, const char*, int, int, int);
 double (*jiIchimoku) (int, int, int, const char*, int);
-int (*jiMAInit) (int, const char*, const char*, int, int, int, int);
+int (*jiMAInit) (int, string, const char*, int, int, int, int);
 double (*jiMA) (int, int, int, const char*, int);
 double (*jiMAOnArray) (int, double*, int, int, int, const char*, int);
-int (*jiMACDInit) (int, const char*, const char*, int, int, int, int);
+int (*jiMACDInit) (int, string, const char*, int, int, int, int);
 double (*jiMACD) (int, int, const char*, int);
-int (*jiMomentumInit) (int, const char*, const char*, int, int);
+int (*jiMomentumInit) (int, string, const char*, int, int);
 double (*jiMomentum) (int, int, int);
 double (*jiMomentumOnArray) (int, double*, int, int, int);
-int (*jiRSIInit) (int, const char*, const char*, int, int);
+int (*jiRSIInit) (int, string, const char*, int, int);
 double (*jiRSI) (int, int, int);
 double (*jiRSIOnArray) (int, double*, int, int, int);
-int (*jiRVIInit) (int, const char*, const char*, int);
+int (*jiRVIInit) (int, string, const char*, int);
 double (*jiRVI) (int, int, const char*, int);
-int (*jiSARInit) (int, const char*, const char*, double, double);
+int (*jiSARInit) (int, string, const char*, double, double);
 double (*jiSAR) (int, int, int);
-int (*jiStochasticInit) (int, const char*, const char*, int, int, int, const char*);
+int (*jiStochasticInit) (int, string, const char*, int, int, int, const char*);
 double (*jiStochastic) (int, int, const char*, int);
-int (*jiWPRInit) (int, const char*, const char*, int);
+int (*jiWPRInit) (int, string, const char*, int);
 double (*jiWPR) (int, int, int);
 int (*jARROW_CHECKCreate) (int, long, const char*, datetime, double);
 int (*jARROW_CHECKDelete) (int, const char*);
@@ -1401,6 +1405,10 @@ void setjOrdersTotal (int (*f) (int)) {
   jOrdersTotal = f;
 }
 EMSCRIPTEN_KEEPALIVE
+void setjOrdersHistoryTotal (int (*f) (int)) {
+  jOrdersHistoryTotal = f;
+}
+EMSCRIPTEN_KEEPALIVE
 void setjOrderSelect (int (*f) (int, int, int, int)) {
   jOrderSelect = f;
 }
@@ -1441,7 +1449,11 @@ void setjOrderMagicNumber (int (*f) (int)) {
   jOrderMagicNumber = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiTimeInit (int (*f) (int, const char*, const char*)) {
+void setjOrderOpenTime (datetime (*f) (int)) {
+  jOrderOpenTime = f;
+}
+EMSCRIPTEN_KEEPALIVE
+void setjiTimeInit (int (*f) (int, string, const char*)) {
   jiTimeInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1449,7 +1461,7 @@ void setjiTime (datetime (*f) (int, int, int)) {
   jiTime = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiOpenInit (int (*f) (int, const char*, const char*)) {
+void setjiOpenInit (int (*f) (int, string, const char*)) {
   jiOpenInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1457,7 +1469,7 @@ void setjiOpen (double (*f) (int, int, int)) {
   jiOpen = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiHighInit (int (*f) (int, const char*, const char*)) {
+void setjiHighInit (int (*f) (int, string, const char*)) {
   jiHighInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1465,7 +1477,7 @@ void setjiHigh (double (*f) (int, int, int)) {
   jiHigh = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiLowInit (int (*f) (int, const char*, const char*)) {
+void setjiLowInit (int (*f) (int, string, const char*)) {
   jiLowInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1473,7 +1485,7 @@ void setjiLow (double (*f) (int, int, int)) {
   jiLow = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiCloseInit (int (*f) (int, const char*, const char*)) {
+void setjiCloseInit (int (*f) (int, string, const char*)) {
   jiCloseInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1481,7 +1493,7 @@ void setjiClose (double (*f) (int, int, int)) {
   jiClose = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiVolumeInit (int (*f) (int, const char*, const char*)) {
+void setjiVolumeInit (int (*f) (int, string, const char*)) {
   jiVolumeInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1489,7 +1501,7 @@ void setjiVolume (long (*f) (int, int, int)) {
   jiVolume = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiACInit (int (*f) (int, const char*, const char*)) {
+void setjiACInit (int (*f) (int, string, const char*)) {
   jiACInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1497,7 +1509,7 @@ void setjiAC (double (*f) (int, int, int)) {
   jiAC = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiADXInit (int (*f) (int, const char*, const char*, int, int)) {
+void setjiADXInit (int (*f) (int, string, const char*, int, int)) {
   jiADXInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1505,7 +1517,7 @@ void setjiADX (double (*f) (int, int, const char*, int)) {
   jiADX = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiAlligatorInit (int (*f) (int, const char*, const char*, int, int, int, int, int, int, const char*, int)) {
+void setjiAlligatorInit (int (*f) (int, string, const char*, int, int, int, int, int, int, const char*, int)) {
   jiAlligatorInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1513,7 +1525,7 @@ void setjiAlligator (double (*f) (int, int, int, int, int, const char*, int)) {
   jiAlligator = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiAOInit (int (*f) (int, const char*, const char*)) {
+void setjiAOInit (int (*f) (int, string, const char*)) {
   jiAOInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1521,7 +1533,7 @@ void setjiAO (double (*f) (int, int, int)) {
   jiAO = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiATRInit (int (*f) (int, const char*, const char*, int)) {
+void setjiATRInit (int (*f) (int, string, const char*, int)) {
   jiATRInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1529,7 +1541,7 @@ void setjiATR (double (*f) (int, int, int)) {
   jiATR = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiBearsPowerInit (int (*f) (int, const char*, const char*, int, int)) {
+void setjiBearsPowerInit (int (*f) (int, string, const char*, int, int)) {
   jiBearsPowerInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1537,7 +1549,7 @@ void setjiBearsPower (double (*f) (int, int, int)) {
   jiBearsPower = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiBandsInit (int (*f) (int, const char*, const char*, int, double, int, int)) {
+void setjiBandsInit (int (*f) (int, string, const char*, int, double, int, int)) {
   jiBandsInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1549,7 +1561,7 @@ void setjiBandsOnArray (double (*f) (int, double*, int, int, double, int, const 
   jiBandsOnArray = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiBullsPowerInit (int (*f) (int, const char*, const char*, int, int)) {
+void setjiBullsPowerInit (int (*f) (int, string, const char*, int, int)) {
   jiBullsPowerInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1557,7 +1569,7 @@ void setjiBullsPower (double (*f) (int, int, int)) {
   jiBullsPower = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiCCIInit (int (*f) (int, const char*, const char*, int, int)) {
+void setjiCCIInit (int (*f) (int, string, const char*, int, int)) {
   jiCCIInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1569,7 +1581,7 @@ void setjiCCIOnArray (double (*f) (int, double*, int, int, int)) {
   jiCCIOnArray = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiCustomInit (int (*f) (int, const char*, const char*, const char*, const char*)) {
+void setjiCustomInit (int (*f) (int, string, const char*, const char*, const char*)) {
   jiCustomInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1577,7 +1589,7 @@ void setjiCustom (double (*f) (int, int, const char*, int)) {
   jiCustom = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiDeMarkerInit (int (*f) (int, const char*, const char*, int)) {
+void setjiDeMarkerInit (int (*f) (int, string, const char*, int)) {
   jiDeMarkerInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1585,7 +1597,7 @@ void setjiDeMarker (double (*f) (int, int, int)) {
   jiDeMarker = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiEnvelopesInit (int (*f) (int, const char*, const char*, int, const char*, int, int, double)) {
+void setjiEnvelopesInit (int (*f) (int, string, const char*, int, const char*, int, int, double)) {
   jiEnvelopesInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1597,7 +1609,7 @@ void setjiEnvelopesOnArray (double (*f) (int, double*, int, int, const char*, in
   jiEnvelopesOnArray = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiFractalsInit (int (*f) (int, const char*, const char*)) {
+void setjiFractalsInit (int (*f) (int, string, const char*)) {
   jiFractalsInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1605,7 +1617,7 @@ void setjiFractals (double (*f) (int, int, const char*, int)) {
   jiFractals = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiIchimokuInit (int (*f) (int, const char*, const char*, int, int, int)) {
+void setjiIchimokuInit (int (*f) (int, string, const char*, int, int, int)) {
   jiIchimokuInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1613,7 +1625,7 @@ void setjiIchimoku (double (*f) (int, int, int, const char*, int)) {
   jiIchimoku = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiMAInit (int (*f) (int, const char*, const char*, int, int, int, int)) {
+void setjiMAInit (int (*f) (int, string, const char*, int, int, int, int)) {
   jiMAInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1625,7 +1637,7 @@ void setjiMAOnArray (double (*f) (int, double*, int, int, int, const char*, int)
   jiMAOnArray = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiMACDInit (int (*f) (int, const char*, const char*, int, int, int, int)) {
+void setjiMACDInit (int (*f) (int, string, const char*, int, int, int, int)) {
   jiMACDInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1633,7 +1645,7 @@ void setjiMACD (double (*f) (int, int, const char*, int)) {
   jiMACD = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiMomentumInit (int (*f) (int, const char*, const char*, int, int)) {
+void setjiMomentumInit (int (*f) (int, string, const char*, int, int)) {
   jiMomentumInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1645,7 +1657,7 @@ void setjiMomentumOnArray (double (*f) (int, double*, int, int, int)) {
   jiMomentumOnArray = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiRSIInit (int (*f) (int, const char*, const char*, int, int)) {
+void setjiRSIInit (int (*f) (int, string, const char*, int, int)) {
   jiRSIInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1657,7 +1669,7 @@ void setjiRSIOnArray (double (*f) (int, double*, int, int, int)) {
   jiRSIOnArray = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiRVIInit (int (*f) (int, const char*, const char*, int)) {
+void setjiRVIInit (int (*f) (int, string, const char*, int)) {
   jiRVIInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1665,7 +1677,7 @@ void setjiRVI (double (*f) (int, int, const char*, int)) {
   jiRVI = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiSARInit (int (*f) (int, const char*, const char*, double, double)) {
+void setjiSARInit (int (*f) (int, string, const char*, double, double)) {
   jiSARInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1673,7 +1685,7 @@ void setjiSAR (double (*f) (int, int, int)) {
   jiSAR = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiStochasticInit (int (*f) (int, const char*, const char*, int, int, int, const char*)) {
+void setjiStochasticInit (int (*f) (int, string, const char*, int, int, int, const char*)) {
   jiStochasticInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1681,7 +1693,7 @@ void setjiStochastic (double (*f) (int, int, const char*, int)) {
   jiStochastic = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiWPRInit (int (*f) (int, const char*, const char*, int)) {
+void setjiWPRInit (int (*f) (int, string, const char*, int)) {
   jiWPRInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1806,6 +1818,14 @@ int OrdersTotal () {
   return jOrdersTotal(iFintecheeUID);
 }
 
+int OrdersHistoryTotal () {
+  if (paramHandleList[iFintecheeUID].bInit) return -1;
+  return jOrdersHistoryTotal(iFintecheeUID);
+}
+int HistoryTotal () {
+  return OrdersHistoryTotal();
+}
+
 bool OrderSelect(int index, int select, int pool) {
   if (paramHandleList[iFintecheeUID].bInit) return false;
   return jOrderSelect(iFintecheeUID, index, select, pool) == 1;
@@ -1861,6 +1881,11 @@ int OrderMagicNumber() {
   return jOrderMagicNumber(iFintecheeUID);
 }
 
+datetime OrderOpenTime() {
+  if (paramHandleList[iFintecheeUID].bInit) return -1;
+  return jOrderOpenTime(iFintecheeUID);
+}
+
 template <class Type, class... Types>
 void Print (const Type & arg, const Types &... args) {
   stringstream s;
@@ -1887,7 +1912,7 @@ void Alert (const Type & arg, const Types &... args) {
   jPrint(iFintecheeUID, s.str().c_str());
 }
 
-datetime iTime (const char* symbol, int timeframe, int shift) {
+datetime iTime (string symbol, int timeframe, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("Chart_") + string(symbol) + string("_") + tf;
   if (paramHandleList[iFintecheeUID].bInit) {
@@ -1901,7 +1926,7 @@ datetime iTime (const char* symbol, int timeframe, int shift) {
 datetime iTime (long symbol, int timeframe, int shift) {
   return iTime("", timeframe, shift);
 }
-double iOpen (const char* symbol, int timeframe, int shift) {
+double iOpen (string symbol, int timeframe, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("Chart_") + string(symbol) + string("_") + tf;
   if (paramHandleList[iFintecheeUID].bInit) {
@@ -1915,7 +1940,7 @@ double iOpen (const char* symbol, int timeframe, int shift) {
 double iOpen (long symbol, int timeframe, int shift) {
   return iOpen("", timeframe, shift);
 }
-double iHigh (const char* symbol, int timeframe, int shift) {
+double iHigh (string symbol, int timeframe, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("Chart_") + string(symbol) + string("_") + tf;
   if (paramHandleList[iFintecheeUID].bInit) {
@@ -1929,7 +1954,7 @@ double iHigh (const char* symbol, int timeframe, int shift) {
 double iHigh (long symbol, int timeframe, int shift) {
   return iHigh("", timeframe, shift);
 }
-double iLow (const char* symbol, int timeframe, int shift) {
+double iLow (string symbol, int timeframe, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("Chart_") + string(symbol) + string("_") + tf;
   if (paramHandleList[iFintecheeUID].bInit) {
@@ -1943,7 +1968,7 @@ double iLow (const char* symbol, int timeframe, int shift) {
 double iLow (long symbol, int timeframe, int shift) {
   return iLow("", timeframe, shift);
 }
-double iClose (const char* symbol, int timeframe, int shift) {
+double iClose (string symbol, int timeframe, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("Chart_") + string(symbol) + string("_") + tf;
   if (paramHandleList[iFintecheeUID].bInit) {
@@ -1957,7 +1982,7 @@ double iClose (const char* symbol, int timeframe, int shift) {
 double iClose (long symbol, int timeframe, int shift) {
   return iClose("", timeframe, shift);
 }
-long iVolume (const char* symbol, int timeframe, int shift) {
+long iVolume (string symbol, int timeframe, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("Chart_") + string(symbol) + string("_") + tf;
   if (paramHandleList[iFintecheeUID].bInit) {
@@ -1972,7 +1997,7 @@ long iVolume (long symbol, int timeframe, int shift) {
   return iVolume("", timeframe, shift);
 }
 
-double iAC (const char* symbol, int timeframe, int shift) {
+double iAC (string symbol, int timeframe, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iAC_") + string(symbol) + string("_") + tf;
   if (paramHandleList[iFintecheeUID].bInit) {
@@ -1987,7 +2012,7 @@ double iAC (long symbol, int timeframe, int shift) {
   return iAC("", timeframe, shift);
 }
 
-double iADX (const char* symbol, int timeframe, int period, int applied_price, int mode, int shift) {
+double iADX (string symbol, int timeframe, int period, int applied_price, int mode, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iADX_") + string(symbol) + string("_") + tf + string("_") + to_string(period) + string("_") + to_string(applied_price);
   if (paramHandleList[iFintecheeUID].bInit) {
@@ -2003,7 +2028,7 @@ double iADX (long symbol, int timeframe, int period, int applied_price, int mode
 }
 
 double iAlligator (
-  const char* symbol, int timeframe, int jaw_period, int jaw_shift, int teeth_period, int teeth_shift, int lips_period, int lips_shift,
+  string symbol, int timeframe, int jaw_period, int jaw_shift, int teeth_period, int teeth_shift, int lips_period, int lips_shift,
   int ma_method, int applied_price, int mode, int shift) {
 
   const char* tf = convertTimeFrame(timeframe);
@@ -2023,7 +2048,7 @@ double iAlligator (
   return iAlligator("", timeframe, jaw_period, jaw_shift, teeth_period, teeth_shift, lips_period, lips_shift, ma_method, applied_price, mode, shift);
 }
 
-double iAO (const char* symbol, int timeframe, int shift) {
+double iAO (string symbol, int timeframe, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iAO_") + string(symbol) + string("_") + tf;
   if (paramHandleList[iFintecheeUID].bInit) {
@@ -2038,7 +2063,7 @@ double iAO (long symbol, int timeframe, int shift) {
   return iAO("", timeframe, shift);
 }
 
-double iATR (const char* symbol, int timeframe, int period, int shift) {
+double iATR (string symbol, int timeframe, int period, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iATR_") + string(symbol) + string("_") + tf + string("_") + to_string(period);
   if (paramHandleList[iFintecheeUID].bInit) {
@@ -2053,7 +2078,7 @@ double iATR (long symbol, int timeframe, int period, int shift) {
   return iATR("", timeframe, period, shift);
 }
 
-double iBearsPower (const char* symbol, int timeframe, int period, int applied_price, int shift) {
+double iBearsPower (string symbol, int timeframe, int period, int applied_price, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iBearsPower_") + string(symbol) + string("_") + tf + string("_") + to_string(period) + string("_") + to_string(applied_price);
   if (paramHandleList[iFintecheeUID].bInit) {
@@ -2068,7 +2093,7 @@ double iBearsPower (long symbol, int timeframe, int period, int applied_price, i
   return iBearsPower("", timeframe, period, applied_price, shift);
 }
 
-double iBands (const char* symbol, int timeframe, int period, double deviation, int bands_shift, int applied_price, int mode, int shift) {
+double iBands (string symbol, int timeframe, int period, double deviation, int bands_shift, int applied_price, int mode, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iBands_") + string(symbol) + string("_") + tf + string("_") + to_string(period) + string("_") + to_string(deviation) + string("_") + to_string(bands_shift) + string("_") + to_string(applied_price);
   if (paramHandleList[iFintecheeUID].bInit) {
@@ -2087,7 +2112,7 @@ double iBandsOnArray (double* array, int total, int period, double deviation, in
   return jiBandsOnArray(iFintecheeUID, array, total, period, deviation, bands_shift, convertMode(mode, INDI_BANDS), shift);
 }
 
-double iBullsPower (const char*  symbol, int timeframe, int period, int applied_price, int shift) {
+double iBullsPower (string  symbol, int timeframe, int period, int applied_price, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iBullsPower_") + string(symbol) + string("_") + tf + string("_") + to_string(period) + string("_") + to_string(applied_price);
   if (paramHandleList[iFintecheeUID].bInit) {
@@ -2102,7 +2127,7 @@ double iBullsPower (long symbol, int timeframe, int period, int applied_price, i
   return iBullsPower("", timeframe, period, applied_price, shift);
 }
 
-double iCCI (const char* symbol, int timeframe, int period, int applied_price, int shift) {
+double iCCI (string symbol, int timeframe, int period, int applied_price, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iCCI_") + string(symbol) + string("_") + tf + string("_") + to_string(period) + string("_") + to_string(applied_price);
   if (paramHandleList[iFintecheeUID].bInit) {
@@ -2122,7 +2147,7 @@ double iCCIOnArray (double* array, int total, int period, int shift) {
 }
 
 template<class...Ts>
-double iCustom (const char* symbol, int timeframe, const char* name, Ts&&... args) {
+double iCustom (string symbol, int timeframe, const char* name, Ts&&... args) {
   const char* tf = convertTimeFrame(timeframe);
   stringstream s;
   const char* mode;
@@ -2157,7 +2182,7 @@ double iCustom (long symbol, int timeframe, const char* name, Ts&&... args) {
   return iCustom("", timeframe, name, args...);
 }
 
-double iDeMarker (const char* symbol, int timeframe, int period, int shift) {
+double iDeMarker (string symbol, int timeframe, int period, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iDeMarker_") + string(symbol) + string("_") + tf + string("_") + to_string(period);
   if (paramHandleList[iFintecheeUID].bInit) {
@@ -2172,7 +2197,7 @@ double iDeMarker (long symbol, int timeframe, int period, int shift) {
   return iDeMarker("", timeframe, period, shift);
 }
 
-double iEnvelopes (const char* symbol, int timeframe, int ma_period, int ma_method, int ma_shift, int applied_price, double deviation, int mode, int shift) {
+double iEnvelopes (string symbol, int timeframe, int ma_period, int ma_method, int ma_shift, int applied_price, double deviation, int mode, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iEnvelopes_") + string(symbol) + string("_") + tf + string("_") + to_string(ma_period) + string("_") + to_string(ma_method) + string("_") + to_string(ma_shift) + string("_") + to_string(applied_price) + string("_") + to_string(deviation);
   if (paramHandleList[iFintecheeUID].bInit) {
@@ -2191,7 +2216,7 @@ double iEnvelopesOnArray (double* array, int total, int ma_period, int ma_method
   return jiEnvelopesOnArray(iFintecheeUID, array, total, ma_period, convertMAMethod(ma_method), ma_shift, deviation, convertMode(mode, INDI_ENVELOPES), shift);
 }
 
-double iFractals (const char* symbol, int timeframe, int mode, int shift) {
+double iFractals (string symbol, int timeframe, int mode, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iFractals_") + string(symbol) + string("_") + tf;
   if (paramHandleList[iFintecheeUID].bInit) {
@@ -2206,7 +2231,7 @@ double iFractals (long symbol, int timeframe, int mode, int shift) {
   return iFractals("", timeframe, mode, shift);
 }
 
- double iIchimoku (const char* symbol, int timeframe, int tenkan_sen, int kijun_sen, int senkou_span_b, int mode, int shift) {
+ double iIchimoku (string symbol, int timeframe, int tenkan_sen, int kijun_sen, int senkou_span_b, int mode, int shift) {
    const char* tf = convertTimeFrame(timeframe);
    string strID = string("iIchimoku_") + string(symbol) + string("_") + tf + string("_") + to_string(tenkan_sen) + string("_") + to_string(kijun_sen) + string("_") + to_string(senkou_span_b);
    if (paramHandleList[iFintecheeUID].bInit) {
@@ -2231,7 +2256,7 @@ double iFractals (long symbol, int timeframe, int mode, int shift) {
    return iIchimoku("", timeframe, tenkan_sen, kijun_sen, senkou_span_b, mode, shift);
  }
 
-double iMA (const char* symbol, int timeframe, int ma_period, int ma_shift, int ma_method, int applied_price, int shift) {
+double iMA (string symbol, int timeframe, int ma_period, int ma_shift, int ma_method, int applied_price, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iMA_") + string(symbol) + string("_") + tf + string("_") + to_string(ma_period) + string("_") + to_string(ma_shift) + string("_") + to_string(ma_method) + string("_") + to_string(applied_price);
   if (paramHandleList[iFintecheeUID].bInit) {
@@ -2250,7 +2275,7 @@ double iMAOnArray (double* array, int total, int ma_period, int ma_shift, int ma
   return jiMAOnArray(iFintecheeUID, array, total, ma_period, ma_shift, convertMAMethod(ma_method), shift);
 }
 
-double iMACD (const char* symbol, int timeframe, int fast_ema_period, int slow_ema_period, int signal_period, int applied_price, int mode, int shift) {
+double iMACD (string symbol, int timeframe, int fast_ema_period, int slow_ema_period, int signal_period, int applied_price, int mode, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iMACD_") + string(symbol) + string("_") + tf + string("_") + to_string(fast_ema_period) + string("_") + to_string(slow_ema_period) + string("_") + to_string(signal_period) + string("_") + to_string(applied_price);
   if (paramHandleList[iFintecheeUID].bInit) {
@@ -2265,7 +2290,7 @@ double iMACD (long symbol, int timeframe, int fast_ema_period, int slow_ema_peri
   return iMACD("", timeframe, fast_ema_period, slow_ema_period, signal_period, applied_price, mode, shift);
 }
 
-double iMomentum (const char* symbol, int timeframe, int period, int applied_price, int shift) {
+double iMomentum (string symbol, int timeframe, int period, int applied_price, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iMomentum_") + string(symbol) + string("_") + tf + string("_") + to_string(period) + string("_") + to_string(applied_price);
   if (paramHandleList[iFintecheeUID].bInit) {
@@ -2284,7 +2309,7 @@ double iMomentumOnArray (double* array, int total, int period, int shift) {
   return jiMomentumOnArray(iFintecheeUID, array, total, period, shift);
 }
 
-double iRSI (const char* symbol, int timeframe, int period, int applied_price, int shift) {
+double iRSI (string symbol, int timeframe, int period, int applied_price, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iRSI_") + string(symbol) + string("_") + tf + string("_") + to_string(period) + string("_") + to_string(applied_price);
   if (paramHandleList[iFintecheeUID].bInit) {
@@ -2303,7 +2328,7 @@ double iRSIOnArray (double* array, int total, int period, int shift) {
   return jiRSIOnArray(iFintecheeUID, array, total, period, shift);
 }
 
-double iRVI (const char* symbol, int timeframe, int period, int mode, int shift) {
+double iRVI (string symbol, int timeframe, int period, int mode, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iRVI_") + string(symbol) + string("_") + tf + string("_") + to_string(period);
   if (paramHandleList[iFintecheeUID].bInit) {
@@ -2318,7 +2343,7 @@ double iRVI (long symbol, int timeframe, int period, int mode, int shift) {
   return iRVI("", timeframe, period, mode, shift);
 }
 
-double iSAR (const char* symbol, int timeframe, double step, double maximum, int shift) {
+double iSAR (string symbol, int timeframe, double step, double maximum, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iSAR_") + string(symbol) + string("_") + tf + string("_") + to_string(step) + string("_") + to_string(maximum);
   if (paramHandleList[iFintecheeUID].bInit) {
@@ -2333,7 +2358,7 @@ double iSAR (long symbol, int timeframe, double step, double maximum, int shift)
   return iSAR("", timeframe, step, maximum, shift);
 }
 
-double iStochastic (const char* symbol, int timeframe, int Kperiod, int Dperiod, int slowing, int method, int price_field, int mode, int shift) {
+double iStochastic (string symbol, int timeframe, int Kperiod, int Dperiod, int slowing, int method, int price_field, int mode, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iStochastic_") + string(symbol) + string("_") + tf + string("_") + to_string(Kperiod) + string("_") + to_string(Dperiod) + string("_") + to_string(slowing) + string("_") + to_string(method);
   if (paramHandleList[iFintecheeUID].bInit) {
@@ -2348,7 +2373,7 @@ double iStochastic (long symbol, int timeframe, int Kperiod, int Dperiod, int sl
   return iStochastic("", timeframe, Kperiod, Dperiod, slowing, method, price_field, mode, shift);
 }
 
-double iWPR (const char* symbol, int timeframe, int period, int shift) {
+double iWPR (string symbol, int timeframe, int period, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iWPR_") + string(symbol) + string("_") + tf + string("_") + to_string(period);
   if (paramHandleList[iFintecheeUID].bInit) {
