@@ -1,6 +1,6 @@
 	registerEA(
 		"mql_ea_loader_plugin",
-		"mql_plugin to make MQL-based EAs runnable on Fintechee(v1.0)",
+		"mql_plugin to make MQL-based EAs runnable on Fintechee(v1.01)",
 		[{ // parameters
 			name: "definition",
 			value: "",
@@ -278,6 +278,19 @@
 								var arr = getData(obj.context, chartHandle, "Close")
 								return arr[arr.length - shift - 1]
 							}, "diii")
+							var jiVolumeInit = Module.addFunction(function (uid, symbol, timeframe) {
+								var obj = window.mqlEAsBuffer[uid + ""]
+								var symbolName = window.mqlEAs[obj.name].module.UTF8ToString(symbol)
+								var timeFrm = window.mqlEAs[obj.name].module.UTF8ToString(timeframe)
+								symbolName = symbolName == "" ? obj.symbolName : symbolName
+								timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
+								return getChartHandle(obj.context, obj.brokerName, obj.accountId, symbolName, timeFrm)
+							}, "iiii")
+							var jiVolume = Module.addFunction(function (uid, chartHandle, shift) {
+								var obj = window.mqlEAsBuffer[uid + ""]
+								var arr = getData(obj.context, chartHandle, "Volume")
+								return arr[arr.length - shift - 1]
+							}, "iiii")
 							var jiACInit = Module.addFunction(function (uid, symbol, timeframe) {
 								var obj = window.mqlEAsBuffer[uid + ""]
 								var symbolName = window.mqlEAs[obj.name].module.UTF8ToString(symbol)
@@ -739,7 +752,7 @@
 								symbolName = symbolName == "" ? obj.symbolName : symbolName
 								timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
 								return getIndicatorHandle(obj.context, obj.brokerName, obj.accountId, symbolName, timeFrm, "macd_for_mql", [{
-									name: "fasteEMA",
+									name: "fastEMA",
 									value: fast_ema_period
 								},{
 									name: "slowEMA",
@@ -988,6 +1001,8 @@
 								setjiLow: Module.cwrap('setjiLow', null, ['number']),
 								setjiCloseInit: Module.cwrap('setjiCloseInit', null, ['number']),
 								setjiClose: Module.cwrap('setjiClose', null, ['number']),
+								setjiVolumeInit: Module.cwrap('setjiVolumeInit', null, ['number']),
+								setjiVolume: Module.cwrap('setjiVolume', null, ['number']),
 								setjiACInit: Module.cwrap('setjiACInit', null, ['number']),
 								setjiAC: Module.cwrap('setjiAC', null, ['number']),
 								setjiADXInit: Module.cwrap('setjiADXInit', null, ['number']),
@@ -1079,6 +1094,8 @@
 							window.mqlEAs[definition.name].setjiLow(jiLow)
 							window.mqlEAs[definition.name].setjiCloseInit(jiCloseInit)
 							window.mqlEAs[definition.name].setjiClose(jiClose)
+							window.mqlEAs[definition.name].setjiVolumeInit(jiVolumeInit)
+							window.mqlEAs[definition.name].setjiVolume(jiVolume)
 							window.mqlEAs[definition.name].setjiACInit(jiACInit)
 							window.mqlEAs[definition.name].setjiAC(jiAC)
 							window.mqlEAs[definition.name].setjiADXInit(jiADXInit)
