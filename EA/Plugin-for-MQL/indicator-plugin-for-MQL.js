@@ -1,6 +1,6 @@
 	registerEA(
 		"mql_indicator_loader_plugin",
-		"mql_plugin to make MQL-based indicators runnable on Fintechee(v1.0)",
+		"mql_plugin to make MQL-based indicators runnable on Fintechee(v1.01)",
 		[{ // parameters
 			name: "definition",
 			value: "",
@@ -48,18 +48,96 @@
 								var md = window.mqlIndicators[obj.name].module.UTF8ToString(name)
 								setIndiShift(obj.context, md, shift)
 							}, "viii")
+							var jiTimeInit = Module.addFunction(function (uid, symbol, timeframe) {
+								var obj = window.mqlIndicatorsBuffer[uid + ""]
+								var symbolName = window.mqlIndicators[obj.name].module.UTF8ToString(symbol)
+								var timeFrm = window.mqlIndicators[obj.name].module.UTF8ToString(timeframe)
+								symbolName = symbolName == "" ? obj.symbolName : symbolName
+								timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
+								return getChartHandleFromIndi(obj.context, symbolName, timeFrm)
+							}, "iiii")
+							var jiTime = Module.addFunction(function (uid, chartHandle, shift) {
+								var obj = window.mqlIndicatorsBuffer[uid + ""]
+								var arr = getDataFromIndi(obj.context, chartHandle, "Time")
+								return arr[arr.length - shift - 1]
+							}, "iiii")
+							var jiOpenInit = Module.addFunction(function (uid, symbol, timeframe) {
+								var obj = window.mqlIndicatorsBuffer[uid + ""]
+								var symbolName = window.mqlIndicators[obj.name].module.UTF8ToString(symbol)
+								var timeFrm = window.mqlIndicators[obj.name].module.UTF8ToString(timeframe)
+								symbolName = symbolName == "" ? obj.symbolName : symbolName
+								timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
+								return getChartHandleFromIndi(obj.context, symbolName, timeFrm)
+							}, "iiii")
+							var jiOpen = Module.addFunction(function (uid, chartHandle, shift) {
+								var obj = window.mqlIndicatorsBuffer[uid + ""]
+								var arr = getDataFromIndi(obj.context, chartHandle, "Open")
+								return arr[arr.length - shift - 1]
+							}, "diii")
+							var jiHighInit = Module.addFunction(function (uid, symbol, timeframe) {
+								var obj = window.mqlIndicatorsBuffer[uid + ""]
+								var symbolName = window.mqlIndicators[obj.name].module.UTF8ToString(symbol)
+								var timeFrm = window.mqlIndicators[obj.name].module.UTF8ToString(timeframe)
+								symbolName = symbolName == "" ? obj.symbolName : symbolName
+								timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
+								return getChartHandleFromIndi(obj.context, symbolName, timeFrm)
+							}, "iiii")
+							var jiHigh = Module.addFunction(function (uid, chartHandle, shift) {
+								var obj = window.mqlIndicatorsBuffer[uid + ""]
+								var arr = getDataFromIndi(obj.context, chartHandle, "High")
+								return arr[arr.length - shift - 1]
+							}, "diii")
+							var jiLowInit = Module.addFunction(function (uid, symbol, timeframe) {
+								var obj = window.mqlIndicatorsBuffer[uid + ""]
+								var symbolName = window.mqlIndicators[obj.name].module.UTF8ToString(symbol)
+								var timeFrm = window.mqlIndicators[obj.name].module.UTF8ToString(timeframe)
+								symbolName = symbolName == "" ? obj.symbolName : symbolName
+								timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
+								return getChartHandleFromIndi(obj.context, symbolName, timeFrm)
+							}, "iiii")
+							var jiLow = Module.addFunction(function (uid, chartHandle, shift) {
+								var obj = window.mqlIndicatorsBuffer[uid + ""]
+								var arr = getDataFromIndi(obj.context, chartHandle, "Low")
+								return arr[arr.length - shift - 1]
+							}, "diii")
+							var jiCloseInit = Module.addFunction(function (uid, symbol, timeframe) {
+								var obj = window.mqlIndicatorsBuffer[uid + ""]
+								var symbolName = window.mqlIndicators[obj.name].module.UTF8ToString(symbol)
+								var timeFrm = window.mqlIndicators[obj.name].module.UTF8ToString(timeframe)
+								symbolName = symbolName == "" ? obj.symbolName : symbolName
+								timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
+								return getChartHandleFromIndi(obj.context, symbolName, timeFrm)
+							}, "iiii")
+							var jiClose = Module.addFunction(function (uid, chartHandle, shift) {
+								var obj = window.mqlIndicatorsBuffer[uid + ""]
+								var arr = getDataFromIndi(obj.context, chartHandle, "Close")
+								return arr[arr.length - shift - 1]
+							}, "diii")
+							var jiVolumeInit = Module.addFunction(function (uid, symbol, timeframe) {
+								var obj = window.mqlIndicatorsBuffer[uid + ""]
+								var symbolName = window.mqlIndicators[obj.name].module.UTF8ToString(symbol)
+								var timeFrm = window.mqlIndicators[obj.name].module.UTF8ToString(timeframe)
+								symbolName = symbolName == "" ? obj.symbolName : symbolName
+								timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
+								return getChartHandleFromIndi(obj.context, symbolName, timeFrm)
+							}, "iiii")
+							var jiVolume = Module.addFunction(function (uid, chartHandle, shift) {
+								var obj = window.mqlIndicatorsBuffer[uid + ""]
+								var arr = getDataFromIndi(obj.context, chartHandle, "Volume")
+								return arr[arr.length - shift - 1]
+							}, "iiii")
 							var jiACInit = Module.addFunction(function (uid, symbol, timeframe) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
 								var symbolName = window.mqlIndicators[obj.name].module.UTF8ToString(symbol)
 								var timeFrm = window.mqlIndicators[obj.name].module.UTF8ToString(timeframe)
 								symbolName = symbolName == "" ? obj.symbolName : symbolName
 								timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
-								return getIndicatorHandle(obj.context, obj.brokerName, obj.accountId, symbolName, timeFrm, "ac", [])
+								return getIndicatorHandleFromIndi(obj.context, symbolName, timeFrm, "ac", [])
 							}, "iiii")
 							var jiAC = Module.addFunction(function (uid, indiHandle, shift) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
-								var arrUp = getData(obj.context, indiHandle, "up")
-								var arrDown = getData(obj.context, indiHandle, "down")
+								var arrUp = getDataFromIndi(obj.context, indiHandle, "up")
+								var arrDown = getDataFromIndi(obj.context, indiHandle, "down")
 								return arrUp[arrUp.length - shift - 1] > 0 ? arrUp[arrUp.length - shift - 1] : arrDown[arrDown.length - shift - 1]
 							}, "diii")
 							var jiADXInit = Module.addFunction(function (uid, symbol, timeframe, period, applied_price) {
@@ -68,7 +146,7 @@
 								var timeFrm = window.mqlIndicators[obj.name].module.UTF8ToString(timeframe)
 								symbolName = symbolName == "" ? obj.symbolName : symbolName
 								timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
-								return getIndicatorHandle(obj.context, obj.brokerName, obj.accountId, symbolName, timeFrm, "adx_for_mql", [{
+								return getIndicatorHandleFromIndi(obj.context, symbolName, timeFrm, "adx_for_mql", [{
 									name: "period",
 									value: period
 								},{
@@ -79,7 +157,7 @@
 							var jiADX = Module.addFunction(function (uid, indiHandle, mode, shift) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
 								var md = window.mqlIndicators[obj.name].module.UTF8ToString(mode)
-								var arr = getData(obj.context, indiHandle, md)
+								var arr = getDataFromIndi(obj.context, indiHandle, md)
 								return arr[arr.length - shift - 1]
 							}, "diiii")
 							var jiAlligatorInit = Module.addFunction(function (uid, symbol, timeframe, jaw_period, jaw_shift, teeth_period, teeth_shift, lips_period, lips_shift, ma_method, applied_price) {
@@ -89,7 +167,7 @@
 								var method = window.mqlIndicators[obj.name].module.UTF8ToString(ma_method)
 								symbolName = symbolName == "" ? obj.symbolName : symbolName
 								timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
-								return getIndicatorHandle(obj.context, obj.brokerName, obj.accountId, symbolName, timeFrm, "alligator_for_mql", [{
+								return getIndicatorHandleFromIndi(obj.context, symbolName, timeFrm, "alligator_for_mql", [{
 									name: "jawsPeriod",
 									value: jaw_period
 								},{
@@ -118,7 +196,7 @@
 							var jiAlligator = Module.addFunction(function (uid, indiHandle, jaw_shift, teeth_shift, lips_shift, mode, shift) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
 								var md = window.mqlIndicators[obj.name].module.UTF8ToString(mode)
-								var arr = getData(obj.context, indiHandle, md)
+								var arr = getDataFromIndi(obj.context, indiHandle, md)
 								if (md == "jaws") {
 									return arr[arr.length - jaw_shift - shift - 1]
 								} else if (md == "teeth") {
@@ -133,12 +211,12 @@
 								var timeFrm = window.mqlIndicators[obj.name].module.UTF8ToString(timeframe)
 								symbolName = symbolName == "" ? obj.symbolName : symbolName
 								timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
-								return getIndicatorHandle(obj.context, obj.brokerName, obj.accountId, symbolName, timeFrm, "ao", [])
+								return getIndicatorHandleFromIndi(obj.context, symbolName, timeFrm, "ao", [])
 							}, "iiii")
 							var jiAO = Module.addFunction(function (uid, indiHandle, shift) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
-								var arrUp = getData(obj.context, indiHandle, "up")
-								var arrDown = getData(obj.context, indiHandle, "down")
+								var arrUp = getDataFromIndi(obj.context, indiHandle, "up")
+								var arrDown = getDataFromIndi(obj.context, indiHandle, "down")
 								return arrUp[arrUp.length - shift - 1] > 0 ? arrUp[arrUp.length - shift - 1] : arrDown[arrDown.length - shift - 1]
 							}, "diii")
 							var jiATRInit = Module.addFunction(function (uid, symbol, timeframe, period) {
@@ -147,14 +225,14 @@
 								var timeFrm = window.mqlIndicators[obj.name].module.UTF8ToString(timeframe)
 								symbolName = symbolName == "" ? obj.symbolName : symbolName
 								timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
-								return getIndicatorHandle(obj.context, obj.brokerName, obj.accountId, symbolName, timeFrm, "atr", [{
+								return getIndicatorHandleFromIndi(obj.context, symbolName, timeFrm, "atr", [{
 									name: "period",
 									value: period
 								}])
 							}, "iiiii")
 							var jiATR = Module.addFunction(function (uid, indiHandle, shift) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
-								var arr = getData(obj.context, indiHandle, "atr")
+								var arr = getDataFromIndi(obj.context, indiHandle, "atr")
 								return arr[arr.length - shift - 1]
 							}, "diii")
 							var jiBearsPowerInit = Module.addFunction(function (uid, symbol, timeframe, period, applied_price) {
@@ -163,7 +241,7 @@
 								var timeFrm = window.mqlIndicators[obj.name].module.UTF8ToString(timeframe)
 								symbolName = symbolName == "" ? obj.symbolName : symbolName
 								timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
-								return getIndicatorHandle(obj.context, obj.brokerName, obj.accountId, symbolName, timeFrm, "bears_for_mql", [{
+								return getIndicatorHandleFromIndi(obj.context, symbolName, timeFrm, "bears_for_mql", [{
 									name: "period",
 									value: period
 								},{
@@ -173,7 +251,7 @@
 							}, "iiiiii")
 							var jiBearsPower = Module.addFunction(function (uid, indiHandle, shift) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
-								var arr = getData(obj.context, indiHandle, "bears")
+								var arr = getDataFromIndi(obj.context, indiHandle, "bears")
 								return arr[arr.length - shift - 1]
 							}, "diii")
 							var jiBandsInit = Module.addFunction(function (uid, symbol, timeframe, period, deviation, bands_shift, applied_price) {
@@ -182,7 +260,7 @@
 								var timeFrm = window.mqlIndicators[obj.name].module.UTF8ToString(timeframe)
 								symbolName = symbolName == "" ? obj.symbolName : symbolName
 								timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
-								return getIndicatorHandle(obj.context, obj.brokerName, obj.accountId, symbolName, timeFrm, "bands_for_mql", [{
+								return getIndicatorHandleFromIndi(obj.context, symbolName, timeFrm, "bands_for_mql", [{
 								    name: "period",
 								    value: period,
 								},{
@@ -202,7 +280,7 @@
 							var jiBands = Module.addFunction(function (uid, indiHandle, bands_shift, mode, shift) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
 								var md = window.mqlIndicators[obj.name].module.UTF8ToString(mode)
-								var arr = getData(obj.context, indiHandle, md)
+								var arr = getDataFromIndi(obj.context, indiHandle, md)
 								return arr[arr.length - bands_shift - shift - 1]
 							}, "diiiii")
 							var jiBandsOnArray = Module.addFunction(function (uid, array, total, period, deviation, bands_shift, mode, shift) {
@@ -240,7 +318,7 @@
 								var timeFrm = window.mqlIndicators[obj.name].module.UTF8ToString(timeframe)
 								symbolName = symbolName == "" ? obj.symbolName : symbolName
 								timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
-								return getIndicatorHandle(obj.context, obj.brokerName, obj.accountId, symbolName, timeFrm, "bulls_for_mql", [{
+								return getIndicatorHandleFromIndi(obj.context, symbolName, timeFrm, "bulls_for_mql", [{
 									name: "period",
 									value: period
 								},{
@@ -250,7 +328,7 @@
 							}, "iiiiii")
 							var jiBullsPower = Module.addFunction(function (uid, indiHandle, shift) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
-								var arr = getData(obj.context, indiHandle, "bulls")
+								var arr = getDataFromIndi(obj.context, indiHandle, "bulls")
 								return arr[arr.length - shift - 1]
 							}, "diii")
 							var jiCCIInit = Module.addFunction(function (uid, symbol, timeframe, period, applied_price) {
@@ -259,7 +337,7 @@
 								var timeFrm = window.mqlIndicators[obj.name].module.UTF8ToString(timeframe)
 								symbolName = symbolName == "" ? obj.symbolName : symbolName
 								timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
-								return getIndicatorHandle(obj.context, obj.brokerName, obj.accountId, symbolName, timeFrm, "cci_for_mql", [{
+								return getIndicatorHandleFromIndi(obj.context, symbolName, timeFrm, "cci_for_mql", [{
 							    name: "period",
 							    value: period
 								},{
@@ -269,7 +347,7 @@
 							}, "iiiiii")
 							var jiCCI = Module.addFunction(function (uid, indiHandle, shift) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
-								var arr = getData(obj.context, indiHandle, "cci")
+								var arr = getDataFromIndi(obj.context, indiHandle, "cci")
 								return arr[arr.length - shift - 1]
 							}, "diii")
 							var jiCCIOnArray = Module.addFunction(function (uid, array, total, period, shift) {
@@ -316,12 +394,12 @@
 										parameters[i].value = params[i]
 									}
 								}
-								return getIndicatorHandle(obj.context, obj.brokerName, obj.accountId, symbolName, timeFrm, indiName, parameters)
+								return getIndicatorHandleFromIndi(obj.context, symbolName, timeFrm, indiName, parameters)
 							}, "iiiiii")
 							var jiCustom = Module.addFunction(function (uid, indiHandle, mode, shift) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
 								var md = window.mqlIndicators[obj.name].module.UTF8ToString(mode)
-								var arr = getData(obj.context, indiHandle, md)
+								var arr = getDataFromIndi(obj.context, indiHandle, md)
 								return arr[arr.length - shift - 1]
 							}, "diiii")
 							var jiDeMarkerInit = Module.addFunction(function (uid, symbol, timeframe, period) {
@@ -330,14 +408,14 @@
 								var timeFrm = window.mqlIndicators[obj.name].module.UTF8ToString(timeframe)
 								symbolName = symbolName == "" ? obj.symbolName : symbolName
 								timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
-								return getIndicatorHandle(obj.context, obj.brokerName, obj.accountId, symbolName, timeFrm, "demarker", [{
+								return getIndicatorHandleFromIndi(obj.context, symbolName, timeFrm, "demarker", [{
 									name: "period",
 									value: period
 								}])
 							}, "iiiii")
 							var jiDeMarker = Module.addFunction(function (uid, indiHandle, shift) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
-								var arr = getData(obj.context, indiHandle, "demarker")
+								var arr = getDataFromIndi(obj.context, indiHandle, "demarker")
 								return arr[arr.length - shift - 1]
 							}, "diii")
 							var jiEnvelopesInit = Module.addFunction(function (uid, symbol, timeframe, ma_period, ma_method, ma_shift, applied_price, deviation) {
@@ -347,7 +425,7 @@
 								var method = window.mqlIndicators[obj.name].module.UTF8ToString(ma_method)
 								symbolName = symbolName == "" ? obj.symbolName : symbolName
 								timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
-								return getIndicatorHandle(obj.context, obj.brokerName, obj.accountId, symbolName, timeFrm, "envelopes_for_mql", [{
+								return getIndicatorHandleFromIndi(obj.context, symbolName, timeFrm, "envelopes_for_mql", [{
 								    name: "period",
 								    value: ma_period
 								},{
@@ -367,7 +445,7 @@
 							var jiEnvelopes = Module.addFunction(function (uid, indiHandle, ma_shift, mode, shift) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
 								var md = window.mqlIndicators[obj.name].module.UTF8ToString(mode)
-								var arr = getData(obj.context, indiHandle, md)
+								var arr = getDataFromIndi(obj.context, indiHandle, md)
 								return arr[arr.length - ma_shift - shift - 1]
 							}, "diiiii")
 							var jiEnvelopesOnArray = Module.addFunction(function (uid, array, total, ma_period, ma_method, ma_shift, deviation, mode, shift) {
@@ -406,12 +484,12 @@
 								var timeFrm = window.mqlIndicators[obj.name].module.UTF8ToString(timeframe)
 								symbolName = symbolName == "" ? obj.symbolName : symbolName
 								timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
-								return getIndicatorHandle(obj.context, obj.brokerName, obj.accountId, symbolName, timeFrm, "fractals", [])
+								return getIndicatorHandleFromIndi(obj.context, symbolName, timeFrm, "fractals", [])
 							}, "iiii")
 							var jiFractals = Module.addFunction(function (uid, indiHandle, mode, shift) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
 								var md = window.mqlIndicators[obj.name].module.UTF8ToString(mode)
-								var arr = getData(obj.context, indiHandle, md)
+								var arr = getDataFromIndi(obj.context, indiHandle, md)
 								return arr[arr.length - shift - 1]
 							}, "diiii")
 							var jiIchimokuInit = Module.addFunction(function (uid, symbol, timeframe, tenkan_sen, kijun_sen, senkou_span_b) {
@@ -420,7 +498,7 @@
 								var timeFrm = window.mqlIndicators[obj.name].module.UTF8ToString(timeframe)
 								symbolName = symbolName == "" ? obj.symbolName : symbolName
 								timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
-								return getIndicatorHandle(obj.context, obj.brokerName, obj.accountId, symbolName, timeFrm, "ichimoku", [{
+								return getIndicatorHandleFromIndi(obj.context, symbolName, timeFrm, "ichimoku", [{
 								    name: "tenkan",
 								    value: tenkan_sen
 								},{
@@ -434,7 +512,7 @@
 							var jiIchimoku = Module.addFunction(function (uid, indiHandle, ichimoku_shift, mode, shift) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
 								var md = window.mqlIndicators[obj.name].module.UTF8ToString(mode)
-								var arr = getData(obj.context, indiHandle, md)
+								var arr = getDataFromIndi(obj.context, indiHandle, md)
 								return arr[arr.length - ichimoku_shift - shift - 1]
 							}, "diiiii")
 							var jiMAInit = Module.addFunction(function (uid, symbol, timeframe, ma_period, ma_shift, ma_method, applied_price) {
@@ -454,19 +532,19 @@
 									value: applied_price
 								}]
 								if (ma_method == 1) {
-									return getIndicatorHandle(obj.context, obj.brokerName, obj.accountId, symbolName, timeFrm, "ema_for_mql", params)
+									return getIndicatorHandleFromIndi(obj.context, symbolName, timeFrm, "ema_for_mql", params)
 								} else if (ma_method == 2) {
-									return getIndicatorHandle(obj.context, obj.brokerName, obj.accountId, symbolName, timeFrm, "smma_for_mql", params)
+									return getIndicatorHandleFromIndi(obj.context, symbolName, timeFrm, "smma_for_mql", params)
 								} else if (ma_method == 3) {
-									return getIndicatorHandle(obj.context, obj.brokerName, obj.accountId, symbolName, timeFrm, "lwma_for_mql", params)
+									return getIndicatorHandleFromIndi(obj.context, symbolName, timeFrm, "lwma_for_mql", params)
 								} else {
-									return getIndicatorHandle(obj.context, obj.brokerName, obj.accountId, symbolName, timeFrm, "sma_for_mql", params)
+									return getIndicatorHandleFromIndi(obj.context, symbolName, timeFrm, "sma_for_mql", params)
 								}
 							}, "iiiiiiii")
 							var jiMA = Module.addFunction(function (uid, indiHandle, ma_shift, ma_method, shift) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
 								var method = window.mqlIndicators[obj.name].module.UTF8ToString(ma_method)
-								var arr = getData(obj.context, indiHandle, method)
+								var arr = getDataFromIndi(obj.context, indiHandle, method)
 								return arr[arr.length - ma_shift - shift - 1]
 							}, "diiiii")
 							var jiMAOnArray = Module.addFunction(function (uid, array, total, ma_period, ma_shift, ma_method, shift) {
@@ -508,8 +586,8 @@
 								var timeFrm = window.mqlIndicators[obj.name].module.UTF8ToString(timeframe)
 								symbolName = symbolName == "" ? obj.symbolName : symbolName
 								timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
-								return getIndicatorHandle(obj.context, obj.brokerName, obj.accountId, symbolName, timeFrm, "macd_for_mql", [{
-									name: "fasteEMA",
+								return getIndicatorHandleFromIndi(obj.context, symbolName, timeFrm, "macd_for_mql", [{
+									name: "fastEMA",
 									value: fast_ema_period
 								},{
 									name: "slowEMA",
@@ -525,7 +603,7 @@
 							var jiMACD = Module.addFunction(function (uid, indiHandle, mode, shift) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
 								var md = window.mqlIndicators[obj.name].module.UTF8ToString(mode)
-								var arr = getData(obj.context, indiHandle, md)
+								var arr = getDataFromIndi(obj.context, indiHandle, md)
 								return arr[arr.length - shift - 1]
 							}, "diiii")
 							var jiMomentumInit = Module.addFunction(function (uid, symbol, timeframe, period, applied_price) {
@@ -534,7 +612,7 @@
 								var timeFrm = window.mqlIndicators[obj.name].module.UTF8ToString(timeframe)
 								symbolName = symbolName == "" ? obj.symbolName : symbolName
 								timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
-								return getIndicatorHandle(obj.context, obj.brokerName, obj.accountId, symbolName, timeFrm, "momentum_for_mql", [{
+								return getIndicatorHandleFromIndi(obj.context, symbolName, timeFrm, "momentum_for_mql", [{
 									name: "period",
 									value: period
 								},{
@@ -544,7 +622,7 @@
 							}, "iiiiii")
 							var jiMomentum = Module.addFunction(function (uid, indiHandle, shift) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
-								var arr = getData(obj.context, indiHandle, "momentum")
+								var arr = getDataFromIndi(obj.context, indiHandle, "momentum")
 								return arr[arr.length - shift - 1]
 							}, "diii")
 							var jiMomentumOnArray = Module.addFunction(function (uid, array, total, period, shift) {
@@ -572,7 +650,7 @@
 								var timeFrm = window.mqlIndicators[obj.name].module.UTF8ToString(timeframe)
 								symbolName = symbolName == "" ? obj.symbolName : symbolName
 								timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
-								return getIndicatorHandle(obj.context, obj.brokerName, obj.accountId, symbolName, timeFrm, "rsi_for_mql", [{
+								return getIndicatorHandleFromIndi(obj.context, symbolName, timeFrm, "rsi_for_mql", [{
 									name: "period",
 									value: period
 								},{
@@ -582,7 +660,7 @@
 							}, "iiiiii")
 							var jiRSI = Module.addFunction(function (uid, indiHandle, shift) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
-								var arr = getData(obj.context, indiHandle, "rsi")
+								var arr = getDataFromIndi(obj.context, indiHandle, "rsi")
 								return arr[arr.length - shift - 1]
 							}, "diii")
 							var jiRSIOnArray = Module.addFunction(function (uid, array, total, period, shift) {
@@ -610,7 +688,7 @@
 								var timeFrm = window.mqlIndicators[obj.name].module.UTF8ToString(timeframe)
 								symbolName = symbolName == "" ? obj.symbolName : symbolName
 								timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
-								return getIndicatorHandle(obj.context, obj.brokerName, obj.accountId, symbolName, timeFrm, "rvi", [{
+								return getIndicatorHandleFromIndi(obj.context, symbolName, timeFrm, "rvi", [{
 									name: "period",
 									value: period
 								}])
@@ -618,7 +696,7 @@
 							var jiRVI = Module.addFunction(function (uid, indiHandle, mode, shift) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
 								var md = window.mqlIndicators[obj.name].module.UTF8ToString(mode)
-								var arr = getData(obj.context, indiHandle, md)
+								var arr = getDataFromIndi(obj.context, indiHandle, md)
 								return arr[arr.length - shift - 1]
 							}, "diiii")
 							var jiSARInit = Module.addFunction(function (uid, symbol, timeframe, step, maximum) {
@@ -627,7 +705,7 @@
 								var timeFrm = window.mqlIndicators[obj.name].module.UTF8ToString(timeframe)
 								symbolName = symbolName == "" ? obj.symbolName : symbolName
 								timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
-								return getIndicatorHandle(obj.context, obj.brokerName, obj.accountId, symbolName, timeFrm, "sar", [{
+								return getIndicatorHandleFromIndi(obj.context, symbolName, timeFrm, "sar", [{
 									name: "acceleration",
 									value: step,
 								},{
@@ -637,7 +715,7 @@
 							}, "iiiidd")
 							var jiSAR = Module.addFunction(function (uid, indiHandle, shift) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
-								var arr = getData(obj.context, indiHandle, "sar")
+								var arr = getDataFromIndi(obj.context, indiHandle, "sar")
 								return arr[arr.length - shift - 1]
 							}, "diii")
 							var jiStochasticInit = Module.addFunction(function (uid, symbol, timeframe, Kperiod, Dperiod, slowing, ma_method) {
@@ -647,7 +725,7 @@
 								var method = window.mqlIndicators[obj.name].module.UTF8ToString(ma_method)
 								symbolName = symbolName == "" ? obj.symbolName : symbolName
 								timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
-								return getIndicatorHandle(obj.context, obj.brokerName, obj.accountId, symbolName, timeFrm, "stochastic", [{
+								return getIndicatorHandleFromIndi(obj.context, symbolName, timeFrm, "stochastic", [{
 									name: "KPeriod",
 									value: Kperiod
 								},{
@@ -664,7 +742,7 @@
 							var jiStochastic = Module.addFunction(function (uid, indiHandle, mode, shift) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
 								var md = window.mqlIndicators[obj.name].module.UTF8ToString(mode)
-								var arr = getData(obj.context, indiHandle, md)
+								var arr = getDataFromIndi(obj.context, indiHandle, md)
 								return arr[arr.length - shift - 1]
 							}, "diiii")
 							var jiWPRInit = Module.addFunction(function (uid, symbol, timeframe, period) {
@@ -673,14 +751,14 @@
 								var timeFrm = window.mqlIndicators[obj.name].module.UTF8ToString(timeframe)
 								symbolName = symbolName == "" ? obj.symbolName : symbolName
 								timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
-								return getIndicatorHandle(obj.context, obj.brokerName, obj.accountId, symbolName, timeFrm, "wpr", [{
+								return getIndicatorHandleFromIndi(obj.context, symbolName, timeFrm, "wpr", [{
 									name: "period",
 									value: period
 								}])
 							}, "iiiii")
 							var jiWPR = Module.addFunction(function (uid, indiHandle, shift) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
-								var arr = getData(obj.context, indiHandle, "wpr")
+								var arr = getDataFromIndi(obj.context, indiHandle, "wpr")
 								return arr[arr.length - shift - 1]
 							}, "diii")
 
@@ -696,6 +774,18 @@
 								onCalc: Module.cwrap("onCalc", null, ["number", "number", "number"]),
 								setjPrint: Module.cwrap("setjPrint", null, ["number"]),
 								setjSetIndexShift: Module.cwrap("setjSetIndexShift", null, ["number"]),
+								setjiTimeInit: Module.cwrap('setjiTimeInit', null, ['number']),
+								setjiTime: Module.cwrap('setjiTime', null, ['number']),
+								setjiOpenInit: Module.cwrap('setjiOpenInit', null, ['number']),
+								setjiOpen: Module.cwrap('setjiOpen', null, ['number']),
+								setjiHighInit: Module.cwrap('setjiHighInit', null, ['number']),
+								setjiHigh: Module.cwrap('setjiHigh', null, ['number']),
+								setjiLowInit: Module.cwrap('setjiLowInit', null, ['number']),
+								setjiLow: Module.cwrap('setjiLow', null, ['number']),
+								setjiCloseInit: Module.cwrap('setjiCloseInit', null, ['number']),
+								setjiClose: Module.cwrap('setjiClose', null, ['number']),
+								setjiVolumeInit: Module.cwrap('setjiVolumeInit', null, ['number']),
+								setjiVolume: Module.cwrap('setjiVolume', null, ['number']),
 								setjiACInit: Module.cwrap('setjiACInit', null, ['number']),
 								setjiAC: Module.cwrap('setjiAC', null, ['number']),
 								setjiADXInit: Module.cwrap('setjiADXInit', null, ['number']),
@@ -750,6 +840,18 @@
 
 							window.mqlIndicators[definition.name].setjPrint(jPrint)
 							window.mqlIndicators[definition.name].setjSetIndexShift(jSetIndexShift)
+							window.mqlIndicators[definition.name].setjiTimeInit(jiTimeInit)
+							window.mqlIndicators[definition.name].setjiTime(jiTime)
+							window.mqlIndicators[definition.name].setjiOpenInit(jiOpenInit)
+							window.mqlIndicators[definition.name].setjiOpen(jiOpen)
+							window.mqlIndicators[definition.name].setjiHighInit(jiHighInit)
+							window.mqlIndicators[definition.name].setjiHigh(jiHigh)
+							window.mqlIndicators[definition.name].setjiLowInit(jiLowInit)
+							window.mqlIndicators[definition.name].setjiLow(jiLow)
+							window.mqlIndicators[definition.name].setjiCloseInit(jiCloseInit)
+							window.mqlIndicators[definition.name].setjiClose(jiClose)
+							window.mqlIndicators[definition.name].setjiVolumeInit(jiVolumeInit)
+							window.mqlIndicators[definition.name].setjiVolume(jiVolume)
 							window.mqlIndicators[definition.name].setjiACInit(jiACInit)
 							window.mqlIndicators[definition.name].setjiAC(jiAC)
 							window.mqlIndicators[definition.name].setjiADXInit(jiADXInit)
