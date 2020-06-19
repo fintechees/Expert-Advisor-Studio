@@ -1,12 +1,12 @@
 registerIndicator(
-    "macd", "MACD(v1.0)", function (context) {
+    "macd", "MACD(v1.01)", function (context) {
         var dataInput = getDataInput(context, 0)
 		var dataFEMA = getDataOutput(context, "fastEMA")
 		var dataSEMA = getDataOutput(context, "slowEMA")
 		var dataOutputMain = getDataOutput(context, "main")
 		var dataOutputSignal = getDataOutput(context, "signal")
 
-		var fEMA = getIndiParameter(context, "fasteEMA")
+		var fEMA = getIndiParameter(context, "fastEMA")
 		var sEMA = getIndiParameter(context, "slowEMA")
 		var sgnlSMA = getIndiParameter(context, "signalSMA")
 
@@ -33,7 +33,7 @@ registerIndicator(
 
 		sma(dataOutputMain, dataOutputSignal, calculatedLength, sgnlSMA)
 	},[{
-		name: "fasteEMA",
+		name: "fastEMA",
 		value: 12,
 		required: true,
 		type: PARAMETER_TYPE.INTEGER,
