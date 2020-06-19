@@ -222,7 +222,7 @@ const char* (*jOrderSymbol) (int);
 int (*jOrderTicket) (int);
 int (*jOrderMagicNumber) (int);
 int (*jiTimeInit) (int, const char*, const char*);
-int (*jiTime) (int, int, int);
+datetime (*jiTime) (int, int, int);
 int (*jiOpenInit) (int, const char*, const char*);
 double (*jiOpen) (int, int, int);
 int (*jiHighInit) (int, const char*, const char*);
@@ -231,6 +231,8 @@ int (*jiLowInit) (int, const char*, const char*);
 double (*jiLow) (int, int, int);
 int (*jiCloseInit) (int, const char*, const char*);
 double (*jiClose) (int, int, int);
+int (*jiVolumeInit) (int, const char*, const char*);
+long (*jiVolume) (int, int, int);
 int (*jiACInit) (int, const char*, const char*);
 double (*jiAC) (int, int, int);
 int (*jiADXInit) (int, const char*, const char*, int, int);
@@ -281,10 +283,10 @@ int (*jiStochasticInit) (int, const char*, const char*, int, int, int, const cha
 double (*jiStochastic) (int, int, const char*, int);
 int (*jiWPRInit) (int, const char*, const char*, int);
 double (*jiWPR) (int, int, int);
-int (*jARROW_CHECKCreate) (int, long, const char*, long, double);
+int (*jARROW_CHECKCreate) (int, long, const char*, datetime, double);
 int (*jARROW_CHECKDelete) (int, const char*);
 
-EM_JS(int, jOrderSend, (int uid, string symbol, const char* cmd, double volume, double price, int slippage, double stoploss, double takeprofit, string comment, int magic, int expiration, int arrow_color), {
+EM_JS(int, jOrderSend, (int uid, string symbol, const char* cmd, double volume, double price, int slippage, double stoploss, double takeprofit, string comment, int magic, datetime expiration, int arrow_color), {
    return Asyncify.handleSleep(function (wakeUp) {
     try {
       var symbolName = UTF8ToString(symbol);
@@ -307,7 +309,7 @@ EM_JS(int, jOrderSend, (int uid, string symbol, const char* cmd, double volume, 
   });
 });
 
-EM_JS(int, jOrderModify, (int uid, int ticket, double volume, double price, int slippage, double stoploss, double takeprofit, string comment, int expiration, int arrow_color), {
+EM_JS(int, jOrderModify, (int uid, int ticket, double volume, double price, int slippage, double stoploss, double takeprofit, string comment, datetime expiration, int arrow_color), {
   return Asyncify.handleSleep(function (wakeUp) {
     try {
       const cmmnt = UTF8ToString(comment);
@@ -393,7 +395,7 @@ bool IsStopped () {
 bool IsTradeAllowed () {
   return true;
 }
-bool IsTradeAllowed (const string symbol, long tested_time) {
+bool IsTradeAllowed (const string symbol, datetime tested_time) {
   return true;
 }
 bool RefreshRates () {
@@ -544,13 +546,13 @@ string TimeToString (long value, int mode) {
     return string(buffer);
   }
 }
-string TimeToString (long value) {
+string TimeToString (datetime value) {
   return TimeToString(value, 5);
 }
-string TimeToStr (long value, int mode) {
+string TimeToStr (datetime value, int mode) {
   return TimeToString(value, mode);
 }
-string TimeToStr (long value) {
+string TimeToStr (datetime value) {
   return TimeToString(value, 5);
 }
 double NormalizeDouble (double value, int digits) {
@@ -568,7 +570,7 @@ int StringToInteger (string value) {
 int StrToInteger (string value) {
   return StringToInteger(value);
 }
-long StringToTime (string value) {
+datetime StringToTime (string value) {
   struct tm tm;
   if (value.length() == 19) {
     strptime(value.c_str(), "%Y.%m.%d %H:%M:%S", &tm);
@@ -583,16 +585,16 @@ long StringToTime (string value) {
     return 0;
   }
 }
-long StrToTime (string value) {
+datetime StrToTime (string value) {
   return StringToTime(value);
 }
-long TimeCurrent () {
+datetime TimeCurrent () {
   return chrono::system_clock::to_time_t(chrono::system_clock::now());
 }
-long TimeGMT () {
+datetime TimeGMT () {
   return TimeCurrent();
 }
-long CurTime () {
+datetime CurTime () {
   return TimeCurrent();
 }
 int Day () {
@@ -630,42 +632,42 @@ int Seconds () {
   struct tm *aTime = localtime(&theTime);
   return aTime->tm_sec;
 }
-int TimeDay (long ltime) {
+int TimeDay (datetime ltime) {
   time_t theTime = ltime;
   struct tm *aTime = localtime(&theTime);
   return aTime->tm_mday;
 }
-int TimeDayOfWeek (long ltime) {
+int TimeDayOfWeek (datetime ltime) {
   time_t theTime = ltime;
   struct tm *aTime = localtime(&theTime);
   return aTime->tm_wday;
 }
-int TimeDayOfYear (long ltime) {
+int TimeDayOfYear (datetime ltime) {
   time_t theTime = ltime;
   struct tm *aTime = localtime(&theTime);
   return aTime->tm_yday + 1;
 }
-int TimeHour (long ltime) {
+int TimeHour (datetime ltime) {
   time_t theTime = ltime;
   struct tm *aTime = localtime(&theTime);
   return aTime->tm_hour;
 }
-int TimeMinute (long ltime) {
+int TimeMinute (datetime ltime) {
   time_t theTime = ltime;
   struct tm *aTime = localtime(&theTime);
   return aTime->tm_min;
 }
-int TimeMonth (long ltime) {
+int TimeMonth (datetime ltime) {
   time_t theTime = ltime;
   struct tm *aTime = localtime(&theTime);
   return aTime->tm_mon + 1;
 }
-int TimeSeconds (long ltime) {
+int TimeSeconds (datetime ltime) {
   time_t theTime = ltime;
   struct tm *aTime = localtime(&theTime);
   return aTime->tm_sec;
 }
-int TimeYear (long ltime) {
+int TimeYear (datetime ltime) {
   time_t theTime = ltime;
   struct tm *aTime = localtime(&theTime);
   return aTime->tm_year + 1900;
@@ -1443,7 +1445,7 @@ void setjiTimeInit (int (*f) (int, const char*, const char*)) {
   jiTimeInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiTime (int (*f) (int, int, int)) {
+void setjiTime (datetime (*f) (int, int, int)) {
   jiTime = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1477,6 +1479,14 @@ void setjiCloseInit (int (*f) (int, const char*, const char*)) {
 EMSCRIPTEN_KEEPALIVE
 void setjiClose (double (*f) (int, int, int)) {
   jiClose = f;
+}
+EMSCRIPTEN_KEEPALIVE
+void setjiVolumeInit (int (*f) (int, const char*, const char*)) {
+  jiVolumeInit = f;
+}
+EMSCRIPTEN_KEEPALIVE
+void setjiVolume (long (*f) (int, int, int)) {
+  jiVolume = f;
 }
 EMSCRIPTEN_KEEPALIVE
 void setjiACInit (int (*f) (int, const char*, const char*)) {
@@ -1679,7 +1689,7 @@ void setjiWPR (double (*f) (int, int, int)) {
   jiWPR = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjARROW_CHECKCreate (int (*f) (int, long, const char*, long, double)) {
+void setjARROW_CHECKCreate (int (*f) (int, long, const char*, datetime, double)) {
   jARROW_CHECKCreate = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1801,6 +1811,10 @@ bool OrderSelect(int index, int select, int pool) {
   return jOrderSelect(iFintecheeUID, index, select, pool) == 1;
 }
 
+bool OrderSelect(int index, int select) {
+  return OrderSelect(index, select, MODE_TRADES) == 1;
+}
+
 double OrderOpenPrice() {
   if (paramHandleList[iFintecheeUID].bInit) return -1;
   return jOrderOpenPrice(iFintecheeUID);
@@ -1855,7 +1869,25 @@ void Print (const Type & arg, const Types &... args) {
   jPrint(iFintecheeUID, s.str().c_str());
 }
 
-int iTime (const char* symbol, int timeframe, int shift) {
+// todo
+template <class Type, class... Types>
+void Comment (const Type & arg, const Types &... args) {
+  stringstream s;
+  s << arg;
+  ((s << args), ..., (s << endl));
+  jPrint(iFintecheeUID, s.str().c_str());
+}
+
+// todo
+template <class Type, class... Types>
+void Alert (const Type & arg, const Types &... args) {
+  stringstream s;
+  s << arg;
+  ((s << args), ..., (s << endl));
+  jPrint(iFintecheeUID, s.str().c_str());
+}
+
+datetime iTime (const char* symbol, int timeframe, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("Chart_") + string(symbol) + string("_") + tf;
   if (paramHandleList[iFintecheeUID].bInit) {
@@ -1866,7 +1898,7 @@ int iTime (const char* symbol, int timeframe, int shift) {
     return jiTime(iFintecheeUID, paramHandleList[iFintecheeUID].handleList[strID], shift);
   }
 }
-int iTime (long symbol, int timeframe, int shift) {
+datetime iTime (long symbol, int timeframe, int shift) {
   return iTime("", timeframe, shift);
 }
 double iOpen (const char* symbol, int timeframe, int shift) {
@@ -1924,6 +1956,20 @@ double iClose (const char* symbol, int timeframe, int shift) {
 }
 double iClose (long symbol, int timeframe, int shift) {
   return iClose("", timeframe, shift);
+}
+long iVolume (const char* symbol, int timeframe, int shift) {
+  const char* tf = convertTimeFrame(timeframe);
+  string strID = string("Chart_") + string(symbol) + string("_") + tf;
+  if (paramHandleList[iFintecheeUID].bInit) {
+    int handle = jiVolumeInit(iFintecheeUID, symbol, tf);
+    paramHandleList[iFintecheeUID].handleList[strID] = handle;
+    return 0;
+  } else {
+    return jiVolume(iFintecheeUID, paramHandleList[iFintecheeUID].handleList[strID], shift);
+  }
+}
+long iVolume (long symbol, int timeframe, int shift) {
+  return iVolume("", timeframe, shift);
 }
 
 double iAC (const char* symbol, int timeframe, int shift) {
@@ -2317,7 +2363,7 @@ double iWPR (long symbol, int timeframe, int period, int shift) {
   return iWPR("", timeframe, period, shift);
 }
 
-bool ObjectCreate (long chart_id, const char* object_name, ENUM_OBJECT object_type, int sub_window, long time, double price) {
+bool ObjectCreate (long chart_id, const char* object_name, ENUM_OBJECT object_type, int sub_window, datetime time, double price) {
   if (paramHandleList[iFintecheeUID].bInit) return false;
   if (object_type == OBJ_ARROW_CHECK) {
     return jARROW_CHECKCreate(iFintecheeUID, chart_id, object_name, time, price) == 1;
@@ -2334,7 +2380,7 @@ bool ObjectDelete (long chart_id, const char* object_name) {
   return ObjectDelete(object_name);
 }
 
-int OrderSend (string symbol, int cmd, double volume, double price, int slippage, double stoploss, double takeprofit, string comment, int magic, int expiration, int arrow_color) {
+int OrderSend (string symbol, int cmd, double volume, double price, int slippage, double stoploss, double takeprofit, string comment, int magic, datetime expiration, int arrow_color) {
   if (paramHandleList[iFintecheeUID].bInit) return -1;
   if (cmd == OP_BUY || cmd == OP_SELL) {
     return jOrderSend(iFintecheeUID, symbol, convertCmd(cmd), volume, 0, slippage, stoploss, takeprofit, comment, magic, expiration, arrow_color);
@@ -2342,12 +2388,12 @@ int OrderSend (string symbol, int cmd, double volume, double price, int slippage
     return jOrderSend(iFintecheeUID, symbol, convertCmd(cmd), volume, price, slippage, stoploss, takeprofit, comment, magic, expiration, arrow_color);
   }
 }
-int OrderSend (long symbol, int cmd, double volume, double price, int slippage, double stoploss, double takeprofit, string comment, int magic, int expiration, int arrow_color) {
+int OrderSend (long symbol, int cmd, double volume, double price, int slippage, double stoploss, double takeprofit, string comment, int magic, datetime expiration, int arrow_color) {
   if (paramHandleList[iFintecheeUID].bInit) return -1;
   return OrderSend("", cmd, volume, price, slippage, stoploss, takeprofit, comment, magic, expiration, arrow_color);
 }
 
-bool OrderModify (int ticket, double price, double stoploss, double takeprofit, int expiration, int arrow_color) {
+bool OrderModify (int ticket, double price, double stoploss, double takeprofit, datetime expiration, int arrow_color) {
   if (paramHandleList[iFintecheeUID].bInit) return false;
   return jOrderModify (iFintecheeUID, ticket, OrderLots(), price, 0, stoploss, takeprofit, "", expiration, arrow_color) == 1;
 }
