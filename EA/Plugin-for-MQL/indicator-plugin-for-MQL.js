@@ -1,6 +1,6 @@
 	registerEA(
 		"mql_indicator_loader_plugin",
-		"mql_plugin to make MQL-based indicators runnable on Fintechee(v1.01)",
+		"mql_plugin to make MQL-based indicators runnable on Fintechee(v1.02)",
 		[{ // parameters
 			name: "definition",
 			value: "",
