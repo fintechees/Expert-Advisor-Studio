@@ -1,6 +1,6 @@
 	registerEA(
 		"mql_ea_loader_plugin",
-		"mql_plugin to make MQL-based EAs runnable on Fintechee(v1.01)",
+		"mql_plugin to make MQL-based EAs runnable on Fintechee(v1.02)",
 		[{ // parameters
 			name: "definition",
 			value: "",
@@ -217,6 +217,12 @@
 								var obj = window.mqlEAsBuffer[uid + ""]
 								return getOrderTradeTime(obj.orderOrTrade)
 							}, "ii")
+							var jOrderPrint = Module.addFunction(function (uid) {
+								var orderOrTrade = window.mqlEAsBuffer[uid + ""].orderOrTrade
+								// todo add more information
+								return printMessage(getId(orderOrTrade) + " " + getOrderTradeTime(orderOrTrade) + " " + getOrderType(orderOrTrade) + " " + getOrderTradeLots(orderOrTrade) + " " +
+												getSymbolName(orderOrTrade) + " " + getOrderTradePrice(orderOrTrade) + " " + getStopLoss(orderOrTrade) + " " + getTakeProfit(orderOrTrade))
+							}, "vi")
 							var jPrint = Module.addFunction(function (uid, s) {
 								var obj = window.mqlEAsBuffer[uid + ""]
 								printMessage(window.mqlEAs[obj.name].module.UTF8ToString(s))
@@ -965,6 +971,9 @@
 									return 0
 								}
 							}, "iii")
+							var jIsTesting = Module.addFunction(function () {
+								return isTesting() ? 1 : 0
+							}, "i")
 
 					    window.mqlEAs[definition.name] = {
 								definition: definition,
@@ -1001,6 +1010,7 @@
 								setjOrderTicket: Module.cwrap('setjOrderTicket', null, ['number']),
 								setjOrderMagicNumber: Module.cwrap('setjOrderMagicNumber', null, ['number']),
 								setjOrderOpenTime: Module.cwrap('setjOrderOpenTime', null, ['number']),
+								setjOrderPrint: Module.cwrap('setjOrderPrint', null, ['number']),
 								setjiTimeInit: Module.cwrap('setjiTimeInit', null, ['number']),
 								setjiTime: Module.cwrap('setjiTime', null, ['number']),
 								setjiOpenInit: Module.cwrap('setjiOpenInit', null, ['number']),
@@ -1065,6 +1075,7 @@
 								setjiWPR: Module.cwrap('setjiWPR', null, ['number']),
 								setjARROW_CHECKCreate: Module.cwrap('setjARROW_CHECKCreate', null, ['number']),
 								setjARROW_CHECKDelete: Module.cwrap('setjARROW_CHECKDelete', null, ['number']),
+								setjIsTesting: Module.cwrap('setjIsTesting', null, ['number']),
 								onTick: Module.cwrap("onTick", null, ["number", "number", "number", "number"])
 							}
 
@@ -1096,6 +1107,7 @@
 							window.mqlEAs[definition.name].setjOrderTicket(jOrderTicket)
 							window.mqlEAs[definition.name].setjOrderMagicNumber(jOrderMagicNumber)
 							window.mqlEAs[definition.name].setjOrderOpenTime(jOrderOpenTime)
+							window.mqlEAs[definition.name].setjOrderPrint(jOrderPrint)
 							window.mqlEAs[definition.name].setjiTimeInit(jiTimeInit)
 							window.mqlEAs[definition.name].setjiTime(jiTime)
 							window.mqlEAs[definition.name].setjiOpenInit(jiOpenInit)
@@ -1160,6 +1172,7 @@
 							window.mqlEAs[definition.name].setjiWPR(jiWPR)
 							window.mqlEAs[definition.name].setjARROW_CHECKCreate(jARROW_CHECKCreate)
 							window.mqlEAs[definition.name].setjARROW_CHECKDelete(jARROW_CHECKDelete)
+							window.mqlEAs[definition.name].setjIsTesting(jIsTesting)
 
 							var parameters = []
 							parameters.push({
