@@ -17,6 +17,7 @@
 using namespace std;
 
 typedef long datetime;
+typedef int color;
 
 enum ENUM_TIMEFRAMES {
   PERIOD_CURRENT = 0,
@@ -98,6 +99,8 @@ int White = 0;
 int Yellow = 0;
 int Blue = 0;
 int FireBrick = 0;
+int Pink = 0;
+int Lime = 0;
 
 int EMPTY = -1;
 int EMPTY_VALUE = 0x7FFFFFFF;
@@ -225,6 +228,7 @@ const char* (*jOrderSymbol) (int);
 int (*jOrderTicket) (int);
 int (*jOrderMagicNumber) (int);
 datetime (*jOrderOpenTime) (int);
+void (*jOrderPrint) (int);
 int (*jiTimeInit) (int, string, const char*);
 datetime (*jiTime) (int, int, int);
 int (*jiOpenInit) (int, string, const char*);
@@ -289,6 +293,7 @@ int (*jiWPRInit) (int, string, const char*, int);
 double (*jiWPR) (int, int, int);
 int (*jARROW_CHECKCreate) (int, long, const char*, datetime, double);
 int (*jARROW_CHECKDelete) (int, const char*);
+int (*jIsTesting) ();
 
 EM_JS(int, jOrderSend, (int uid, string symbol, const char* cmd, double volume, double price, int slippage, double stoploss, double takeprofit, string comment, int magic, datetime expiration, int arrow_color), {
    return Asyncify.handleSleep(function (wakeUp) {
@@ -1286,10 +1291,16 @@ struct Parameter {
   const char* paramString;
 };
 
+struct GlobalVar {
+  datetime time;
+  double value;
+};
+
 struct ParamHandleItem {
   bool bInit = true;
   vector<struct Parameter> paramList;
   map<string, int> handleList;
+  map<string, struct GlobalVar> globalVarList;
 };
 
 map<int, struct ParamHandleItem> paramHandleList;
@@ -1307,6 +1318,51 @@ void setParam (int uid, const struct Parameter & parameter) {
     struct ParamHandleItem item;
     item.paramList.push_back(parameter);
     paramHandleList[uid] = item;
+  }
+}
+
+datetime setGlobalVar (int uid, string name, double value) {
+  struct GlobalVar globalVar;
+  globalVar.time = TimeCurrent();
+
+  if (paramHandleList.find(uid) != paramHandleList.end()) {
+    datetime time = paramHandleList[uid].globalVarList.count(name) > 0 ? paramHandleList[uid].globalVarList[name].time : globalVar.time;
+    paramHandleList[uid].globalVarList[name] = globalVar;
+    return time;
+  } else {
+    struct ParamHandleItem item;
+    item.globalVarList[name] = globalVar;
+    paramHandleList[uid] = item;
+    return globalVar.time;
+  }
+}
+
+bool checkGlobalVar (int uid, string name) {
+  if (paramHandleList.find(uid) != paramHandleList.end()) {
+    return paramHandleList[uid].globalVarList.count(name) > 0;
+  } else {
+    return false;
+  }
+}
+
+double getGlobalVar (int uid, string name) {
+  if (paramHandleList.find(uid) != paramHandleList.end()) {
+    return paramHandleList[uid].globalVarList.count(name) > 0 ? paramHandleList[uid].globalVarList[name].value : 0;
+  } else {
+    return 0;
+  }
+}
+
+bool delGlobalVar (int uid, string name) {
+  if (paramHandleList.find(uid) != paramHandleList.end()) {
+    if (paramHandleList[uid].globalVarList.count(name) > 0) {
+      paramHandleList[uid].globalVarList.erase(name);
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return false;
   }
 }
 
@@ -1451,6 +1507,10 @@ void setjOrderMagicNumber (int (*f) (int)) {
 EMSCRIPTEN_KEEPALIVE
 void setjOrderOpenTime (datetime (*f) (int)) {
   jOrderOpenTime = f;
+}
+EMSCRIPTEN_KEEPALIVE
+void setjOrderPrint (void (*f) (int)) {
+  jOrderPrint = f;
 }
 EMSCRIPTEN_KEEPALIVE
 void setjiTimeInit (int (*f) (int, string, const char*)) {
@@ -1708,6 +1768,10 @@ EMSCRIPTEN_KEEPALIVE
 void setjARROW_CHECKDelete (int (*f) (int, const char*)) {
   jARROW_CHECKDelete = f;
 }
+EMSCRIPTEN_KEEPALIVE
+void setjIsTesting (int (*f) ()) {
+  jIsTesting = f;
+}
 
 }
 
@@ -1886,6 +1950,11 @@ datetime OrderOpenTime() {
   return jOrderOpenTime(iFintecheeUID);
 }
 
+void OrderPrint() {
+  if (paramHandleList[iFintecheeUID].bInit) return;
+  jOrderPrint(iFintecheeUID);
+}
+
 template <class Type, class... Types>
 void Print (const Type & arg, const Types &... args) {
   stringstream s;
@@ -1910,6 +1979,11 @@ void Alert (const Type & arg, const Types &... args) {
   s << arg;
   ((s << args), ..., (s << endl));
   jPrint(iFintecheeUID, s.str().c_str());
+}
+
+bool PlaySound (string name) {
+  Print("Playing: ", name);
+  return true;
 }
 
 datetime iTime (string symbol, int timeframe, int shift) {
@@ -2431,4 +2505,25 @@ bool OrderClose(int ticket, double lots, double price, int slippage, int arrow_c
 bool OrderDelete(int ticket, int arrow_color) {
   if (paramHandleList[iFintecheeUID].bInit) return false;
   return jOrderDelete(iFintecheeUID, ticket, arrow_color) == 1;
+}
+
+// todo, check whether the logic about the return value is the same as MQL4
+datetime GlobalVariableSet (string name, double value) {
+  return setGlobalVar(iFintecheeUID, name, value);
+}
+
+bool GlobalVariableCheck (string name) {
+  return checkGlobalVar(iFintecheeUID, name);
+}
+
+double GlobalVariableGet (string name) {
+  return getGlobalVar(iFintecheeUID, name);
+}
+
+bool GlobalVariableDel (string name) {
+  return delGlobalVar(iFintecheeUID, name);
+}
+
+bool IsTesting () {
+  return jIsTesting() == 1;
 }
