@@ -17,6 +17,7 @@
 using namespace std;
 
 typedef long datetime;
+typedef int color;
 
 enum ENUM_TIMEFRAMES {
   PERIOD_CURRENT = 0,
@@ -86,6 +87,8 @@ int White = 0;
 int Yellow = 0;
 int Blue = 0;
 int FireBrick = 0;
+int Pink = 0;
+int Lime = 0;
 
 int EMPTY = -1;
 int EMPTY_VALUE = 0x7FFFFFFF;
@@ -1141,11 +1144,17 @@ struct DataOutput {
   double* buffer;
 };
 
+struct GlobalVar {
+  datetime time;
+  double value;
+};
+
 struct ParamInputOutputItem {
   vector<struct Parameter> paramList;
   vector<struct DataInput> dataInputList;
   vector<struct DataOutput> dataOutputList;
   map<string, int> handleList;
+  map<string, struct GlobalVar> globalVarList;
 };
 
 map<int, struct ParamInputOutputItem> paramInputOutputList;
@@ -1158,6 +1167,51 @@ void setParam (int uid, const struct Parameter & parameter) {
     struct ParamInputOutputItem item;
     item.paramList.push_back(parameter);
     paramInputOutputList[uid] = item;
+  }
+}
+
+datetime setGlobalVar (int uid, string name, double value) {
+  struct GlobalVar globalVar;
+  globalVar.time = TimeCurrent();
+
+  if (paramInputOutputList.find(uid) != paramInputOutputList.end()) {
+    datetime time = paramInputOutputList[uid].globalVarList.count(name) > 0 ? paramInputOutputList[uid].globalVarList[name].time : globalVar.time;
+    paramInputOutputList[uid].globalVarList[name] = globalVar;
+    return time;
+  } else {
+    struct ParamInputOutputItem item;
+    item.globalVarList[name] = globalVar;
+    paramInputOutputList[uid] = item;
+    return globalVar.time;
+  }
+}
+
+bool checkGlobalVar (int uid, string name) {
+  if (paramInputOutputList.find(uid) != paramInputOutputList.end()) {
+    return paramInputOutputList[uid].globalVarList.count(name) > 0;
+  } else {
+    return false;
+  }
+}
+
+double getGlobalVar (int uid, string name) {
+  if (paramInputOutputList.find(uid) != paramInputOutputList.end()) {
+    return paramInputOutputList[uid].globalVarList.count(name) > 0 ? paramInputOutputList[uid].globalVarList[name].value : 0;
+  } else {
+    return 0;
+  }
+}
+
+bool delGlobalVar (int uid, string name) {
+  if (paramInputOutputList.find(uid) != paramInputOutputList.end()) {
+    if (paramInputOutputList[uid].globalVarList.count(name) > 0) {
+      paramInputOutputList[uid].globalVarList.erase(name);
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return false;
   }
 }
 
@@ -1500,6 +1554,11 @@ void Alert (const Type & arg, const Types &... args) {
   s << arg;
   ((s << args), ..., (s << endl));
   jPrint(iFintecheeUID, s.str().c_str());
+}
+
+bool PlaySound (string name) {
+  Print("Playing: ", name);
+  return true;
 }
 
 void SetIndexShift (const char* name, int shift) {
@@ -1918,4 +1977,21 @@ double iWPR (string symbol, int timeframe, int period, int shift) {
 }
 double iWPR (long symbol, int timeframe, int period, int shift) {
   return iWPR("", timeframe, period, shift);
+}
+
+// todo, check whether the logic about the return value is the same as MQL4
+datetime GlobalVariableSet (string name, double value) {
+  return setGlobalVar(iFintecheeUID, name, value);
+}
+
+bool GlobalVariableCheck (string name) {
+  return checkGlobalVar(iFintecheeUID, name);
+}
+
+double GlobalVariableGet (string name) {
+  return getGlobalVar(iFintecheeUID, name);
+}
+
+bool GlobalVariableDel (string name) {
+  return delGlobalVar(iFintecheeUID, name);
 }
