@@ -1,6 +1,6 @@
 	registerEA(
 		"mql_ea_loader_plugin",
-		"mql_plugin to make MQL-based EAs runnable on Fintechee(v1.02)",
+		"mql_plugin to make MQL-based EAs runnable on Fintechee(v1.03)",
 		[{ // parameters
 			name: "definition",
 			value: "",
@@ -305,6 +305,34 @@
 								var arr = getData(obj.context, chartHandle, "Volume")
 								return arr[arr.length - shift - 1]
 							}, "iiii")
+							var jiHighest = Module.addFunction(function (uid, chartHandle, mode, count, start) {
+								var obj = window.mqlEAsBuffer[uid + ""]
+								var md = window.mqlEAs[obj.name].module.UTF8ToString(mode)
+								var arr = getData(obj.context, indiHandle, md)
+								var highest = -Number.MAX_VALUE
+								var idx = -1
+								for (var i = start; i < start + count && i >= 0 && i < arr.length; i++) {
+									if (arr[arr.length - i - 1] > highest) {
+										highest = arr[arr.length - i - 1]
+										idx = i
+									}
+								}
+								return idx
+							}, "iiiiii")
+							var jiLowest = Module.addFunction(function (uid, chartHandle, mode, count, start) {
+								var obj = window.mqlEAsBuffer[uid + ""]
+								var md = window.mqlEAs[obj.name].module.UTF8ToString(mode)
+								var arr = getData(obj.context, indiHandle, md)
+								var lowest = Number.MAX_VALUE
+								var idx = -1
+								for (var i = start; i < start + count && i >= 0 && i < arr.length; i++) {
+									if (arr[arr.length - i - 1] < lowest) {
+										lowest = arr[arr.length - i - 1]
+										idx = i
+									}
+								}
+								return idx
+							}, "iiiiii")
 							var jiACInit = Module.addFunction(function (uid, symbol, timeframe) {
 								var obj = window.mqlEAsBuffer[uid + ""]
 								var symbolName = window.mqlEAs[obj.name].module.UTF8ToString(symbol)
@@ -1023,6 +1051,8 @@
 								setjiClose: Module.cwrap('setjiClose', null, ['number']),
 								setjiVolumeInit: Module.cwrap('setjiVolumeInit', null, ['number']),
 								setjiVolume: Module.cwrap('setjiVolume', null, ['number']),
+								setjiHighest: Module.cwrap('setjiHighest', null, ['number']),
+								setjiLowest: Module.cwrap('setjiLowest', null, ['number']),
 								setjiACInit: Module.cwrap('setjiACInit', null, ['number']),
 								setjiAC: Module.cwrap('setjiAC', null, ['number']),
 								setjiADXInit: Module.cwrap('setjiADXInit', null, ['number']),
@@ -1120,6 +1150,8 @@
 							window.mqlEAs[definition.name].setjiClose(jiClose)
 							window.mqlEAs[definition.name].setjiVolumeInit(jiVolumeInit)
 							window.mqlEAs[definition.name].setjiVolume(jiVolume)
+							window.mqlEAs[definition.name].setjiHighest(jiHighest)
+							window.mqlEAs[definition.name].setjiLowest(jiLowest)
 							window.mqlEAs[definition.name].setjiACInit(jiACInit)
 							window.mqlEAs[definition.name].setjiAC(jiAC)
 							window.mqlEAs[definition.name].setjiADXInit(jiADXInit)
