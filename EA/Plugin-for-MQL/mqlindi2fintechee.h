@@ -61,8 +61,15 @@ const int MODE_KIJUNSEN = 2;
 const int MODE_SENKOUSPANA = 3;
 const int MODE_SENKOUSPANB = 4;
 const int MODE_CHIKOUSPAN = 5;
+const int MODE_OPEN = 0;
+const int MODE_LOW = 1;
+const int MODE_HIGH = 2;
+const int MODE_CLOSE = 3;
+const int MODE_VOLUME = 4;
+const int MODE_TIME = 5;
 
 // MQL has no these enumeration.
+const int INDI_OHLC = 0;
 const int INDI_ADX = 1;
 const int INDI_ALLIGATOR = 2;
 const int INDI_BANDS = 3;
@@ -157,6 +164,18 @@ const char* convertMode (int mode, int indi) {
     return "spanb";
   } else if (MODE_CHIKOUSPAN == mode && indi == INDI_ICHIMOKU) {
     return "chikou";
+  } else if (MODE_OPEN == mode && indi == INDI_OHLC) {
+    return "Open";
+  } else if (MODE_LOW == mode && indi == INDI_OHLC) {
+    return "Low";
+  } else if (MODE_HIGH == mode && indi == INDI_OHLC) {
+    return "High";
+  } else if (MODE_CLOSE == mode && indi == INDI_OHLC) {
+    return "Close";
+  } else if (MODE_VOLUME == mode && indi == INDI_OHLC) {
+    return "Volume";
+  } else if (MODE_TIME == mode && indi == INDI_OHLC) {
+    return "Time";
   } else {
     return "main";
   }
@@ -187,6 +206,8 @@ int (*jiCloseInit) (int, string, const char*);
 double (*jiClose) (int, int, int);
 int (*jiVolumeInit) (int, string, const char*);
 long (*jiVolume) (int, int, int);
+int (*jiHighest) (int, int, const char*, int, int);
+int (*jiLowest) (int, int, const char*, int, int);
 int (*jiACInit) (int, string, const char*);
 double (*jiAC) (int, int, int);
 int (*jiADXInit) (int, string, const char*, int, int);
@@ -1328,6 +1349,14 @@ void setjiVolume (long (*f) (int, int, int)) {
   jiVolume = f;
 }
 EMSCRIPTEN_KEEPALIVE
+void setjiHighest (int (*f) (int, int, const char*, int, int)) {
+  jiHighest = f;
+}
+EMSCRIPTEN_KEEPALIVE
+void setjiLowest (int (*f) (int, int, const char*, int, int)) {
+  jiLowest = f;
+}
+EMSCRIPTEN_KEEPALIVE
 void setjiACInit (int (*f) (int, string, const char*)) {
   jiACInit = f;
 }
@@ -1636,6 +1665,42 @@ long iVolume (string symbol, int timeframe, int shift) {
 }
 long iVolume (long symbol, int timeframe, int shift) {
   return iVolume("", timeframe, shift);
+}
+int iHighest (string symbol, int timeframe, int type, int count, int start) {
+  const char* tf = convertTimeFrame(timeframe);
+  string strID = string("Chart_") + string(symbol) + string("_") + tf;
+  if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
+    int handle = jiTimeInit(iFintecheeUID, symbol, tf);
+    paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
+  }
+  return jiHighest(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], convertMode(type, INDI_OHLC), count, start);
+}
+int iHighest (long symbol, int timeframe, int type, int count, int start) {
+  return iHighest("", timeframe, type, count, start);
+}
+int Highest (string symbol, int timeframe, int type, int count, int start) {
+  return iHighest (symbol, timeframe, type, count, start);
+}
+int Highest (long symbol, int timeframe, int type, int count, int start) {
+  return iHighest("", timeframe, type, count, start);
+}
+int iLowest (string symbol, int timeframe, int type, int count, int start) {
+  const char* tf = convertTimeFrame(timeframe);
+  string strID = string("Chart_") + string(symbol) + string("_") + tf;
+  if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
+    int handle = jiTimeInit(iFintecheeUID, symbol, tf);
+    paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
+  }
+  return jiLowest(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], convertMode(type, INDI_OHLC), count, start);
+}
+int iLowest (long symbol, int timeframe, int type, int count, int start) {
+  return iLowest("", timeframe, type, count, start);
+}
+int Lowest (string symbol, int timeframe, int type, int count, int start) {
+  return iLowest (symbol, timeframe, type, count, start);
+}
+int Lowest (long symbol, int timeframe, int type, int count, int start) {
+  return iLowest("", timeframe, type, count, start);
 }
 
 double iAC (string symbol, int timeframe, int shift) {
