@@ -47,57 +47,57 @@ enum ENUM_MA_METHOD {
   MODE_LWMA = 3
 };
 
-int MODE_MAIN = 0;
-int MODE_SIGNAL = 1;
-int MODE_PLUSDI = 1;
-int MODE_MINUSDI = 2;
-int MODE_UPPER = 1;
-int MODE_LOWER = 2;
-int MODE_GATORJAW = 1;
-int MODE_GATORTEETH = 2;
-int MODE_GATORLIPS = 3;
-int MODE_TENKANSEN = 1;
-int MODE_KIJUNSEN = 2;
-int MODE_SENKOUSPANA = 3;
-int MODE_SENKOUSPANB = 4;
-int MODE_CHIKOUSPAN = 5;
+const int MODE_MAIN = 0;
+const int MODE_SIGNAL = 1;
+const int MODE_PLUSDI = 1;
+const int MODE_MINUSDI = 2;
+const int MODE_UPPER = 1;
+const int MODE_LOWER = 2;
+const int MODE_GATORJAW = 1;
+const int MODE_GATORTEETH = 2;
+const int MODE_GATORLIPS = 3;
+const int MODE_TENKANSEN = 1;
+const int MODE_KIJUNSEN = 2;
+const int MODE_SENKOUSPANA = 3;
+const int MODE_SENKOUSPANB = 4;
+const int MODE_CHIKOUSPAN = 5;
 
 // MQL has no these enumeration.
-int INDI_ADX = 1;
-int INDI_ALLIGATOR = 2;
-int INDI_BANDS = 3;
-int INDI_ENVELOPES = 4;
-int INDI_FRACTALS = 5;
-int INDI_ICHIMOKU = 6;
-int INDI_MACD = 7;
-int INDI_RVI = 8;
-int INDI_STOCHASTIC = 9;
+const int INDI_ADX = 1;
+const int INDI_ALLIGATOR = 2;
+const int INDI_BANDS = 3;
+const int INDI_ENVELOPES = 4;
+const int INDI_FRACTALS = 5;
+const int INDI_ICHIMOKU = 6;
+const int INDI_MACD = 7;
+const int INDI_RVI = 8;
+const int INDI_STOCHASTIC = 9;
 
-int MODE_ASCEND = 1;
-int MODE_DESCEND = 2;
+const int MODE_ASCEND = 1;
+const int MODE_DESCEND = 2;
 
-int TIME_DATE = 4;
-int TIME_MINUTES = 2;
-int TIME_SECONDS = 1;
+const int TIME_DATE = 4;
+const int TIME_MINUTES = 2;
+const int TIME_SECONDS = 1;
 
-int Green = 0;
-int Red = 0;
-int Violet = 0;
-int White = 0;
-int Yellow = 0;
-int Blue = 0;
-int FireBrick = 0;
-int Pink = 0;
-int Lime = 0;
+const int Green = 0;
+const int Red = 0;
+const int Violet = 0;
+const int White = 0;
+const int Yellow = 0;
+const int Blue = 0;
+const int FireBrick = 0;
+const int Pink = 0;
+const int Lime = 0;
 
-int EMPTY = -1;
-int EMPTY_VALUE = 0x7FFFFFFF;
-int CLR_NONE = -1;
-int clrNONE = -1;
-int CHARTS_MAX = 100;
-int INVALID_HANDLE = -1;
-int WHOLE_ARRAY = 0;
-int WRONG_VALUE = -1;
+const int EMPTY = -1;
+const int EMPTY_VALUE = 0x7FFFFFFF;
+const int CLR_NONE = -1;
+const int clrNONE = -1;
+const int CHARTS_MAX = 100;
+const int INVALID_HANDLE = -1;
+const int WHOLE_ARRAY = 0;
+const int WRONG_VALUE = -1;
 
 enum ENUM_OBJECT {
   OBJ_ARROW_CHECK = 1
