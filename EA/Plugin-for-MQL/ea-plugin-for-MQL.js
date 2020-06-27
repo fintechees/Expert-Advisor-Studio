@@ -41,13 +41,13 @@
 
 							var jChartClose = Module.addFunction(function (uid, chart_id) {
 								if (chart_id == 0) {
-									return removeChart(window.chartHandles[uid + ""])
+									return removeChart(window.mqlEAsBuffer[uid + ""].chartId)
 								} else {
 									return removeChart(chart_id)
 								}
 							}, "iii")
 							var jChartID = Module.addFunction(function (uid) {
-							  return window.chartHandles[uid + ""]
+							  return window.mqlEAsBuffer[uid + ""].chartId
 							}, "ii")
 							var jChartOpen = Module.addFunction(function (uid, symbol, timeframe) {
 								var obj = window.mqlEAsBuffer[uid + ""]
@@ -60,22 +60,27 @@
 							var jChartPeriod = Module.addFunction(function (uid, chart_id) {
 								var obj = window.mqlEAsBuffer[uid + ""]
 								if (chart_id == 0) {
-									return obj.convertTimeFrame(getChartTimeFrame(window.chartHandles[uid + ""]))
+									return obj.convertTimeFrame(obj.timeFrame)
 								} else {
 									return obj.convertTimeFrame(getChartTimeFrame(chart_id))
 								}
 							}, "iii")
 							var jChartSymbol = Module.addFunction(function (uid, chart_id) {
 								var obj = window.mqlEAsBuffer[uid + ""]
-								var symbolName = getChartSymbolName(chart_id)
+								var symbolName = ""
+								if (chart_id == 0) {
+									symbolName = obj.symbolName
+								} else {
+									symbolName = getChartSymbolName(chart_id)
+								}
 								var lengthBytes = window.mqlEAs[obj.name].module.lengthBytesUTF8(symbolName) + 1
-							  var stringOnWasmHeap = window.mqlEAs[obj.name].module._malloc(lengthBytes)
-							  window.mqlEAs[obj.name].module.stringToUTF8(symbolName, stringOnWasmHeap, lengthBytes)
-							  return stringOnWasmHeap
+								var stringOnWasmHeap = window.mqlEAs[obj.name].module._malloc(lengthBytes)
+								window.mqlEAs[obj.name].module.stringToUTF8(symbolName, stringOnWasmHeap, lengthBytes)
+								return stringOnWasmHeap
 							}, "iii")
 							var jPeriod = Module.addFunction(function (uid) {
 								var obj = window.mqlEAsBuffer[uid + ""]
-								return obj.convertTimeFrame(getChartTimeFrame(window.chartHandles[uid + ""]))
+								return obj.convertTimeFrame(obj.timeFrame)
 							}, "ii")
 							var jSymbol = Module.addFunction(function (uid) {
 								var obj = window.mqlEAsBuffer[uid + ""]
@@ -1002,6 +1007,35 @@
 							var jIsTesting = Module.addFunction(function () {
 								return isTesting() ? 1 : 0
 							}, "i")
+							var jMarketInfo = Module.addFunction(function (uid, symbol, type) {
+								var obj = window.mqlIndicatorsBuffer[uid + ""]
+								var symbolName = window.mqlIndicators[obj.name].module.UTF8ToString(symbol)
+								var symbolObj = null
+								if (symbolName == "") {
+									symbolObj = obj.symbol
+								} else {
+									symbolObj = getSymbolInfo(obj.brokerName, obj.accountId, symbolName)
+								}
+								if (type == 11) {
+									return 1.0 / symbolObj.toFixed
+								} else if (type == 12) {
+									return Math.log10(symbolObj.toFixed)
+								} else if (type == 18) {
+									return symbolObj.swapLong
+								} else if (type == 19) {
+									return symbolObj.swapShort
+								} else if (type == 22) {
+									return symbolObj.tradable
+								} else if (type == 23) {
+									return symbolObj.lotsMinLimit
+								} else if (type == 24) {
+									return symbolObj.lotsStep
+								} else if (type == 25) {
+									return symbolObj.lotsLimit
+								}
+								printErrorMessage("Not supported the specific market information currently!")
+								return -1
+							}, "diii")
 
 					    window.mqlEAs[definition.name] = {
 								definition: definition,
@@ -1010,6 +1044,7 @@
 								setParamDouble: Module.cwrap("setParamDouble", null, ["number", "number"]),
 								setParamBool: Module.cwrap("setParamBool", null, ["number", "number"]),
 								setParamString: Module.cwrap("setParamString", null, ["number", "string"]),
+								onTick: Module.cwrap("onTick", null, ["number", "number", "number", "number", "number", "number"]),
 								setjPrint: Module.cwrap('setjPrint', null, ['number']),
 								setjChartClose: Module.cwrap('setjChartClose', null, ['number']),
 								setjChartID: Module.cwrap('setjChartID', null, ['number']),
@@ -1106,7 +1141,7 @@
 								setjARROW_CHECKCreate: Module.cwrap('setjARROW_CHECKCreate', null, ['number']),
 								setjARROW_CHECKDelete: Module.cwrap('setjARROW_CHECKDelete', null, ['number']),
 								setjIsTesting: Module.cwrap('setjIsTesting', null, ['number']),
-								onTick: Module.cwrap("onTick", null, ["number", "number", "number", "number"])
+								setjMarketInfo: Module.cwrap("setjMarketInfo", null, ["number"])
 							}
 
 							window.mqlEAs[definition.name].setjPrint(jPrint)
@@ -1205,6 +1240,7 @@
 							window.mqlEAs[definition.name].setjARROW_CHECKCreate(jARROW_CHECKCreate)
 							window.mqlEAs[definition.name].setjARROW_CHECKDelete(jARROW_CHECKDelete)
 							window.mqlEAs[definition.name].setjIsTesting(jIsTesting)
+							window.mqlEAs[definition.name].setjMarketInfo(jMarketInfo)
 
 							var parameters = []
 							parameters.push({
@@ -1275,6 +1311,8 @@
 											accountId: accountId,
 											symbolName: symbolName,
 											timeFrame: timeFrame,
+											chartId: getChartHandle(context, brokerName, accountId, symbolName, timeFrame),
+											symbol: getSymbolInfo(brokerName, accountId, symbolName),
 											objs: typeof localStorage.mqlObjs != "undefined" ? JSON.parse(localStorage.mqlObjs) : [],
 											lock: false,
 											convertTimeFrame: function () {
@@ -1303,17 +1341,12 @@
 										}
 
 										getQuotes (context, brokerName, accountId, symbolName)
-										if (typeof window.chartHandles == "undefined") {
-											window.chartHandles = []
-										}
-										window.chartHandles[uid + ""] = getChartHandle(context, brokerName, accountId, symbolName, timeFrame)
 									}
 
-									window.mqlEAs[eaName].onTick(uid, 10000, 0, 0)
+									window.mqlEAs[eaName].onTick(uid, 10000, 0, 0, 0, 1.0 / window.mqlEAsBuffer[uid + ""].symbol.toFixed, Math.log10(window.mqlEAsBuffer[uid + ""].symbol.toFixed))
 								},
 								function (context) { // Deinit()
 									delete window.mqlEAsBuffer[context.uid + ""]
-									delete window.chartHandles[context.uid + ""]
 								},
 								function (context) { // OnTick()
 									var eaName = getEAName(context)
@@ -1326,16 +1359,21 @@
 										return
 									}
 
-									window.mqlEAsBuffer[uid + ""].context = context
-									var brokerName = window.mqlEAsBuffer[uid + ""].brokerName
-									var accountId = window.mqlEAsBuffer[uid + ""].accountId
-									var symbolName = window.mqlEAsBuffer[uid + ""].symbolName
+									var buffObj = window.mqlEAsBuffer[uid + ""]
+									buffObj.context = context
+									var brokerName = buffObj.brokerName
+									var accountId = buffObj.accountId
+									var symbolName = buffObj.symbolName
+
+									var tData = getData(context, buffObj.chartId, DATA_NAME.TIME)
 
 									window.mqlEAs[eaName].onTick(
 										uid,
-										getData(context, window.chartHandles[uid + ""], DATA_NAME.CLOSE).length,
+										tData.length,
 										getAsk(context, brokerName, accountId, symbolName),
-										getBid(context, brokerName, accountId, symbolName)
+										getBid(context, brokerName, accountId, symbolName),
+										1.0 / buffObj.symbol.toFixed,
+										Math.log10(buffObj.symbol.toFixed)
 									)
 								}
 							) // registerEA
