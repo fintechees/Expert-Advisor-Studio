@@ -48,6 +48,42 @@
 								var md = window.mqlIndicators[obj.name].module.UTF8ToString(name)
 								setIndiShift(obj.context, md, shift)
 							}, "viii")
+							var jChartID = Module.addFunction(function (uid) {
+							  return window.mqlIndicatorsBuffer[uid + ""].chartId
+							}, "ii")
+							var jChartPeriod = Module.addFunction(function (uid, chart_id) {
+								var obj = window.mqlIndicatorsBuffer[uid + ""]
+								if (chart_id == 0) {
+									return obj.convertTimeFrame(obj.timeFrame)
+								} else {
+									return obj.convertTimeFrame(getChartTimeFrame(chart_id))
+								}
+							}, "iii")
+							var jChartSymbol = Module.addFunction(function (uid, chart_id) {
+								var obj = window.mqlIndicatorsBuffer[uid + ""]
+								var symbolName = ""
+								if (chart_id == 0) {
+									symbolName = obj.symbolName
+								} else {
+									symbolName = getChartSymbolName(chart_id)
+								}
+								var lengthBytes = window.mqlIndicators[obj.name].module.lengthBytesUTF8(symbolName) + 1
+							  var stringOnWasmHeap = window.mqlIndicators[obj.name].module._malloc(lengthBytes)
+							  window.mqlIndicators[obj.name].module.stringToUTF8(symbolName, stringOnWasmHeap, lengthBytes)
+							  return stringOnWasmHeap
+							}, "iii")
+							var jPeriod = Module.addFunction(function (uid) {
+								var obj = window.mqlIndicatorsBuffer[uid + ""]
+								return obj.convertTimeFrame(obj.timeFrame)
+							}, "ii")
+							var jSymbol = Module.addFunction(function (uid) {
+								var obj = window.mqlIndicatorsBuffer[uid + ""]
+								var symbolName = obj.symbolName
+								var lengthBytes = window.mqlIndicators[obj.name].module.lengthBytesUTF8(symbolName) + 1
+							  var stringOnWasmHeap = window.mqlIndicators[obj.name].module._malloc(lengthBytes)
+							  window.mqlIndicators[obj.name].module.stringToUTF8(symbolName, stringOnWasmHeap, lengthBytes)
+							  return stringOnWasmHeap
+							}, "ii")
 							var jiTimeInit = Module.addFunction(function (uid, symbol, timeframe) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
 								var symbolName = window.mqlIndicators[obj.name].module.UTF8ToString(symbol)
@@ -789,6 +825,35 @@
 								var arr = getDataFromIndi(obj.context, indiHandle, "wpr")
 								return arr[arr.length - shift - 1]
 							}, "diii")
+							var jMarketInfo = Module.addFunction(function (uid, symbol, type) {
+								var obj = window.mqlIndicatorsBuffer[uid + ""]
+								var symbolName = window.mqlIndicators[obj.name].module.UTF8ToString(symbol)
+								var symbolObj = null
+								if (symbolName == "") {
+									symbolObj = obj.symbol
+								} else {
+									symbolObj = getSymbolInfo(obj.brokerName, obj.accountId, symbolName)
+								}
+								if (type == 11) {
+									return 1.0 / symbolObj.toFixed
+								} else if (type == 12) {
+									return Math.log10(symbolObj.toFixed)
+								} else if (type == 18) {
+									return symbolObj.swapLong
+								} else if (type == 19) {
+									return symbolObj.swapShort
+								} else if (type == 22) {
+									return symbolObj.tradable
+								} else if (type == 23) {
+									return symbolObj.lotsMinLimit
+								} else if (type == 24) {
+									return symbolObj.lotsStep
+								} else if (type == 25) {
+									return symbolObj.lotsLimit
+								}
+								printErrorMessage("Not supported the specific market information currently!")
+								return -1
+							}, "diii")
 
 					    window.mqlIndicators[definition.name] = {
 								definition: definition,
@@ -799,9 +864,14 @@
 								setParamString: Module.cwrap("setParamString", null, ["number", "string"]),
 								setDataInput: Module.cwrap("setDataInput", null, ["number", "number", "number"]),
 								setDataOutput: Module.cwrap("setDataOutput", null, ["number", "number", "number"]),
-								onCalc: Module.cwrap("onCalc", null, ["number", "number", "number"]),
+								onCalc: Module.cwrap("onCalc", null, ["number", "number", "number", "number", "number", "number"]),
 								setjPrint: Module.cwrap("setjPrint", null, ["number"]),
 								setjSetIndexShift: Module.cwrap("setjSetIndexShift", null, ["number"]),
+								setjChartID: Module.cwrap('setjChartID', null, ['number']),
+								setjChartPeriod: Module.cwrap('setjChartPeriod', null, ['number']),
+								setjChartSymbol: Module.cwrap('setjChartSymbol', null, ['number']),
+								setjPeriod: Module.cwrap('setjPeriod', null, ['number']),
+								setjSymbol: Module.cwrap('setjSymbol', null, ['number']),
 								setjiTimeInit: Module.cwrap('setjiTimeInit', null, ['number']),
 								setjiTime: Module.cwrap('setjiTime', null, ['number']),
 								setjiOpenInit: Module.cwrap('setjiOpenInit', null, ['number']),
@@ -865,11 +935,17 @@
 								setjiStochasticInit: Module.cwrap('setjiStochasticInit', null, ['number']),
 								setjiStochastic: Module.cwrap('setjiStochastic', null, ['number']),
 								setjiWPRInit: Module.cwrap('setjiWPRInit', null, ['number']),
-								setjiWPR: Module.cwrap('setjiWPR', null, ['number'])
+								setjiWPR: Module.cwrap('setjiWPR', null, ['number']),
+								setjMarketInfo: Module.cwrap("setjMarketInfo", null, ["number"])
 							}
 
 							window.mqlIndicators[definition.name].setjPrint(jPrint)
 							window.mqlIndicators[definition.name].setjSetIndexShift(jSetIndexShift)
+							window.mqlIndicators[definition.name].setjChartID(jChartID)
+							window.mqlIndicators[definition.name].setjChartPeriod(jChartPeriod)
+							window.mqlIndicators[definition.name].setjChartSymbol(jChartSymbol)
+							window.mqlIndicators[definition.name].setjPeriod(jPeriod)
+							window.mqlIndicators[definition.name].setjSymbol(jSymbol)
 							window.mqlIndicators[definition.name].setjiTimeInit(jiTimeInit)
 							window.mqlIndicators[definition.name].setjiTime(jiTime)
 							window.mqlIndicators[definition.name].setjiOpenInit(jiOpenInit)
@@ -934,6 +1010,7 @@
 							window.mqlIndicators[definition.name].setjiStochastic(jiStochastic)
 							window.mqlIndicators[definition.name].setjiWPRInit(jiWPRInit)
 							window.mqlIndicators[definition.name].setjiWPR(jiWPR)
+							window.mqlIndicators[definition.name].setjMarketInfo(jMarketInfo)
 
 							var monitorMemory = function () {
 								for (var i in window.mqlIndicatorsBuffer) {
@@ -965,6 +1042,8 @@
 										return
 									}
 
+									var indiObj = window.mqlIndicators[indiName]
+
 									var uid = null
 									if (typeof context.uid == "undefined") {
 										uid = window.mqlIndiUID++
@@ -977,7 +1056,7 @@
 										calculatedLength = getCalculatedLength(context)
 									}
 
-									var currDefinition = window.mqlIndicators[indiName].definition
+									var currDefinition = indiObj.definition
 
 									var nByteDouble = 8
 									var nByteString = 1
@@ -987,13 +1066,13 @@
 									if (calculatedLength == 0) {
 										for (var i in currDefinition.parameters) {
 											if (currDefinition.parameters[i].type == PARAMETER_TYPE.INTEGER) {
-												window.mqlIndicators[indiName].setParamInt(uid, getIndiParameter(context, currDefinition.parameters[i].name))
+												indiObj.setParamInt(uid, getIndiParameter(context, currDefinition.parameters[i].name))
 											} else if (currDefinition.parameters[i].type == PARAMETER_TYPE.NUMBER) {
-												window.mqlIndicators[indiName].setParamDouble(uid, getIndiParameter(context, currDefinition.parameters[i].name))
+												indiObj.setParamDouble(uid, getIndiParameter(context, currDefinition.parameters[i].name))
 											} else if (currDefinition.parameters[i].type == PARAMETER_TYPE.BOOLEAN) {
-												window.mqlIndicators[indiName].setParamBool(uid, getIndiParameter(context, currDefinition.parameters[i].name))
+												indiObj.setParamBool(uid, getIndiParameter(context, currDefinition.parameters[i].name))
 											} else if (currDefinition.parameters[i].type == PARAMETER_TYPE.STRING) {
-												window.mqlIndicators[indiName].setParamString(uid, getIndiParameter(context, currDefinition.parameters[i].name))
+												indiObj.setParamString(uid, getIndiParameter(context, currDefinition.parameters[i].name))
 											}
 										}
 									}
@@ -1003,10 +1082,23 @@
 									var ratesTotal = dataLen
 									var prevCalc = calculatedLength
 
+									var buffObj = null
+
 									if (typeof window.mqlIndicatorsBuffer[uid + ""] == "undefined") {
+										var brokerName = getBrokerNameByContext(context)
+										var accountId = getAccountIdByContext(context)
+										var symbolName = getChartSymbolNameByContext(context)
+										var timeFrame = getChartTimeFrameByContext(context)
+
 										window.mqlIndicatorsBuffer[uid + ""] = {
 											name: definition.name,
 											context: context,
+											brokerName: brokerName,
+											accountId: accountId,
+											symbolName: symbolName,
+											timeFrame: timeFrame,
+											chartId: getChartHandleByContext(context),
+											symbol: getSymbolInfo(brokerName, accountId, symbolName),
 											bufferLen: buffLen,
 											dataInput: [],
 											dataOutput: [],
@@ -1014,91 +1106,99 @@
 											mTime: 0
 										}
 
+										buffObj = window.mqlIndicatorsBuffer[uid + ""]
+
 										for (var i in currDefinition.dataInput) {
 											var dataInput = getDataInput(context, currDefinition.dataInput[i].index)
 
-											buffer = window.mqlIndicators[indiName].module._malloc(buffLen * nByteDouble)
+											buffer = indiObj.module._malloc(buffLen * nByteDouble)
 
 											for (var j = 0; j < dataInput.length; j++) {
-												window.mqlIndicators[indiName].module.setValue(buffer + j * nByteDouble, dataInput[j], "double")
+												indiObj.module.setValue(buffer + j * nByteDouble, dataInput[j], "double")
 											}
 
-											window.mqlIndicators[indiName].setDataInput(uid, buffLen, buffer)
-											window.mqlIndicatorsBuffer[uid + ""].dataInput.push(buffer)
+											indiObj.setDataInput(uid, buffLen, buffer)
+											buffObj.dataInput.push(buffer)
 										}
 
 										for (var i in currDefinition.dataOutput) {
-											buffer = window.mqlIndicators[indiName].module._malloc(buffLen * nByteDouble)
+											buffer = indiObj.module._malloc(buffLen * nByteDouble)
 
-											window.mqlIndicators[indiName].setDataOutput(uid, buffLen, buffer)
-											window.mqlIndicatorsBuffer[uid + ""].dataOutput.push(buffer)
+											indiObj.setDataOutput(uid, buffLen, buffer)
+											buffObj.dataOutput.push(buffer)
 										}
 
-										window.mqlIndicators[indiName].onCalc(uid, ratesTotal, prevCalc)
+										indiObj.onCalc(uid, ratesTotal, prevCalc, 10000, 1.0 / buffObj.symbol.toFixed, Math.log10(buffObj.symbol.toFixed))
 
 										for (var i in currDefinition.dataOutput) {
-											var dataOutputMql = window.mqlIndicatorsBuffer[uid + ""].dataOutput[i]
+											var dataOutputMql = buffObj.dataOutput[i]
 											var dataOutput = getDataOutput(context, currDefinition.dataOutput[i].name)
 
 											for (var j = 0; j < dataOutput.length; j++) {
-												dataOutput[j] = window.mqlIndicators[indiName].module.getValue(dataOutputMql + j * nByteDouble, "double")
+												dataOutput[j] = indiObj.module.getValue(dataOutputMql + j * nByteDouble, "double")
 											}
 										}
 									} else if (dataLen == window.mqlIndicatorsBuffer[uid + ""].bufferLen) {
-										window.mqlIndicatorsBuffer[uid + ""].time = new Date().getTime()
-										window.mqlIndicatorsBuffer[uid + ""].bufferLen = buffLen
+										buffObj = window.mqlIndicatorsBuffer[uid + ""]
+
+										buffObj.time = new Date().getTime()
+										buffObj.bufferLen = buffLen
 
 										for (var i in currDefinition.dataInput) {
 											var dataInput = getDataInput(context, currDefinition.dataInput[i].index)
 
-											buffer = window.mqlIndicators[indiName].module._malloc(buffLen * nByteDouble)
+											buffer = indiObj.module._malloc(buffLen * nByteDouble)
 
 											for (var j = 0; j < dataInput.length; j++) {
-												window.mqlIndicators[indiName].module.setValue(buffer + j * nByteDouble, dataInput[j], "double")
+												indiObj.module.setValue(buffer + j * nByteDouble, dataInput[j], "double")
 											}
 
-											window.mqlIndicators[indiName].setDataInput(uid, buffLen, buffer)
-											window.mqlIndicators[indiName].module._free(window.mqlIndicatorsBuffer[uid + ""].dataInput[i])
-											window.mqlIndicatorsBuffer[uid + ""].dataInput.push(buffer)
+											indiObj.setDataInput(uid, buffLen, buffer)
+											indiObj.module._free(buffObj.dataInput[i])
+											buffObj.dataInput.push(buffer)
 										}
 
 										for (var i in definition.dataOutput) {
-											buffer = window.mqlIndicators[indiName].module._malloc(buffLen * nByteDouble)
+											buffer = indiObj.module._malloc(buffLen * nByteDouble)
 
 											for (var j = 0; j < dataOutput.length; j++) {
-												window.mqlIndicators[indiName].module.setValue(buffer + j * nByteDouble, dataOutput[j], "double")
+												indiObj.module.setValue(buffer + j * nByteDouble, dataOutput[j], "double")
 											}
 
-											window.mqlIndicators[indiName].setDataOutput(uid, buffLen, buffer)
-											window.mqlIndicators[indiName].module._free(window.mqlIndicatorsBuffer[uid + ""].dataOutput[i])
-											window.mqlIndicatorsBuffer[uid + ""].dataOutput.push(buffer)
+											indiObj.setDataOutput(uid, buffLen, buffer)
+											indiObj.module._free(buffObj.dataOutput[i])
+											buffObj.dataOutput.push(buffer)
 										}
 
-										window.mqlIndicators[indiName].onCalc(uid, ratesTotal, prevCalc)
+										var cData = getDataFromIndi(context, buffObj.chartId, DATA_NAME.CLOSE)
+										indiObj.onCalc(uid, ratesTotal, prevCalc, cData.length, 1.0 / buffObj.symbol.toFixed, Math.log10(buffObj.symbol.toFixed))
 
 										for (var i in currDefinition.dataOutput) {
-											var dataOutputMql = window.mqlIndicatorsBuffer[uid + ""].dataOutput[i]
+											var dataOutputMql = buffObj.dataOutput[i]
 											var dataOutput = getDataOutput(context, currDefinition.dataOutput[i].name)
 
-											dataOutput[dataOutput.length - 1] = window.mqlIndicators[indiName].module.getValue(dataOutputMql + (dataOutput.length - 1) * nByteDouble, "double")
+											dataOutput[dataOutput.length - 1] = indiObj.module.getValue(dataOutputMql + (dataOutput.length - 1) * nByteDouble, "double")
 										}
 									} else {
-										window.mqlIndicatorsBuffer[uid + ""].time = new Date().getTime()
+										buffObj = window.mqlIndicatorsBuffer[uid + ""]
+
+										buffObj.time = new Date().getTime()
 
 										for (var i in currDefinition.dataInput) {
-											var dataInputMql = window.mqlIndicatorsBuffer[uid + ""].dataInput[i]
+											var dataInputMql = buffObj.dataInput[i]
 											var dataInput = getDataInput(context, currDefinition.dataInput[i].index)
 
-											window.mqlIndicators[indiName].module.setValue(dataInputMql + (dataInput.length - 1) * nByteDouble, dataInput[dataInput.length - 1], "double")
+											indiObj.module.setValue(dataInputMql + (dataInput.length - 1) * nByteDouble, dataInput[dataInput.length - 1], "double")
 										}
 
-										window.mqlIndicators[indiName].onCalc(uid, ratesTotal, prevCalc)
+										var cData = getDataFromIndi(context, buffObj.chartId, DATA_NAME.CLOSE)
+										indiObj.onCalc(uid, ratesTotal, prevCalc, cData.length, 1.0 / buffObj.symbol.toFixed, Math.log10(buffObj.symbol.toFixed))
 
 										for (var i in currDefinition.dataOutput) {
-											var dataOutputMql = window.mqlIndicatorsBuffer[uid + ""].dataOutput[i]
+											var dataOutputMql = buffObj.dataOutput[i]
 											var dataOutput = getDataOutput(context, currDefinition.dataOutput[i].name)
 
-											dataOutput[dataOutput.length - 1] = window.mqlIndicators[indiName].module.getValue(dataOutputMql + (dataOutput.length - 1) * nByteDouble, "double")
+											dataOutput[dataOutput.length - 1] = indiObj.module.getValue(dataOutputMql + (dataOutput.length - 1) * nByteDouble, "double")
 										}
 									}
 
