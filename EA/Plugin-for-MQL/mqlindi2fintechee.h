@@ -67,6 +67,17 @@ const int MODE_HIGH = 2;
 const int MODE_CLOSE = 3;
 const int MODE_VOLUME = 4;
 const int MODE_TIME = 5;
+const int MODE_BID = 9;
+const int MODE_ASK = 10;
+const int MODE_POINT = 11;
+const int MODE_DIGITS = 12;
+const int MODE_SPREAD = 13;
+const int MODE_SWAPLONG = 18;
+const int MODE_SWAPSHORT = 19;
+const int MODE_TRADEALLOWED = 22;
+const int MODE_MINLOT = 23;
+const int MODE_LOTSTEP = 24;
+const int MODE_MAXLOT = 25;
 
 // MQL has no these enumeration.
 const int INDI_OHLC = 0;
@@ -194,6 +205,11 @@ const char* convertMAMethod (int ma_method) {
 
 void (*jPrint) (int, const char*);
 void (*jSetIndexShift) (int, const char*, int);
+long (*jChartID) (int);
+int (*jChartPeriod) (int, long);
+const char* (*jChartSymbol) (int, long);
+int (*jPeriod) (int);
+const char* (*jSymbol) (int);
 int (*jiTimeInit) (int, string, const char*);
 datetime (*jiTime) (int, int, int);
 int (*jiOpenInit) (int, string, const char*);
@@ -258,6 +274,7 @@ int (*jiStochasticInit) (int, string, const char*, int, int, int, const char*);
 double (*jiStochastic) (int, int, const char*, int);
 int (*jiWPRInit) (int, string, const char*, int);
 double (*jiWPR) (int, int, int);
+double (*jMarketInfo) (int, string, int);
 
 void Sleep (int  milliseconds) {
   sleep(milliseconds / 1000);
@@ -1180,6 +1197,9 @@ struct ParamInputOutputItem {
 
 map<int, struct ParamInputOutputItem> paramInputOutputList;
 int iFintecheeUID;
+int Bars;
+double Point;
+int Digits;
 
 void setParam (int uid, const struct Parameter & parameter) {
   if (paramInputOutputList.find(uid) != paramInputOutputList.end()) {
@@ -1299,6 +1319,26 @@ void setjPrint (void (*f) (int, const char*)) {
 EMSCRIPTEN_KEEPALIVE
 void setjSetIndexShift (void (*f) (int, const char*, int)) {
   jSetIndexShift = f;
+}
+EMSCRIPTEN_KEEPALIVE
+void setjChartID (long (*f) (int)) {
+  jChartID = f;
+}
+EMSCRIPTEN_KEEPALIVE
+void setjChartPeriod (int (*f) (int, long)) {
+  jChartPeriod = f;
+}
+EMSCRIPTEN_KEEPALIVE
+void setjChartSymbol (const char* (*f) (int, long)) {
+  jChartSymbol = f;
+}
+EMSCRIPTEN_KEEPALIVE
+void setjPeriod (int (*f) (int)) {
+  jPeriod = f;
+}
+EMSCRIPTEN_KEEPALIVE
+void setjSymbol (const char* (*f) (int)) {
+  jSymbol = f;
 }
 EMSCRIPTEN_KEEPALIVE
 void setjiTimeInit (int (*f) (int, string, const char*)) {
@@ -1556,6 +1596,10 @@ EMSCRIPTEN_KEEPALIVE
 void setjiWPR (double (*f) (int, int, int)) {
   jiWPR = f;
 }
+EMSCRIPTEN_KEEPALIVE
+void setjMarketInfo (double (*f) (int, string, int)) {
+  jMarketInfo = f;
+}
 
 }
 
@@ -1592,6 +1636,34 @@ bool PlaySound (string name) {
 
 void SetIndexShift (const char* name, int shift) {
   jSetIndexShift(iFintecheeUID, name, shift);
+}
+
+long ChartID () {
+  return jChartID(iFintecheeUID);
+}
+
+ENUM_TIMEFRAMES ChartPeriod (long chart_id) {
+  return (ENUM_TIMEFRAMES)jChartPeriod(iFintecheeUID, chart_id);
+}
+ENUM_TIMEFRAMES ChartPeriod () {
+  return ChartPeriod(0);
+}
+
+string ChartSymbol (long chart_id) {
+  string symbol(jChartSymbol(iFintecheeUID, chart_id));
+  return symbol;
+}
+string ChartSymbol () {
+  return ChartSymbol(0);
+}
+
+ENUM_TIMEFRAMES Period () {
+  return (ENUM_TIMEFRAMES)jPeriod(iFintecheeUID);
+}
+
+string Symbol () {
+  string symbol(jSymbol(iFintecheeUID));
+  return symbol;
 }
 
 datetime iTime (string symbol, int timeframe, int shift) {
@@ -2059,4 +2131,11 @@ double GlobalVariableGet (string name) {
 
 bool GlobalVariableDel (string name) {
   return delGlobalVar(iFintecheeUID, name);
+}
+
+double MarketInfo (string symbol, int type) {
+  return jMarketInfo(symbol, type);
+}
+double MarketInfo (long symbol, int type) {
+  return MarketInfo("", type);
 }
