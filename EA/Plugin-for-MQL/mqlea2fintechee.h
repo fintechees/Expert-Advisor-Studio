@@ -73,6 +73,17 @@ const int MODE_HIGH = 2;
 const int MODE_CLOSE = 3;
 const int MODE_VOLUME = 4;
 const int MODE_TIME = 5;
+const int MODE_BID = 9;
+const int MODE_ASK = 10;
+const int MODE_POINT = 11;
+const int MODE_DIGITS = 12;
+const int MODE_SPREAD = 13;
+const int MODE_SWAPLONG = 18;
+const int MODE_SWAPSHORT = 19;
+const int MODE_TRADEALLOWED = 22;
+const int MODE_MINLOT = 23;
+const int MODE_LOTSTEP = 24;
+const int MODE_MAXLOT = 25;
 
 // MQL has no these enumeration.
 const int INDI_OHLC = 0;
@@ -315,6 +326,7 @@ double (*jiWPR) (int, int, int);
 int (*jARROW_CHECKCreate) (int, long, const char*, datetime, double);
 int (*jARROW_CHECKDelete) (int, const char*);
 int (*jIsTesting) ();
+double (*jMarketInfo) (int, string, int);
 
 EM_JS(int, jOrderSend, (int uid, string symbol, const char* cmd, double volume, double price, int slippage, double stoploss, double takeprofit, string comment, int magic, datetime expiration, int arrow_color), {
    return Asyncify.handleSleep(function (wakeUp) {
@@ -1329,6 +1341,8 @@ int iFintecheeUID;
 int Bars;
 double Ask;
 double Bid;
+double Point;
+int Digits;
 
 void OnTick (void);
 
@@ -1801,6 +1815,10 @@ EMSCRIPTEN_KEEPALIVE
 void setjIsTesting (int (*f) ()) {
   jIsTesting = f;
 }
+EMSCRIPTEN_KEEPALIVE
+void setjMarketInfo (double (*f) (int, string, int)) {
+  jMarketInfo = f;
+}
 
 }
 
@@ -1863,7 +1881,7 @@ ENUM_TIMEFRAMES Period () {
   return (ENUM_TIMEFRAMES)jPeriod(iFintecheeUID);
 }
 
-string Symbol() {
+string Symbol () {
   if (paramHandleList[iFintecheeUID].bInit) return "";
   string symbol(jSymbol(iFintecheeUID));
   return symbol;
@@ -2598,4 +2616,25 @@ bool GlobalVariableDel (string name) {
 
 bool IsTesting () {
   return jIsTesting() == 1;
+}
+
+double MarketInfo (string symbol, int type) {
+  if (symbol == "") {
+    if (type == MODE_BID) {
+      return Bid;
+    } else if (type == MODE_ASK) {
+      return Ask;
+    } else if (type == MODE_POINT) {
+      return Point;
+    } else if (type == MODE_DIGITS) {
+      return Digits;
+    } else {
+      return jMarketInfo(symbol, type);
+    }
+  } else {
+    return jMarketInfo(symbol, type);
+  }
+}
+double MarketInfo (long symbol, int type) {
+  return MarketInfo("", type);
 }
