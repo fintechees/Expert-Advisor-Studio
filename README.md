@@ -8,6 +8,12 @@ Please check our [Github wiki](https://github.com/fintechee/EA/wiki) to know mor
 
 ![Screenshot](https://www.fintechee.com/vpimages/services/newscreenshot1.png)
 
+### Release Notes
+2020.7.7 three APIs were modified and added parameters.
+1. sendOrder
+2. modifyOrder
+3. closeTrade
+
 ```javascript
 var BROKER_NAME = {
 	DEMO: "CC Demo"
