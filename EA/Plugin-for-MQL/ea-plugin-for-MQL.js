@@ -1,6 +1,6 @@
 	registerEA(
 		"mql_ea_loader_plugin",
-		"mql_plugin to make MQL-based EAs runnable on Fintechee(v1.03)",
+		"mql_plugin to make MQL-based EAs runnable on Fintechee(v1.05)",
 		[{ // parameters
 			name: "definition",
 			value: "",
@@ -216,11 +216,23 @@
 							}, "ii")
 							var jOrderMagicNumber = Module.addFunction(function (uid) {
 								var obj = window.mqlEAsBuffer[uid + ""]
-								return parseInt(getMagicNumber(obj.orderOrTrade))
+								return getMagicNumber(obj.orderOrTrade)
 							}, "ii")
 							var jOrderOpenTime = Module.addFunction(function (uid) {
 								var obj = window.mqlEAsBuffer[uid + ""]
 								return getOrderTradeTime(obj.orderOrTrade)
+							}, "ii")
+							var jOrderComment = Module.addFunction(function (uid) {
+								var obj = window.mqlEAsBuffer[uid + ""]
+								var comment = getComment(obj.orderOrTrade)
+								var lengthBytes = window.mqlEAs[obj.name].module.lengthBytesUTF8(comment) + 1
+							  var stringOnWasmHeap = window.mqlEAs[obj.name].module._malloc(lengthBytes)
+							  window.mqlEAs[obj.name].module.stringToUTF8(comment, stringOnWasmHeap, lengthBytes)
+							  return stringOnWasmHeap
+							}, "ii")
+							var jOrderExpiration = Module.addFunction(function (uid) {
+								var obj = window.mqlEAsBuffer[uid + ""]
+								return getExpiration(obj.orderOrTrade)
 							}, "ii")
 							var jOrderPrint = Module.addFunction(function (uid) {
 								var orderOrTrade = window.mqlEAsBuffer[uid + ""].orderOrTrade
@@ -1073,6 +1085,8 @@
 								setjOrderTicket: Module.cwrap('setjOrderTicket', null, ['number']),
 								setjOrderMagicNumber: Module.cwrap('setjOrderMagicNumber', null, ['number']),
 								setjOrderOpenTime: Module.cwrap('setjOrderOpenTime', null, ['number']),
+								setjOrderComment: Module.cwrap('setjOrderComment', null, ['number']),
+								setjOrderExpiration: Module.cwrap('setjOrderExpiration', null, ['number']),
 								setjOrderPrint: Module.cwrap('setjOrderPrint', null, ['number']),
 								setjiTimeInit: Module.cwrap('setjiTimeInit', null, ['number']),
 								setjiTime: Module.cwrap('setjiTime', null, ['number']),
@@ -1172,6 +1186,8 @@
 							window.mqlEAs[definition.name].setjOrderTicket(jOrderTicket)
 							window.mqlEAs[definition.name].setjOrderMagicNumber(jOrderMagicNumber)
 							window.mqlEAs[definition.name].setjOrderOpenTime(jOrderOpenTime)
+							window.mqlEAs[definition.name].setjOrderComment(jOrderComment)
+							window.mqlEAs[definition.name].setjOrderExpiration(jOrderExpiration)
 							window.mqlEAs[definition.name].setjOrderPrint(jOrderPrint)
 							window.mqlEAs[definition.name].setjiTimeInit(jiTimeInit)
 							window.mqlEAs[definition.name].setjiTime(jiTime)
