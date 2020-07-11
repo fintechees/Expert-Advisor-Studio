@@ -258,6 +258,8 @@ const char* (*jOrderSymbol) (int);
 int (*jOrderTicket) (int);
 int (*jOrderMagicNumber) (int);
 datetime (*jOrderOpenTime) (int);
+const char* (*jOrderComment) (int);
+datetime (*jOrderExpiration) (int);
 void (*jOrderPrint) (int);
 int (*jiTimeInit) (int, string, const char*);
 datetime (*jiTime) (int, int, int);
@@ -343,7 +345,7 @@ EM_JS(int, jOrderSend, (int uid, string symbol, const char* cmd, double volume, 
         window.mqlEAsBuffer[uid + ""].lock = false;
         wakeUp(parseInt(e.detail));
 			}, {once: true});
-      sendOrder (obj.brokerName, obj.accountId, symbolName, orderType, price, slippage, volume, takeprofit, stoploss, cmmnt);
+      sendOrder(obj.brokerName, obj.accountId, symbolName, orderType, price, slippage, volume, takeprofit, stoploss, cmmnt, magic, expiration);
     } catch (e) {
       printErrorMessage(e.message);
       wakeUp(-1);
@@ -351,24 +353,28 @@ EM_JS(int, jOrderSend, (int uid, string symbol, const char* cmd, double volume, 
   });
 });
 
-EM_JS(int, jOrderModify, (int uid, int ticket, double volume, double price, int slippage, double stoploss, double takeprofit, string comment, datetime expiration, int arrow_color), {
+EM_JS(int, jOrderModify, (int uid, int ticket, double price, double stoploss, double takeprofit, datetime expiration, int arrow_color), {
   return Asyncify.handleSleep(function (wakeUp) {
     try {
-      const cmmnt = UTF8ToString(comment);
       var obj = window.mqlEAsBuffer[uid + ""];
       obj.lock = true;
-      if (obj.type == "P") {
+
+      var orderOrTrade = getOrderOrTradeById(obj.context, ticket + "");
+      var type = orderOrTrade.type;
+
+      if (type == "P") {
         document.addEventListener("customevent", function (e) {
           window.mqlEAsBuffer[uid + ""].lock = false;
           wakeUp(1);
   			}, {once: true});
-        modifyOrder (obj.brokerName, obj.accountId, ticket + "", getSymbolName(obj.orderOrTrade), getOrderType(obj.orderOrTrade), price, slippage, volume, takeprofit, stoploss, cmmnt);
-      } else if (obj.type == "T") {
+        modifyOrder(obj.brokerName, obj.accountId, ticket + "", getSymbolName(orderOrTrade), getOrderType(orderOrTrade), price, 0, getLots(orderOrTrade),
+          takeprofit, stoploss, getComment(orderOrTrade), getMagicNumber(orderOrTrade), getExpiration(orderOrTrade));
+      } else if (type == "T") {
         document.addEventListener("customevent", function (e) {
           window.mqlEAsBuffer[uid + ""].lock = false;
           wakeUp(1);
   			}, {once: true});
-        modifyTpSlOfTrade (obj.brokerName, obj.accountId, ticket + "", takeprofit, stoploss);
+        modifyTpSlOfTrade(obj.brokerName, obj.accountId, ticket + "", takeprofit, stoploss);
       } else {
         throw new Error("Failed to modify the order.");
       }
@@ -384,20 +390,11 @@ EM_JS(int, jOrderClose, (int uid, int ticket, double lots, double price, int sli
     try {
       var obj = window.mqlEAsBuffer[uid + ""];
       obj.lock = true;
-      var orderType = getOrderType(obj.orderOrTrade);
-      var ask = getAsk(obj.context, obj.brokerName, obj.accountId, obj.symbolName);
-      var bid = getBid(obj.context, obj.brokerName, obj.accountId, obj.symbolName);
-      if (price == 0 ||
-        ((orderType == "BUY" || orderType == "BUY LIMIT" || orderType == "BUY STOP" ) && Math.abs(price - bid) / price < 0.0003) ||
-        ((orderType == "SELL" || orderType == "SELL LIMIT" || orderType == "SELL STOP" ) && Math.abs(price - ask) / price < 0.0003)) {
-        document.addEventListener("customevent", function (e) {
-          window.mqlEAsBuffer[uid + ""].lock = false;
-          wakeUp(1);
-  			}, {once: true});
-        closeTrade (obj.brokerName, obj.accountId, ticket + "");
-      } else {
-        throw new Error("Failed to close the opened trade.");
-      }
+      document.addEventListener("customevent", function (e) {
+        window.mqlEAsBuffer[uid + ""].lock = false;
+        wakeUp(1);
+			}, {once: true});
+      closeTrade(obj.brokerName, obj.accountId, ticket + "", price, slippage);
     } catch (e) {
       printErrorMessage(e.message);
       wakeUp(0);
@@ -414,7 +411,7 @@ EM_JS(int, jOrderDelete, (int uid, int ticket, int arrow_color), {
         window.mqlEAsBuffer[uid + ""].lock = false;
         wakeUp(1);
 			}, {once: true});
-      cancelOrder (obj.brokerName, obj.accountId, ticket + "");
+      cancelOrder(obj.brokerName, obj.accountId, ticket + "");
     } catch (e) {
       printErrorMessage(e.message);
       wakeUp(0);
@@ -1997,6 +1994,17 @@ datetime OrderOpenTime() {
   return jOrderOpenTime(iFintecheeUID);
 }
 
+string OrderComment() {
+  if (paramHandleList[iFintecheeUID].bInit) return "";
+  string comment(jOrderComment(iFintecheeUID));
+  return comment;
+}
+
+datetime OrderExpiration() {
+  if (paramHandleList[iFintecheeUID].bInit) return -1;
+  return jOrderExpiration(iFintecheeUID);
+}
+
 void OrderPrint() {
   if (paramHandleList[iFintecheeUID].bInit) return;
   jOrderPrint(iFintecheeUID);
@@ -2568,11 +2576,7 @@ bool ObjectDelete (long chart_id, const char* object_name) {
 
 int OrderSend (string symbol, int cmd, double volume, double price, int slippage, double stoploss, double takeprofit, string comment, int magic, datetime expiration, int arrow_color) {
   if (paramHandleList[iFintecheeUID].bInit) return -1;
-  if (cmd == OP_BUY || cmd == OP_SELL) {
-    return jOrderSend(iFintecheeUID, symbol, convertCmd(cmd), volume, 0, slippage, stoploss, takeprofit, comment, magic, expiration, arrow_color);
-  } else {
-    return jOrderSend(iFintecheeUID, symbol, convertCmd(cmd), volume, price, slippage, stoploss, takeprofit, comment, magic, expiration, arrow_color);
-  }
+  return jOrderSend(iFintecheeUID, symbol, convertCmd(cmd), volume, price, slippage, stoploss, takeprofit, comment, magic, expiration, arrow_color);
 }
 int OrderSend (long symbol, int cmd, double volume, double price, int slippage, double stoploss, double takeprofit, string comment, int magic, datetime expiration, int arrow_color) {
   if (paramHandleList[iFintecheeUID].bInit) return -1;
@@ -2581,7 +2585,7 @@ int OrderSend (long symbol, int cmd, double volume, double price, int slippage, 
 
 bool OrderModify (int ticket, double price, double stoploss, double takeprofit, datetime expiration, int arrow_color) {
   if (paramHandleList[iFintecheeUID].bInit) return false;
-  return jOrderModify (iFintecheeUID, ticket, OrderLots(), price, 0, stoploss, takeprofit, "", expiration, arrow_color) == 1;
+  return jOrderModify (iFintecheeUID, ticket, price, stoploss, takeprofit, expiration, arrow_color) == 1;
 }
 
 bool OrderClose(int ticket, double lots, double price, int slippage, int arrow_color) {
