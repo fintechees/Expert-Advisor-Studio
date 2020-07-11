@@ -17,7 +17,7 @@ registerEA(
 {name: "b", value: -30, required: true, type: "Number", range: [-100, 100], step: 10},
 ],
 function (context) { // Init()
-    // Please don;t remove the source codes below, they are required to make an EA get boosted
+    // Please don't remove the source codes below, they are required to make an EA get boosted
 	var account = getAccount(context, 0)
 	var brokerName = getBrokerNameOfAccount(account)
 	var accountId = getAccountIdOfAccount(account)
