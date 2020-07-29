@@ -16,7 +16,7 @@
 				return new Promise(function (rs, rj) {
 					var scriptPromise = new Promise(function (resolve, reject) {
 						var tags = document.getElementsByTagName("script")
-						for (var i = tags.length; i >= 0; i--) {
+						for (var i = tags.length - 1; i >= 0; i--) {
 							if (tags[i] && tags[i].getAttribute("src") != null && tags[i].getAttribute("src") == definition.url) {
 								tags[i].parentNode.removeChild(tags[i])
 								break
