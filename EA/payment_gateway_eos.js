@@ -1,6 +1,6 @@
 registerEA(
 		"payment_gateway_eos",
-		"A payment gateway plugin to make you fund(deposit or withdraw) via EOS platform(v1.0)",
+		"A payment gateway plugin to make you fund(deposit or withdraw) via EOS platform(v1.01)",
 		[{ // parameters
 			name: "from",
 			value: "",
@@ -55,11 +55,9 @@ registerEA(
 				memo = ""
 			}
 
-			const api = window.eos_api;
-
 	    (async () => {
 	      try {
-	        const result = await api.transact({
+	        const result = await window.eos_api.transact({
 	          actions: [{
 	              account: from,
 	              name: "transfer",
