@@ -1,7 +1,13 @@
 registerEA(
 		"payment_gateway_eos",
-		"A payment gateway plugin to make you fund(deposit or withdraw) via EOS platform(v1.01)",
+		"A payment gateway plugin to make you fund(deposit or withdraw) via EOS platform(v1.02)",
 		[{ // parameters
+			name: "contract",
+			value: "eosio.token",
+			required: true,
+			type: PARAMETER_TYPE.STRING,
+			range: null
+		}, {
 			name: "from",
 			value: "",
 			required: false,
@@ -33,6 +39,7 @@ registerEA(
 			range: null
 		}],
 		function (context) { // Init()
+			var contract = getEAParameter(context, "contract")
 			var from = getEAParameter(context, "from")
 			var to = getEAParameter(context, "to")
 			var amount = getEAParameter(context, "amount")
@@ -59,7 +66,7 @@ registerEA(
 	      try {
 	        const result = await window.eos_api.transact({
 	          actions: [{
-	              account: from,
+	              account: contract,
 	              name: "transfer",
 	              authorization: [{
 	                  actor: from,
