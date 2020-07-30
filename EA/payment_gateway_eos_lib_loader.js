@@ -1,6 +1,6 @@
 registerEA(
 		"payment_gateway_eos_lib_loader",
-		"A payment gateway plugin to load EOS libraries(v1.0)",
+		"A payment gateway plugin to load EOS libraries(v1.01)",
 		[{ // parameters
 			name: "privateKey",
 			value: "",
@@ -48,7 +48,6 @@ registerEA(
 			for (var i = tags.length - 1; i >= 0; i--) {
 				if (tags[i] && tags[i].getAttribute("src") != null && (tags[i].getAttribute("src") == jssig || tags[i].getAttribute("src") == jsonrpc || tags[i].getAttribute("src") == api)) {
 					tags[i].parentNode.removeChild(tags[i])
-					break
 				}
 			}
 
@@ -62,9 +61,9 @@ registerEA(
 	        document.body.appendChild(script3)
 	        script3.onload = function () {
 						window.eosjs_jsonrpc = eosjs_jsonrpc
-						window.eos_rpc = new eosjs_jsonrpc.JsonRpc(jsonRpcUrl)
-					  window.eos_signatureProvider = new eosjs_jssig.JsSignatureProvider([defaultPrivateKey])
-					  window.eos_api = new eosjs_api.Api({rpc: window.eos_rpc, signatureProvider: window.eos_signatureProvider})
+						var eos_rpc = new eosjs_jsonrpc.JsonRpc(jsonRpcUrl)
+					  var eos_signatureProvider = new eosjs_jssig.JsSignatureProvider([defaultPrivateKey])
+					  window.eos_api = new eosjs_api.Api({rpc: eos_rpc, signatureProvider: eos_signatureProvider})
 					}
 	        script3.onerror = function () {}
 	        script3.async = true
