@@ -1,6 +1,6 @@
 registerEA(
 		"decentralized_exchange_eos_propose",
-		"A decentralized exchange plugin to propose for exchanging digital assets via EOS platform(v1.0)",
+		"A decentralized exchange plugin to propose for exchanging digital assets via EOS platform(v1.01)",
 		[{ // parameters
 			name: "proposalName",
 			value: "",
@@ -8,7 +8,7 @@ registerEA(
 			type: PARAMETER_TYPE.STRING,
 			range: null
 		}, {
-			name: "contract",
+			name: "asset",
 			value: "eosio.token",
 			required: true,
 			type: PARAMETER_TYPE.STRING,
@@ -27,12 +27,6 @@ registerEA(
 			range: null
 		}, {
 			name: "escrow",
-			value: "",
-			required: false,
-			type: PARAMETER_TYPE.STRING,
-			range: null
-		}, {
-			name: "to",
 			value: "",
 			required: false,
 			type: PARAMETER_TYPE.STRING,
@@ -58,11 +52,10 @@ registerEA(
 		}],
 		function (context) { // Init()
 			var proposalName = getEAParameter(context, "proposalName")
-			var contract = getEAParameter(context, "contract")
+			var asset = getEAParameter(context, "asset")
 			var proposer = getEAParameter(context, "proposer")
 			var exchange = getEAParameter(context, "exchange")
 			var escrow = getEAParameter(context, "escrow")
-			var to = getEAParameter(context, "to")
 			var amount = getEAParameter(context, "amount")
 			var currency = getEAParameter(context, "currency")
 			var memo = getEAParameter(context, "memo")
@@ -83,10 +76,6 @@ registerEA(
 				popupErrorMessage("The escrow account should not be empty.")
 				return
 			}
-			if (to == null || to == "") {
-				popupErrorMessage("The receiver should not be empty.")
-				return
-			}
 			if (amount <= 0) {
 				popupErrorMessage("The amount should be greater than zero.")
 				return
@@ -96,7 +85,7 @@ registerEA(
 			}
 
 			const actions = [{
-				account: contract,
+				account: asset,
 				name: "transfer",
 				authorization: [{
 					actor: escrow,
@@ -104,7 +93,7 @@ registerEA(
 				}],
 				data: {
 					from: escrow,
-					to: to,
+					to: exchange,
 					quantity: Math.floor(amount) + ".0000 " + currency,
 					memo: memo
 				}
@@ -117,11 +106,9 @@ registerEA(
 					const proposeInput = {
 						proposer: proposer,
 						proposal_name: proposalName,
+						// We make the threshold be 1(not 2) to simplify the process, because multi-sig requires that all approvers are online, which is not that realistic.
 						requested: [{
 							actor: exchange,
-							permission: "active"
-						},{
-							actor: proposer,
 							permission: "active"
 						}],
 						trx: {
