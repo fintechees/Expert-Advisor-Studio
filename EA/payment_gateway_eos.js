@@ -1,8 +1,8 @@
 registerEA(
 		"payment_gateway_eos",
-		"A payment gateway plugin to make you fund(deposit or withdraw) via EOS platform(v1.02)",
+		"A payment gateway plugin to make you fund(deposit or withdraw) via EOS platform(v1.03)",
 		[{ // parameters
-			name: "contract",
+			name: "asset",
 			value: "eosio.token",
 			required: true,
 			type: PARAMETER_TYPE.STRING,
@@ -39,7 +39,7 @@ registerEA(
 			range: null
 		}],
 		function (context) { // Init()
-			var contract = getEAParameter(context, "contract")
+			var asset = getEAParameter(context, "asset")
 			var from = getEAParameter(context, "from")
 			var to = getEAParameter(context, "to")
 			var amount = getEAParameter(context, "amount")
@@ -66,7 +66,7 @@ registerEA(
 	      try {
 	        const result = await window.eos_api.transact({
 	          actions: [{
-	              account: contract,
+	              account: asset,
 	              name: "transfer",
 	              authorization: [{
 	                  actor: from,
@@ -76,12 +76,12 @@ registerEA(
 	                  from: from,
 	                  to: to,
 	                  quantity: Math.floor(amount) + ".0000 " + currency,
-	                  memo: memo,
-	              },
+	                  memo: memo
+	              }
 	          }]
 	        }, {
 	          blocksBehind: 3,
-	          expireSeconds: 30,
+	          expireSeconds: 30
 	        })
 
 	        popupMessage("Transaction pushed!\n\n" + JSON.stringify(result, null, 2))
