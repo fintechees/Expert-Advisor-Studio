@@ -2633,10 +2633,10 @@ double MarketInfo (string symbol, int type) {
     } else if (type == MODE_DIGITS) {
       return Digits;
     } else {
-      return jMarketInfo(symbol, type);
+      return jMarketInfo(iFintecheeUID, symbol, type);
     }
   } else {
-    return jMarketInfo(symbol, type);
+    return jMarketInfo(iFintecheeUID, symbol, type);
   }
 }
 double MarketInfo (long symbol, int type) {
