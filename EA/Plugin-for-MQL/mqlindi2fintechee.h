@@ -2134,7 +2134,7 @@ bool GlobalVariableDel (string name) {
 }
 
 double MarketInfo (string symbol, int type) {
-  return jMarketInfo(symbol, type);
+  return jMarketInfo(iFintecheeUID, symbol, type);
 }
 double MarketInfo (long symbol, int type) {
   return MarketInfo("", type);
