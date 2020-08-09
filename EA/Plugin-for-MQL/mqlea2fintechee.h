@@ -1541,6 +1541,14 @@ void setjOrderOpenTime (datetime (*f) (int)) {
   jOrderOpenTime = f;
 }
 EMSCRIPTEN_KEEPALIVE
+void setjOrderComment (const char* (*f) (int)) {
+  jOrderComment = f;
+}
+EMSCRIPTEN_KEEPALIVE
+void setjOrderExpiration (datetime (*f) (int)) {
+  jOrderExpiration = f;
+}
+EMSCRIPTEN_KEEPALIVE
 void setjOrderPrint (void (*f) (int)) {
   jOrderPrint = f;
 }
