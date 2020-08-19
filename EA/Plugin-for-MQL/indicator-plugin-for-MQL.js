@@ -1,6 +1,6 @@
 	registerEA(
 		"mql_indicator_loader_plugin",
-		"mql_plugin to make MQL-based indicators runnable on Fintechee(v1.05)",
+		"mql_plugin to make MQL-based indicators runnable on Fintechee(v1.06)",
 		[{ // parameters
 			name: "definition",
 			value: "",
@@ -1273,8 +1273,6 @@
 										window.mqlIndicators[definition.name].module._free(window.mqlIndicatorsBuffer[j].dataOutput[k])
 									}
 									delete window.mqlIndicatorsBuffer[j]
-
-									break
 								}
 							}
 							break
@@ -1378,8 +1376,6 @@
 											window.mqlIndicators[definition.name].module._free(window.mqlIndicatorsBuffer[j].dataOutput[k])
 										}
 										delete window.mqlIndicatorsBuffer[j]
-
-										break
 									}
 								}
 								break
@@ -1398,4 +1394,5 @@
 		function (context) { // OnTick()
 		}
 	)
+
 
