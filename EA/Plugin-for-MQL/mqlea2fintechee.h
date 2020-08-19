@@ -348,7 +348,8 @@ EM_JS(int, jOrderSend, (int uid, string symbol, const char* cmd, double volume, 
       sendOrder(obj.brokerName, obj.accountId, symbolName, orderType, price, slippage, volume, takeprofit, stoploss, cmmnt, magic, expiration);
     } catch (e) {
       printErrorMessage(e.message);
-      wakeUp(-1);
+      var event = new CustomEvent("customevent", {detail: -1});
+  		document.dispatchEvent(event);
     }
   });
 });
@@ -365,14 +366,22 @@ EM_JS(int, jOrderModify, (int uid, int ticket, double price, double stoploss, do
       if (type == "P") {
         document.addEventListener("customevent", function (e) {
           window.mqlEAsBuffer[uid + ""].lock = false;
-          wakeUp(1);
+          if (e.detail != null) {
+            wakeUp(1);
+          } else {
+            wakeUp(0);
+          }
   			}, {once: true});
         modifyOrder(obj.brokerName, obj.accountId, ticket + "", getSymbolName(orderOrTrade), getOrderType(orderOrTrade), price, 0, getLots(orderOrTrade),
           takeprofit, stoploss, getComment(orderOrTrade), getMagicNumber(orderOrTrade), getExpiration(orderOrTrade));
       } else if (type == "T") {
         document.addEventListener("customevent", function (e) {
           window.mqlEAsBuffer[uid + ""].lock = false;
-          wakeUp(1);
+          if (e.detail != null) {
+            wakeUp(1);
+          } else {
+            wakeUp(0);
+          }
   			}, {once: true});
         modifyTpSlOfTrade(obj.brokerName, obj.accountId, ticket + "", takeprofit, stoploss);
       } else {
@@ -380,7 +389,8 @@ EM_JS(int, jOrderModify, (int uid, int ticket, double price, double stoploss, do
       }
     } catch (e) {
       printErrorMessage(e.message);
-      wakeUp(0);
+      var event = new CustomEvent("customevent", {detail: null});
+  		document.dispatchEvent(event);
     }
   });
 });
@@ -392,12 +402,17 @@ EM_JS(int, jOrderClose, (int uid, int ticket, double lots, double price, int sli
       obj.lock = true;
       document.addEventListener("customevent", function (e) {
         window.mqlEAsBuffer[uid + ""].lock = false;
-        wakeUp(1);
+        if (e.detail != null) {
+          wakeUp(1);
+        } else {
+          wakeUp(0);
+        }
 			}, {once: true});
       closeTrade(obj.brokerName, obj.accountId, ticket + "", price, slippage);
     } catch (e) {
       printErrorMessage(e.message);
-      wakeUp(0);
+      var event = new CustomEvent("customevent", {detail: null});
+  		document.dispatchEvent(event);
     }
   });
 });
@@ -409,12 +424,17 @@ EM_JS(int, jOrderDelete, (int uid, int ticket, int arrow_color), {
       obj.lock = true;
       document.addEventListener("customevent", function (e) {
         window.mqlEAsBuffer[uid + ""].lock = false;
-        wakeUp(1);
+        if (e.detail != null) {
+          wakeUp(1);
+        } else {
+          wakeUp(0);
+        }
 			}, {once: true});
       cancelOrder(obj.brokerName, obj.accountId, ticket + "");
     } catch (e) {
       printErrorMessage(e.message);
-      wakeUp(0);
+      var event = new CustomEvent("customevent", {detail: null});
+  		document.dispatchEvent(event);
     }
   });
 });
