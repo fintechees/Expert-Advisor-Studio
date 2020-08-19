@@ -1,6 +1,6 @@
 	registerEA(
 		"mql_ea_loader_plugin",
-		"mql_plugin to make MQL-based EAs runnable on Fintechee(v1.06)",
+		"mql_plugin to make MQL-based EAs runnable on Fintechee(v1.07)",
 		[{ // parameters
 			name: "definition",
 			value: "",
@@ -1440,7 +1440,6 @@
 							for (var j in window.mqlEAsBuffer) {
 								if (window.mqlEAsBuffer[j].name == currDef.rm) {
 									delete window.mqlEAsBuffer[j]
-									break
 								}
 							}
 
@@ -1539,8 +1538,6 @@
 								for (var j in window.mqlEAsBuffer) {
 									if (window.mqlEAsBuffer[j].name == currDef.name) {
 										delete window.mqlEAsBuffer[j]
-
-										break
 									}
 								}
 								break
@@ -1559,4 +1556,5 @@
 		function (context) { // OnTick()
 		}
 	)
+
 
