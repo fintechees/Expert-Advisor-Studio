@@ -1902,12 +1902,10 @@ string ChartSymbol () {
 }
 
 ENUM_TIMEFRAMES Period () {
-  if (paramHandleList[iFintecheeUID].bInit) return PERIOD_CURRENT;
   return (ENUM_TIMEFRAMES)jPeriod(iFintecheeUID);
 }
 
 string Symbol () {
-  if (paramHandleList[iFintecheeUID].bInit) return "";
   string symbol(jSymbol(iFintecheeUID));
   return symbol;
 }
