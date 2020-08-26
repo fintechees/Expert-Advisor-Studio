@@ -330,7 +330,7 @@ int (*jARROW_CHECKDelete) (int, const char*);
 int (*jIsTesting) ();
 double (*jMarketInfo) (int, string, int);
 
-EM_JS(int, jOrderSend, (int uid, string symbol, const char* cmd, double volume, double price, int slippage, double stoploss, double takeprofit, string comment, int magic, datetime expiration, int arrow_color), {
+EM_JS(int, jOrderSend, (int uid, string symbol, const char* cmd, double volume, double price, int slippage, double stoploss, double takeprofit, const char* comment, int magic, datetime expiration, int arrow_color), {
    return Asyncify.handleSleep(function (wakeUp) {
     try {
       var symbolName = UTF8ToString(symbol);
@@ -2600,11 +2600,11 @@ bool ObjectDelete (long chart_id, const char* object_name) {
   return ObjectDelete(object_name);
 }
 
-int OrderSend (string symbol, int cmd, double volume, double price, int slippage, double stoploss, double takeprofit, string comment, int magic, datetime expiration, int arrow_color) {
+int OrderSend (string symbol, int cmd, double volume, double price, int slippage, double stoploss, double takeprofit, const char* comment, int magic, datetime expiration, int arrow_color) {
   if (paramHandleList[iFintecheeUID].bInit) return -1;
   return jOrderSend(iFintecheeUID, symbol, convertCmd(cmd), volume, price, slippage, stoploss, takeprofit, comment, magic, expiration, arrow_color);
 }
-int OrderSend (long symbol, int cmd, double volume, double price, int slippage, double stoploss, double takeprofit, string comment, int magic, datetime expiration, int arrow_color) {
+int OrderSend (long symbol, int cmd, double volume, double price, int slippage, double stoploss, double takeprofit, const char* comment, int magic, datetime expiration, int arrow_color) {
   if (paramHandleList[iFintecheeUID].bInit) return -1;
   return OrderSend("", cmd, volume, price, slippage, stoploss, takeprofit, comment, magic, expiration, arrow_color);
 }
