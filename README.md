@@ -178,6 +178,6 @@ function lwma (dataInput, dataOutput, calculatedLength, period) {
 }
 ```
 
-Please check our site for details. [Fintechee](https://www.fintechee.com/material/Document.html)
+Please check our site for details. [Fintechee](https://www.fintechee.com/sdk-trading/)
 
 MIT License
