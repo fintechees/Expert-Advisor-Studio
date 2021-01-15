@@ -1,5 +1,5 @@
 registerEA(
-  "auto_mm",
+  "market_maker_bot",
   "Automated market maker(v1.0)",
   [{
   	name: "basePlatform",
