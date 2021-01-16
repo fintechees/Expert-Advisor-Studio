@@ -11,6 +11,7 @@ A repository for trading robots(EA) which can be running on Web browser
 7. Integration with DEX and Clearing House
 8. Custom Indicators(You can create composite indicators -- make an indicator calculated based on another indicator)
 9. You can analyze Bitcoin or Ether's options by using our plugins.
+10. FIX API individual version
 ...... Many features, you can explore them on your own
 
 Please access our demo to run the EAs:
