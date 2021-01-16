@@ -1,6 +1,18 @@
 # Expert Advisor Studio
 A repository for trading robots(EA) which can be running on Web browser
 
+## Features
+1. Compatible with MQL
+2. WEB-based
+3. You can import any data(historical/streaming) as long as you have data source.
+4. Market Maker Bot(You can send transactions to blockchains' SWAP smart contracts)
+5. Integration with crypto wallets(Scatter & Metamask)
+6. Integration with Artificial Intelligence(AI)
+7. Integration with DEX and Clearing House
+8. Custom Indicators(You can create composite indicators -- make an indicator calculated based on another indicator)
+9. You can analyze Bitcoin or Ether's options by using our plugins.
+...... Many features, you can explore them on your own
+
 Please access our demo to run the EAs:
 https://www.fintechee.com
 
