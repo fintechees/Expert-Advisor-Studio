@@ -12,6 +12,7 @@ A repository for trading robots(EA) which can be running on Web browser
 8. Custom Indicators(You can create compound indicators -- make an indicator calculated based on another indicator)
 9. You can analyze Bitcoin or Ether's options by using our plugins.
 10. FIX API individual version
+11. White label enabled
 ...... Many features, you can explore them on your own
 
 Please access our demo to run the EAs:
