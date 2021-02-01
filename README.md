@@ -2,7 +2,7 @@
 A repository for trading robots(EA) which can be running on Web browser
 
 ## Features
-1. Compatible with MQL
+1. Compatible with C/C++/MQL
 2. WEB-based
 3. You can import any data(historical/streaming) as long as you have data source.
 4. Market Maker Bot(You can send transactions to blockchains' SWAP smart contracts)
@@ -13,6 +13,8 @@ A repository for trading robots(EA) which can be running on Web browser
 9. You can analyze Bitcoin or Ether's options by using our plugins.
 10. FIX API individual version
 11. White label enabled
+12. MFA - Multiple Factor Authentication
+
 ...... Many features, you can explore them on your own
 
 Please access our demo to run the EAs:
