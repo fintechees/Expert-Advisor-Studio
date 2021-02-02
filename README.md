@@ -2,7 +2,7 @@
 A repository for trading robots(EA) which can be running on Web browser
 
 ## Features
-1. Compatible with C/C++/MQL
+1. Javascript SDK, Compatible with C/C++/MQL
 2. WEB-based
 3. You can import any data(historical/streaming) as long as you have data source.
 4. Market Maker Bot(You can send transactions to blockchains' SWAP smart contracts)
