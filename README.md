@@ -20,6 +20,9 @@ A repository for trading robots(EA) which can be running on Web browser
 Please access our demo to run the EAs:
 https://www.fintechee.com
 
+You don't know how to use these EAs?
+Please check out our Youtube Channel, there are tutorials(https://www.youtube.com/channel/UCjBs_l6rUxhtZlfRhDuVGSg)
+
 Please check our [Github wiki](https://github.com/fintechee/Expert-Advisor-Studio/wiki) to know more details about APIs.
 
 ![Screenshot](https://www.fintechee.com/vpimages/services/newscreenshot1.png)
