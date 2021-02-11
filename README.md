@@ -14,6 +14,9 @@ A repository for trading robots(EA) which can be running on Web browser
 10. FIX API individual version(Your browser -> local Java Package -> FIX API straightforward)
 11. White label enabled
 12. MFA - Multiple Factor Authentication
+13. Dashboard for broker's manager
+14. APP(Android)
+15. Source codes generator
 
 ...... Many features, you can explore them on your own
 
@@ -24,6 +27,8 @@ You don't know how to use these EAs?
 Please check out our Youtube Channel, there are tutorials(https://www.youtube.com/channel/UCjBs_l6rUxhtZlfRhDuVGSg)
 
 Please check our [Github wiki](https://github.com/fintechee/Expert-Advisor-Studio/wiki) to know more details about APIs.
+
+Please use our Nodejs package(https://github.com/fintechee/Expert-Advisor-CPP-Compiler) to compile C/C++/MQL.
 
 ![Screenshot](https://www.fintechee.com/vpimages/services/newscreenshot1.png)
 
