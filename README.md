@@ -15,7 +15,7 @@ A repository for trading robots(EA) which can be running on Web browser
 11. White label enabled
 12. MFA - Multiple Factor Authentication
 13. Dashboard for broker's manager
-14. APP(Android)
+14. APP(Android, already listed on our website, will publish on Google Play soon)
 15. Source codes generator
 
 ...... Many features, you can explore them on your own
