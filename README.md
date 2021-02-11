@@ -25,6 +25,7 @@ https://www.fintechee.com
 
 You don't know how to use these EAs?
 Please check out our Youtube Channel, there are tutorials(https://www.youtube.com/channel/UCjBs_l6rUxhtZlfRhDuVGSg)
+You can find the source codes for the tutorials here: https://github.com/fintechee/tutorials
 
 Please check our [Github wiki](https://github.com/fintechee/Expert-Advisor-Studio/wiki) to know more details about APIs.
 
