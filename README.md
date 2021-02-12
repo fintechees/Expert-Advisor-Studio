@@ -35,6 +35,8 @@ Please check this tutorial(https://www.fintechee.com/expert-advisor-cpp-compiler
 
 ![Fintechee's Architecture](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/architecture.png)
 
+![Expert Advisor C/C++/MQL Compiler](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/cppcompiler.png)
+
 ![Fintechee custom indicator](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/analyzestructure.png)
 
 ![Fintechee APP Screenshot1](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/mobile1.png)
