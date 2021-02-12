@@ -33,6 +33,8 @@ Please check this tutorial(https://www.fintechee.com/expert-advisor-cpp-compiler
 
 ![Fintechee Screenshot](https://www.fintechee.com/vpimages/services/newscreenshot1.png)
 
+![Fintechee custom indicator](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/analyzestructure.png)
+
 ![Fintechee APP Screenshot1](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/mobile1.png)
 ![Fintechee APP Screenshot2](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/mobile2.png)
 ![Fintechee APP Screenshot3](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/mobile3.png)
