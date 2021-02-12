@@ -29,7 +29,7 @@ You can find the source codes for the tutorials here: https://github.com/fintech
 
 Please check our [Github wiki](https://github.com/fintechee/Expert-Advisor-Studio/wiki) to know more details about APIs.
 
-Please use our Nodejs package(https://github.com/fintechee/Expert-Advisor-CPP-Compiler) to compile C/C++/MQL.
+Please check this tutorial(https://www.fintechee.com/expert-advisor-cpp-compiler) to learn how to use our Nodejs package(https://github.com/fintechee/Expert-Advisor-CPP-Compiler) to compile C/C++/MQL-based programs.
 
 ![Screenshot](https://www.fintechee.com/vpimages/services/newscreenshot1.png)
 
