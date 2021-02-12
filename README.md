@@ -31,7 +31,16 @@ Please check our [Github wiki](https://github.com/fintechee/Expert-Advisor-Studi
 
 Please check this tutorial(https://www.fintechee.com/expert-advisor-cpp-compiler) to learn how to use our Nodejs package(https://github.com/fintechee/Expert-Advisor-CPP-Compiler) to compile C/C++/MQL-based programs.
 
-![Screenshot](https://www.fintechee.com/vpimages/services/newscreenshot1.png)
+![Fintechee Screenshot](https://www.fintechee.com/vpimages/services/newscreenshot1.png)
+
+![Fintechee APP Screenshot1](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/mobile1.png)
+![Fintechee APP Screenshot2](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/mobile2.png)
+![Fintechee APP Screenshot3](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/mobile3.png)
+![Fintechee APP Screenshot4](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/mobile4.png)
+![Fintechee APP Screenshot5](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/mobile5.png)
+![Fintechee APP Screenshot6](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/mobile6.png)
+![Fintechee APP Screenshot7](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/mobile7.png)
+![Fintechee APP Screenshot8](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/mobile8.png)
 
 ### Release Notes
 2020.7.7 three APIs were modified and added parameters.
