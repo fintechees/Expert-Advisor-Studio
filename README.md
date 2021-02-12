@@ -17,6 +17,10 @@ A repository for trading robots(EA) which can be running on Web browser
 13. Dashboard for broker's manager
 14. APP(Android, already listed on our website, will publish on Google Play soon)
 15. Source codes generator
+16. Spread betting
+17. Price aggregator(automated order router)
+18. Mutiple accounts management on the frontend(useful for trading arbitrage)
+19. Multiple charts management(responsive UI layout)
 
 ...... Many features, you can explore them on your own
 
