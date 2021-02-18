@@ -1,14 +1,15 @@
-registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming quotes(v1.0)", function (context) {
+registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming quotes and transactions(v1.01)", function (context) {
   // Disclaimer: we are not affiliated with the data providers or the API providers.
+  window.oandaDemo = getIndiParameter(context, "oandaDemo")
   window.oandaAccountId = getIndiParameter(context, "oandaAccountId")
   window.oandaTradeKey = getIndiParameter(context, "oandaTradeKey")
 
   var changeCallback = function (ctx) {
     var symbolName = getExtraSymbolName(ctx)
 
-    if (typeof window.fintecheeCryptoLoader.cryptocurrenciesList[symbolName] != "undefined") {
+    if (typeof window.oandaApiLoader.cryptocurrenciesList[symbolName] != "undefined") {
       var chartId = getChartHandleByContext(ctx)
-      var symbol = window.fintecheeCryptoLoader.cryptocurrenciesList[symbolName].symbolName.split("/")
+      var symbol = window.oandaApiLoader.cryptocurrenciesList[symbolName].symbolName.split("/")
       var baseCurrency = symbol[0]
       var termCurrency = symbol[1]
 
@@ -16,16 +17,16 @@ registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming 
       changeChartMenuItemName(ctx)
       var timeFrame = getTimeFrame(ctx)
 
-      window.fintecheeCryptoLoader.ticksList.add(baseCurrency)
-      window.fintecheeCryptoLoader.ticksList.add(termCurrency)
-      var chart = window.fintecheeCryptoLoader.charts[chartId + ""]
+      window.oandaApiLoader.ticksList.add(baseCurrency)
+      window.oandaApiLoader.ticksList.add(termCurrency)
+      var chart = window.oandaApiLoader.charts[chartId + ""]
       chart.timeFrame = timeFrame
       chart.baseCurrency = baseCurrency
       chart.termCurrency = termCurrency
 
       $.ajax({
         type: "GET",
-        url: "https://api-fxpractice.oanda.com/v3/instruments/" + chart.baseCurrency + "_" + chart.termCurrency + "/candles?granularity=" + timeFrame.toUpperCase(),
+        url: (window.oandaDemo ? "https://api-fxpractice.oanda.com/v3/instruments/" : "https://api-fxtrade.oanda.com/v3/instruments/") + chart.baseCurrency + "_" + chart.termCurrency + "/candles?granularity=" + timeFrame.toUpperCase(),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         headers: {
@@ -33,35 +34,32 @@ registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming 
           "Accept-Datetime-Format": "UNIX"
         },
         success: function (res) {
-          if (typeof res.data != "undefined") {
-            var data = []
+          var data = []
 
-            if (Array.isArray(res.candles)) {
-              for (var i in res.candles) {
-                var ohlc = res.candles[i].mid
+          if (Array.isArray(res.candles)) {
+            for (var i in res.candles) {
+              var ohlc = res.candles[i].mid
 
-                data.push({
-                  time: Math.floor(res.candles[i].time / 1000),
-                  volume: res.candles[i].volume,
-                  open: parseFloat(ohlc.o),
-                  high: parseFloat(ohlc.h),
-                  low: parseFloat(ohlc.l),
-                  close: parseFloat(ohlc.c)
-                })
-              }
-
-              takeoverLoad(chartId, data)
+              data.push({
+                time: Math.floor(res.candles[i].time / 1000),
+                volume: res.candles[i].volume,
+                open: parseFloat(ohlc.o),
+                high: parseFloat(ohlc.h),
+                low: parseFloat(ohlc.l),
+                close: parseFloat(ohlc.c)
+              })
             }
+
+            takeoverLoad(chartId, data)
           }
         }
       })
 
-      window.fintecheeCryptoLoader.setupSocket()
     } else {
       var chartId = getChartHandleByContext(ctx)
       unsetTakeoverMode(chartId)
       takeoverLoad(chartId, [])
-      delete window.fintecheeCryptoLoader.charts[chartId + ""]
+      delete window.oandaApiLoader.charts[chartId + ""]
     }
   }
 
@@ -69,22 +67,22 @@ registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming 
     var chartId = getChartHandleByContext(ctx)
     unsetTakeoverMode(chartId)
     takeoverLoad(chartId, [])
-    delete window.fintecheeCryptoLoader.charts[chartId + ""]
+    delete window.oandaApiLoader.charts[chartId + ""]
   }
 
   var chartId = getChartHandleByContext(context)
 
-  if (typeof window.fintecheeCryptoLoader == "undefined") {
-    window.fintecheeCryptoLoader = {
+  if (typeof window.oandaApiLoader == "undefined") {
+    window.oandaApiLoader = {
       cryptocurrenciesList: [],
       charts: [],
       ticksList: new Set(),
       socket: null,
       onTick: function (msg) {
-        var ticks = JSON.parse(msg.data)
+        var ticks = msg.data
 
-        for (var i in window.fintecheeCryptoLoader.charts) {
-          var chart = window.fintecheeCryptoLoader.charts[i]
+        for (var i in window.oandaApiLoader.charts) {
+          var chart = window.oandaApiLoader.charts[i]
           var bUpdatable = false
 
           for (var j in ticks) {
@@ -127,21 +125,21 @@ registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming 
           }
         }
       },
-      setupSocket: function () {
-        var that = this
-        var ticksList = Array.from(window.fintecheeCryptoLoader.ticksList)
+      onTransaction: function (data) {
 
-        if (ticksList.length > 0) {
-          $.ajax({
-            type: "GET",
-            url: "https://api-fxpractice.oanda.com/v3/accounts/" + window.oandaAccountId + "/pricing/stream?instruments=" + ticksList.join(",").replaceAll("/", "_"),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            headers: {
-              "Authorization": "bearer " + window.oandaTradeKey,
-              "Accept-Datetime-Format": "UNIX"
-            },
-            success: function (res) {
+      },
+      setupSocket: function () {
+        var symbolsList = []
+        for (var i in window.oandaApiLoader.cryptocurrenciesList) {
+          symbolsList.push(window.oandaApiLoader.cryptocurrenciesList[i].symbolName)
+        }
+
+        if (symbolsList.length > 0) {
+          var script = document.createElement("script")
+          document.body.appendChild(script)
+          script.onload = function () {
+            window.oandaDataAPI.addToken(window.oandaDemo, window.oandaAccountId, window.oandaTradeKey)
+            window.oandaDataAPI.pricing.stream(window.oandaAccountId, {instruments: symbolsList.join(","), snapshot: false}, function (res) {
               if (typeof res.instrument != "undefined") {
                 var data = {
                   data: []
@@ -149,13 +147,13 @@ registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming 
 
                 var price = null
                 if (Array.isArray(res.asks)) {
-                  price = res.asks[0]
+                  price = parseFloat(res.asks[0].price)
                 }
                 if (Array.isArray(res.bids)) {
                   if (price != null) {
-                    price = (price + res.bids[0]) / 2
+                    price = (price + parseFloat(res.bids[0].price)) / 2
                   } else {
-                    price = res.bids[0]
+                    price = parseFloat(res.bids[0].price)
                   }
                 }
 
@@ -163,16 +161,36 @@ registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming 
                 data.data[instrument[0]] = price
                 data.data[instrument[1]] = 1
 
-                that.onTick(data)
+                window.oandaApiLoader.onTick(data)
               }
-            }
-          })
-        }
+            })
+            window.oandaOrderAPI.addToken(window.oandaDemo, window.oandaAccountId, window.oandaTradeKey)
+            window.oandaOrderAPI.transactions.stream(window.oandaAccountId, function (res) {
+              if (typeof res.type != "undefined") {
+                var data = {
 
+                }
+                if (res.type == "ORDER_FILL") {
+
+                } else if (res.type == "HEARTBEAT") {
+                  console.log("Connected!")
+                }
+
+                // {"accountBalance":"6505973.49885","accountID":"<ACCOUNT>","batchID":"777","financing":"0.00000","id":"778","instrument":"EUR_USD","orderID":"777","pl":"0.00000","price":"1.11625","reason":"MARKET_ORDER","time":"2016-09-20T18:18:22.126490230Z","tradeOpened":{"tradeID":"778","units":"100"},"type":"ORDER_FILL","units":"100","userID":1179508}
+                window.oandaApiLoader.onTransaction(data)
+              }
+            })
+          }
+          script.onerror = function () {
+            alert("Failed to load required libs. Please refresh this page again.")
+          }
+          script.async = true
+          script.src = "https://www.fintechee.com/js/oanda/oanda_wrapper.js"
+        }
       }
     }
 
-    window.fintecheeCryptoLoader.charts[chartId + ""] = {
+    window.oandaApiLoader.charts[chartId + ""] = {
       chartId: chartId,
       timeFrame: null,
       baseCurrency: null,
@@ -188,12 +206,14 @@ registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming 
     }]
 
     for (var i in cryptocurrenciesList) {
-      window.fintecheeCryptoLoader.cryptocurrenciesList[cryptocurrenciesList[i].displayName] = cryptocurrenciesList[i]
+      window.oandaApiLoader.cryptocurrenciesList[cryptocurrenciesList[i].displayName] = cryptocurrenciesList[i]
     }
 
     addExtraSymbols(cryptocurrenciesList)
-  } else if (typeof window.fintecheeCryptoLoader.charts[chartId + ""] == "undefined") {
-    window.fintecheeCryptoLoader.charts[chartId + ""] = {
+
+    window.oandaApiLoader.setupSocket()
+  } else if (typeof window.oandaApiLoader.charts[chartId + ""] == "undefined") {
+    window.oandaApiLoader.charts[chartId + ""] = {
       chartId: chartId,
       baseCurrency: null,
       termCurrency: null,
@@ -204,6 +224,12 @@ registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming 
   }
 },
 [{
+  name: "oandaDemo",
+  value: true,
+  required: true,
+  type: PARAMETER_TYPE.BOOLEAN,
+  range: null
+}, {
   name: "oandaAccountId",
   value: "XXX-XXX-XXXXXXXX-XXX",
   required: true,
