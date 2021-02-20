@@ -1,4 +1,4 @@
-registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming quotes and transactions(v1.01)", function (context) {
+registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming quotes and transactions(v1.02)", function (context) {
   // Disclaimer: we are not affiliated with the data providers or the API providers.
   window.oandaDemo = getIndiParameter(context, "oandaDemo")
   window.oandaAccountId = getIndiParameter(context, "oandaAccountId")
@@ -24,34 +24,62 @@ registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming 
       chart.baseCurrency = baseCurrency
       chart.termCurrency = termCurrency
 
-      $.ajax({
-        type: "GET",
-        url: (window.oandaDemo ? "https://api-fxpractice.oanda.com/v3/instruments/" : "https://api-fxtrade.oanda.com/v3/instruments/") + chart.baseCurrency + "_" + chart.termCurrency + "/candles?granularity=" + timeFrame.toUpperCase(),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        headers: {
-          "Authorization": "bearer " + window.oandaTradeKey,
-          "Accept-Datetime-Format": "UNIX"
-        },
-        success: function (res) {
-          var data = []
+      // Solution A:
+      // Worked as well
+      // You can compare the two solutions.
+      // $.ajax({
+      //   type: "GET",
+      //   url: (window.oandaDemo ? "https://api-fxpractice.oanda.com/v3/instruments/" : "https://api-fxtrade.oanda.com/v3/instruments/") + chart.baseCurrency + "_" + chart.termCurrency + "/candles?granularity=" + timeFrame.toUpperCase(),
+      //   contentType: "application/json; charset=utf-8",
+      //   dataType: "json",
+      //   headers: {
+      //     "Authorization": "bearer " + window.oandaTradeKey,
+      //     "Accept-Datetime-Format": "UNIX"
+      //   },
+      //   success: function (res) {
+      //     var data = []
+      //
+      //     if (Array.isArray(res.candles)) {
+      //       for (var i in res.candles) {
+      //         var ohlc = res.candles[i].mid
+      //
+      //         data.push({
+      //           time: Math.floor(res.candles[i].time / 1000),
+      //           volume: res.candles[i].volume,
+      //           open: parseFloat(ohlc.o),
+      //           high: parseFloat(ohlc.h),
+      //           low: parseFloat(ohlc.l),
+      //           close: parseFloat(ohlc.c)
+      //         })
+      //       }
+      //
+      //       takeoverLoad(chartId, data)
+      //     }
+      //   }
+      // })
 
-          if (Array.isArray(res.candles)) {
-            for (var i in res.candles) {
-              var ohlc = res.candles[i].mid
+      // Solution B:
+      oandaDataAPI.instruments.candles(window.oandaAccountId, chart.baseCurrency + "_" + chart.termCurrency, {
+        granularity: timeFrame.toUpperCase()
+      })
+      .then(function (res) {
+        var data = []
 
-              data.push({
-                time: Math.floor(res.candles[i].time / 1000),
-                volume: res.candles[i].volume,
-                open: parseFloat(ohlc.o),
-                high: parseFloat(ohlc.h),
-                low: parseFloat(ohlc.l),
-                close: parseFloat(ohlc.c)
-              })
-            }
+        if (Array.isArray(res.candles)) {
+          for (var i in res.candles) {
+            var ohlc = res.candles[i].mid
 
-            takeoverLoad(chartId, data)
+            data.push({
+              time: Math.floor(new Date(res.candles[i].time).getTime() / 1000),
+              volume: res.candles[i].volume,
+              open: parseFloat(ohlc.o),
+              high: parseFloat(ohlc.h),
+              low: parseFloat(ohlc.l),
+              close: parseFloat(ohlc.c)
+            })
           }
+
+          takeoverLoad(chartId, data)
         }
       })
 
