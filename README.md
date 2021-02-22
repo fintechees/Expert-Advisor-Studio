@@ -21,6 +21,7 @@ A repository for trading robots(EA) which can be running on Web browser
 17. Price aggregator(automated order router)
 18. Multiple accounts management on the frontend(useful for trading arbitrage)
 19. Multiple charts management(responsive UI layout)
+20. Investor mode(guest mode, read-only)
 
 ...... Many features, you can explore them on your own
 
