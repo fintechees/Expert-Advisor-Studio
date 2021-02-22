@@ -86,14 +86,19 @@ registerEA(
 			var result = window.myPerceptron.activate(input)[0]
 			printMessage(result)
 
-			var ask = getAsk(context, brokerName, accountId, symbolName)
-			var bid = getBid(context, brokerName, accountId, symbolName)
-			var volume = 0.01
+			try {
+				var ask = getAsk(context, brokerName, accountId, symbolName)
+				var bid = getBid(context, brokerName, accountId, symbolName)
+				var volume = 0.01
 
-			if (result < 0.5 - threshold) {
-				sendOrder(brokerName, accountId, symbolName, ORDER_TYPE.OP_BUY, 0, 0, volume, ask+takeProfit, bid-3*takeProfit, "", 0, 0)
-			} else if (result > 0.5 + threshold) {
-				sendOrder(brokerName, accountId, symbolName, ORDER_TYPE.OP_SELL, 0, 0, volume, bid-takeProfit, ask+3*takeProfit, "", 0, 0)
+				if (result < 0.5 - threshold) {
+					sendOrder(brokerName, accountId, symbolName, ORDER_TYPE.OP_BUY, 0, 0, volume, ask+takeProfit, bid-3*takeProfit, "", 0, 0)
+				} else if (result > 0.5 + threshold) {
+					sendOrder(brokerName, accountId, symbolName, ORDER_TYPE.OP_SELL, 0, 0, volume, bid-takeProfit, ask+3*takeProfit, "", 0, 0)
+				}
+			} catch (e) {
+				// This try-catch is used to bypass the "error throw" when you start the EA too early to call getAsk or getBid(at that time, bid or ask may be not ready yet.)
+				printErrorMessage(e.message)
 			}
 		}
-)
+	)
