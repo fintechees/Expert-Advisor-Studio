@@ -1,6 +1,6 @@
 registerEA(
 		"sample_trading_arbitrage",
-		"Two accounts signed up on the different servers are required to trade arbitrage. Additionally please make sure that you have signed in to both accounts and logged out from the accounts in investor mode.(v1.02)",
+		"Two accounts signed up on the different servers are required to trade arbitrage. Additionally please make sure that you have signed in to both accounts and logged out from the accounts in investor mode.(v1.03)",
 		[],// parameters
 		function (context) { // Init()
 			var account1 = getAccount(context, 0)
@@ -41,10 +41,21 @@ registerEA(
 			var acc1 = window.acc1
 			var acc2 = window.acc2
 
-			var ask1 = getAsk(context, acc1.brokerName, acc1.accountId, acc1.symbolName)
-			var ask2 = getAsk(context, acc2.brokerName, acc2.accountId, acc2.symbolName)
-			var bid1 = getBid(context, acc1.brokerName, acc1.accountId, acc1.symbolName)
-			var bid2 = getBid(context, acc2.brokerName, acc2.accountId, acc2.symbolName)
+			var ask1 = null
+			var ask2 = null
+			var bid1 = null
+			var bid2 = null
+
+			try {
+				ask1 = getAsk(context, acc1.brokerName, acc1.accountId, acc1.symbolName)
+				ask2 = getAsk(context, acc2.brokerName, acc2.accountId, acc2.symbolName)
+				bid1 = getBid(context, acc1.brokerName, acc1.accountId, acc1.symbolName)
+				bid2 = getBid(context, acc2.brokerName, acc2.accountId, acc2.symbolName)
+			} catch (e) {
+				// This try-catch is used to bypass the "error throw" when you start the EA too early to call getAsk or getBid(at that time, bid or ask may be not ready yet.)
+				printErrorMessage(e.message)
+				return
+			}
 
 			var volume = 0.01
 
@@ -112,4 +123,4 @@ registerEA(
 				}
 			}
 		}
-)
+	)
