@@ -1,6 +1,6 @@
 registerEA(
   "fixapi_oanda_arbitrage",
-  "A test EA to trade arbitrage based on the price difference between FIX API and Oanda(v1.01)",
+  "A test EA to trade arbitrage based on the price difference between FIX API and Oanda(v1.02)",
   [],
   function (context) { // Init()
     var account = getAccount(context, 0)
@@ -46,11 +46,11 @@ registerEA(
     					},
               {title: "Oanda-FIX",
     					render: function (data, type, row) {
-                if (data >= 0) {
-                  return '<p style = "color:#21BA45" >' + data + '</p>'
-                } else {
-                  return '<p style = "color:#DB2828" >' + data + '</p>'
-                }
+                  if (data >= 0) {
+                    return '<p style = "color:#21BA45" >' + data + '</p>'
+                  } else {
+                    return '<p style = "color:#DB2828" >' + data + '</p>'
+                  }
     						}
     					}
     				],
@@ -82,8 +82,6 @@ registerEA(
     			})
 
           for (var i in window.oandaApiLoader.oandaQuotes) {
-            var quote = window.oandaApiLoader.oandaQuotes[i]
-
             $("#arbitrage_prices").DataTable().row.add([
               i,
               "",
@@ -119,7 +117,7 @@ registerEA(
       var askFIXAPI = currentTick.ask
       var bidFIXAPI = currentTick.bid
 
-      if (typeof window.oandaApiLoader.oandaQuotes[symbolName] == "undefined") return
+      if (window.oandaApiLoader.oandaQuotes[symbolName] == null) return
 
       var askOanda = window.oandaApiLoader.oandaQuotes[symbolName].ask
       var bidOanda = window.oandaApiLoader.oandaQuotes[symbolName].bid
