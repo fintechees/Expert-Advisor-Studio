@@ -1,4 +1,4 @@
-registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming quotes and transactions(v1.03)", function (context) {
+registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming quotes and transactions(v1.04)", function (context) {
   // Disclaimer: we are not affiliated with the data providers or the API providers.
   window.oandaDemo = getIndiParameter(context, "oandaDemo")
   window.oandaAccountId = getIndiParameter(context, "oandaAccountId")
@@ -281,11 +281,12 @@ registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming 
       displayName: "GBP/CHF (Oanda)"
     }]
 
+    window.oandaApiLoader.oandaQuotes = []
+
     for (var i in cryptocurrenciesList) {
       window.oandaApiLoader.cryptocurrenciesList[cryptocurrenciesList[i].displayName] = cryptocurrenciesList[i]
+      window.oandaApiLoader.oandaQuotes[cryptocurrenciesList[i].symbolName] = null
     }
-
-    window.oandaApiLoader.oandaQuotes = []
 
     addExtraSymbols(cryptocurrenciesList)
 
