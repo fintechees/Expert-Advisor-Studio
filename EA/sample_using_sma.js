@@ -45,21 +45,25 @@ registerEA(
 			var arrClose = getData(context, window.chartHandle, DATA_NAME.CLOSE)
 			var arrSma = getData(context, window.indiHandle, "sma")
 
+			var ask = null
+			var bid = null
 			try {
-				var ask = getAsk(context, brokerName, accountId, symbolName)
-				var bid = getBid(context, brokerName, accountId, symbolName)
-				var limitPrice = 0.0003
-				var stopPrice = 0.0003
-				var volume = 0.01
-
-				if (arrClose[arrClose.length - 3] < arrSma[arrSma.length - 3] && arrClose[arrClose.length - 2] > arrSma[arrSma.length - 2]) {
-					sendOrder(brokerName, accountId, symbolName, ORDER_TYPE.OP_BUYLIMIT, ask-limitPrice, 0, volume, ask+limitPrice, bid-3*stopPrice, "", 0, 0)
-				} else if (arrClose[arrClose.length - 3] > arrSma[arrSma.length - 3] && arrClose[arrClose.length - 2] < arrSma[arrSma.length - 2]) {
-					sendOrder(brokerName, accountId, symbolName, ORDER_TYPE.OP_SELLLIMIT, bid+limitPrice, 0, volume, bid-limitPrice, ask+3*stopPrice, "", 0, 0)
-				}
+				ask = getAsk(context, brokerName, accountId, symbolName)
+				bid = getBid(context, brokerName, accountId, symbolName)
 			} catch (e) {
 				// This try-catch is used to bypass the "error throw" when you start the EA too early to call getAsk or getBid(at that time, bid or ask may be not ready yet.)
 				printErrorMessage(e.message)
+				return
+			}
+
+			var limitPrice = 0.0003
+			var stopPrice = 0.0003
+			var volume = 0.01
+
+			if (arrClose[arrClose.length - 3] < arrSma[arrSma.length - 3] && arrClose[arrClose.length - 2] > arrSma[arrSma.length - 2]) {
+				sendOrder(brokerName, accountId, symbolName, ORDER_TYPE.OP_BUYLIMIT, ask-limitPrice, 0, volume, ask+limitPrice, bid-3*stopPrice, "", 0, 0)
+			} else if (arrClose[arrClose.length - 3] > arrSma[arrSma.length - 3] && arrClose[arrClose.length - 2] < arrSma[arrSma.length - 2]) {
+				sendOrder(brokerName, accountId, symbolName, ORDER_TYPE.OP_SELLLIMIT, bid+limitPrice, 0, volume, bid-limitPrice, ask+3*stopPrice, "", 0, 0)
 			}
 		}
 	)
