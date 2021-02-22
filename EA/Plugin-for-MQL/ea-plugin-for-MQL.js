@@ -1,6 +1,6 @@
 	registerEA(
 		"mql_ea_loader_plugin",
-		"mql_plugin to make MQL-based EAs runnable on Fintechee(v1.10)",
+		"mql_plugin to make MQL-based EAs runnable on Fintechee(v1.11)",
 		[{ // parameters
 			name: "definition",
 			value: "",
@@ -1383,19 +1383,26 @@
 
 									var tData = getData(context, buffObj.chartId, DATA_NAME.TIME)
 
+									var ask = null
+									var bid = null
+
 									try {
-										window.mqlEAs[eaName].onTick(
-											uid,
-											tData.length,
-											getAsk(context, brokerName, accountId, symbolName),
-											getBid(context, brokerName, accountId, symbolName),
-											1.0 / buffObj.symbol.toFixed,
-											Math.log10(buffObj.symbol.toFixed)
-										)
+										ask = getAsk(context, brokerName, accountId, symbolName)
+										bid = getBid(context, brokerName, accountId, symbolName)
 									} catch (e) {
 					          // This try-catch is used to bypass the "error throw" when you start the EA too early to call getAsk or getBid(at that time, bid or ask may be not ready yet.)
 					          printErrorMessage(e.message)
+										return
 									}
+
+									window.mqlEAs[eaName].onTick(
+										uid,
+										tData.length,
+										ask,
+										bid,
+										1.0 / buffObj.symbol.toFixed,
+										Math.log10(buffObj.symbol.toFixed)
+									)
 								}
 							) // registerEA
 
