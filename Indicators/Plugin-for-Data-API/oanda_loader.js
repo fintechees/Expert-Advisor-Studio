@@ -1,4 +1,4 @@
-registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming quotes and transactions(v1.02)", function (context) {
+registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming quotes and transactions(v1.03)", function (context) {
   // Disclaimer: we are not affiliated with the data providers or the API providers.
   window.oandaDemo = getIndiParameter(context, "oandaDemo")
   window.oandaAccountId = getIndiParameter(context, "oandaAccountId")
@@ -111,20 +111,21 @@ registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming 
 
         for (var i in window.oandaApiLoader.charts) {
           var chart = window.oandaApiLoader.charts[i]
-          var bUpdatable = false
+          var bUpdatable1 = false
+          var bUpdatable2 = false
 
           for (var j in ticks) {
             if (j == chart.baseCurrency) {
               chart.baseCurrencyPrice = parseFloat(ticks[j])
-              bUpdatable = true
+              bUpdatable1 = true
             }
             if (j == chart.termCurrency) {
               chart.termCurrencyPrice = parseFloat(ticks[j])
-              bUpdatable = true
+              bUpdatable2 = true
             }
           }
 
-          if (bUpdatable) {
+          if (bUpdatable1 && bUpdatable2) {
             if (chart.baseCurrencyPrice != null && chart.termCurrencyPrice != null && chart.baseCurrencyPrice > 0 && chart.termCurrencyPrice > 0) {
               var tick = {
                 time: Math.floor(new Date().getTime() / 1000),
@@ -173,21 +174,30 @@ registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming 
                   data: []
                 }
 
+                var ask = null
+                var bid = null
                 var price = null
                 if (Array.isArray(res.asks)) {
-                  price = parseFloat(res.asks[0].price)
+                  ask = parseFloat(res.asks[0].price)
+                  price = ask
                 }
                 if (Array.isArray(res.bids)) {
+                  bid = parseFloat(res.bids[0].price)
                   if (price != null) {
-                    price = (price + parseFloat(res.bids[0].price)) / 2
+                    price = (price + bid) / 2
                   } else {
-                    price = parseFloat(res.bids[0].price)
+                    price = bid
                   }
                 }
 
                 var instrument = res.instrument.split("_")
                 data.data[instrument[0]] = price
                 data.data[instrument[1]] = 1
+
+                window.oandaApiLoader.oandaQuotes[res.instrument] = {
+                  ask: ask,
+                  bid: bid
+                }
 
                 window.oandaApiLoader.onTick(data)
               }
@@ -201,7 +211,6 @@ registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming 
                 if (res.type == "ORDER_FILL") {
 
                 } else if (res.type == "HEARTBEAT") {
-                  console.log("Connected!")
                 }
 
                 // {"accountBalance":"6505973.49885","accountID":"<ACCOUNT>","batchID":"777","financing":"0.00000","id":"778","instrument":"EUR_USD","orderID":"777","pl":"0.00000","price":"1.11625","reason":"MARKET_ORDER","time":"2016-09-20T18:18:22.126490230Z","tradeOpened":{"tradeID":"778","units":"100"},"type":"ORDER_FILL","units":"100","userID":1179508}
@@ -229,13 +238,54 @@ registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming 
     createTakeover(chartId, changeCallback, removeCallback)
 
     var cryptocurrenciesList = [{
+      symbolName: "AUD/JPY",
+      displayName: "AUD/JPY (Oanda)"
+    }, {
+      symbolName: "GBP/JPY",
+      displayName: "GBP/JPY (Oanda)"
+    }, {
+      symbolName: "GBP/AUD",
+      displayName: "GBP/AUD (Oanda)"
+    }, {
+      symbolName: "USD/JPY",
+      displayName: "USD/JPY (Oanda)"
+    }, {
       symbolName: "EUR/USD",
-      displayName: "EUR/USD"
+      displayName: "EUR/USD (Oanda)"
+    }, {
+      symbolName: "USD/CHF",
+      displayName: "USD/CHF (Oanda)"
+    }, {
+      symbolName: "AUD/USD",
+      displayName: "AUD/USD (Oanda)"
+    }, {
+      symbolName: "AUD/CAD",
+      displayName: "AUD/CAD (Oanda)"
+    }, {
+      symbolName: "GBP/USD",
+      displayName: "GBP/USD (Oanda)"
+    }, {
+      symbolName: "USD/CAD",
+      displayName: "USD/CAD (Oanda)"
+    }, {
+      symbolName: "EUR/JPY",
+      displayName: "EUR/JPY (Oanda)"
+    }, {
+      symbolName: "AUD/CHF",
+      displayName: "AUD/CHF (Oanda)"
+    }, {
+      symbolName: "EUR/GBP",
+      displayName: "EUR/GBP (Oanda)"
+    }, {
+      symbolName: "GBP/CHF",
+      displayName: "GBP/CHF (Oanda)"
     }]
 
     for (var i in cryptocurrenciesList) {
       window.oandaApiLoader.cryptocurrenciesList[cryptocurrenciesList[i].displayName] = cryptocurrenciesList[i]
     }
+
+    window.oandaApiLoader.oandaQuotes = []
 
     addExtraSymbols(cryptocurrenciesList)
 
