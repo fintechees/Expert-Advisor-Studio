@@ -1,6 +1,6 @@
 registerEA(
 		"sample_using_sma",
-		"A test EA based on sma(v1.02)",
+		"A test EA based on sma(v1.03)",
 		[{ // parameters
 			name: "period",
 			value: 20,
@@ -45,16 +45,21 @@ registerEA(
 			var arrClose = getData(context, window.chartHandle, DATA_NAME.CLOSE)
 			var arrSma = getData(context, window.indiHandle, "sma")
 
-			var ask = getAsk(context, brokerName, accountId, symbolName)
-			var bid = getBid(context, brokerName, accountId, symbolName)
-			var limitPrice = 0.0003
-			var stopPrice = 0.0003
-			var volume = 0.01
+			try {
+				var ask = getAsk(context, brokerName, accountId, symbolName)
+				var bid = getBid(context, brokerName, accountId, symbolName)
+				var limitPrice = 0.0003
+				var stopPrice = 0.0003
+				var volume = 0.01
 
-			if (arrClose[arrClose.length - 3] < arrSma[arrSma.length - 3] && arrClose[arrClose.length - 2] > arrSma[arrSma.length - 2]) {
-				sendOrder(brokerName, accountId, symbolName, ORDER_TYPE.OP_BUYLIMIT, ask-limitPrice, 0, volume, ask+limitPrice, bid-3*stopPrice, "", 0, 0)
-			} else if (arrClose[arrClose.length - 3] > arrSma[arrSma.length - 3] && arrClose[arrClose.length - 2] < arrSma[arrSma.length - 2]) {
-				sendOrder(brokerName, accountId, symbolName, ORDER_TYPE.OP_SELLLIMIT, bid+limitPrice, 0, volume, bid-limitPrice, ask+3*stopPrice, "", 0, 0)
+				if (arrClose[arrClose.length - 3] < arrSma[arrSma.length - 3] && arrClose[arrClose.length - 2] > arrSma[arrSma.length - 2]) {
+					sendOrder(brokerName, accountId, symbolName, ORDER_TYPE.OP_BUYLIMIT, ask-limitPrice, 0, volume, ask+limitPrice, bid-3*stopPrice, "", 0, 0)
+				} else if (arrClose[arrClose.length - 3] > arrSma[arrSma.length - 3] && arrClose[arrClose.length - 2] < arrSma[arrSma.length - 2]) {
+					sendOrder(brokerName, accountId, symbolName, ORDER_TYPE.OP_SELLLIMIT, bid+limitPrice, 0, volume, bid-limitPrice, ask+3*stopPrice, "", 0, 0)
+				}
+			} catch (e) {
+				// This try-catch is used to bypass the "error throw" when you start the EA too early to call getAsk or getBid(at that time, bid or ask may be not ready yet.)
+				printErrorMessage(e.message)
 			}
 		}
-)
+	)
