@@ -60,6 +60,9 @@ Please check this tutorial(https://www.fintechee.com/expert-advisor-cpp-compiler
 2. modifyOrder
 3. closeTrade
 
+2021.2.22 Added one API to improve the performance.
+1. getCurrentTick
+
 ```javascript
 var BROKER_NAME = {
 	DEMO: "CC Demo"
