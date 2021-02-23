@@ -1,4 +1,4 @@
-registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming quotes and transactions(v1.05)", function (context) {
+registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming quotes and transactions(v1.06)", function (context) {
   // Disclaimer: we are not affiliated with the data providers or the API providers.
   window.oandaDemo = getIndiParameter(context, "oandaDemo")
   window.oandaAccountId = getIndiParameter(context, "oandaAccountId")
@@ -167,8 +167,9 @@ registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming 
           var script = document.createElement("script")
           document.body.appendChild(script)
           script.onload = function () {
+            window.latestTickTime = 0
             window.oandaDataAPI.addToken(window.oandaDemo, window.oandaAccountId, window.oandaTradeKey)
-            window.oandaDataAPI.pricing.stream(window.oandaAccountId, {instruments: symbolsList.join(","), snapshot: false}, function (res) {
+            window.oandaDataCallback = function (res) {
               if (typeof res.instrument != "undefined") {
                 var data = {
                   data: []
@@ -201,9 +202,10 @@ registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming 
 
                 window.oandaApiLoader.onTick(data)
               }
-            })
+            }
+            window.oandaDataAPI.pricing.stream(window.oandaAccountId, {instruments: symbolsList.join(","), snapshot: false}, window.oandaDataCallback)
             window.oandaOrderAPI.addToken(window.oandaDemo, window.oandaAccountId, window.oandaTradeKey)
-            window.oandaOrderAPI.transactions.stream(window.oandaAccountId, function (res) {
+            window.oandaOrderCallback = function (res) {
               if (typeof res.type != "undefined") {
                 var data = {
 
@@ -211,18 +213,32 @@ registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming 
                 if (res.type == "ORDER_FILL") {
 
                 } else if (res.type == "HEARTBEAT") {
+                  window.latestOandaTickTime = new Date().getTime()
+                  window.oandaLoaded = true
                 }
 
                 // {"accountBalance":"6505973.49885","accountID":"<ACCOUNT>","batchID":"777","financing":"0.00000","id":"778","instrument":"EUR_USD","orderID":"777","pl":"0.00000","price":"1.11625","reason":"MARKET_ORDER","time":"2016-09-20T18:18:22.126490230Z","tradeOpened":{"tradeID":"778","units":"100"},"type":"ORDER_FILL","units":"100","userID":1179508}
                 window.oandaApiLoader.onTransaction(data)
               }
-            })
+            }
+            window.oandaOrderAPI.transactions.stream(window.oandaAccountId, window.oandaOrderCallback)
           }
           script.onerror = function () {
             alert("Failed to load required libs. Please refresh this page again.")
           }
           script.async = true
           script.src = "https://www.fintechee.com/js/oanda/oanda_wrapper.js"
+        }
+      },
+      resetupSocket: function () {
+        var symbolsList = []
+        for (var i in window.oandaApiLoader.cryptocurrenciesList) {
+          symbolsList.push(window.oandaApiLoader.cryptocurrenciesList[i].symbolName)
+        }
+
+        if (symbolsList.length > 0) {
+          window.oandaDataAPI.pricing.stream(window.oandaAccountId, {instruments: symbolsList.join(","), snapshot: false}, window.oandaDataCallback)
+          window.oandaOrderAPI.transactions.stream(window.oandaAccountId, window.oandaOrderCallback)
         }
       }
     }
