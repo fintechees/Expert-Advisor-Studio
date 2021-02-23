@@ -1,4 +1,4 @@
-registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming quotes and transactions(v1.06)", function (context) {
+registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming quotes and transactions(v1.07)", function (context) {
   // Disclaimer: we are not affiliated with the data providers or the API providers.
   window.oandaDemo = getIndiParameter(context, "oandaDemo")
   window.oandaAccountId = getIndiParameter(context, "oandaAccountId")
@@ -170,6 +170,8 @@ registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming 
             window.latestTickTime = 0
             window.oandaDataAPI.addToken(window.oandaDemo, window.oandaAccountId, window.oandaTradeKey)
             window.oandaDataCallback = function (res) {
+              window.latestOandaTickTime = new Date().getTime()
+
               if (typeof res.instrument != "undefined") {
                 var data = {
                   data: []
@@ -213,7 +215,6 @@ registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming 
                 if (res.type == "ORDER_FILL") {
 
                 } else if (res.type == "HEARTBEAT") {
-                  window.latestOandaTickTime = new Date().getTime()
                   window.oandaLoaded = true
                 }
 
