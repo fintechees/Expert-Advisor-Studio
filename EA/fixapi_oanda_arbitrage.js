@@ -6,12 +6,13 @@ registerEA(
     var account = getAccount(context, 0)
     var brokerName = getBrokerNameOfAccount(account)
     var accountId = getAccountIdOfAccount(account)
-    window.arbitrageStatistics = []
 
     if (typeof window.oandaLoaded != "undefined" && window.oandaLoaded) {
       window.latestFIXTickTime = new Date().getTime()
 
       if (typeof window.arbitrageStatistics == "undefined") {
+        window.arbitrageStatistics = []
+
         for (var i in window.oandaApiLoader.oandaQuotes) {
           getQuotes(context, brokerName, accountId, i.replace("_", "/"))
           window.arbitrageStatistics[i] = {
