@@ -1,4 +1,4 @@
-registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming quotes and transactions(v1.07)", function (context) {
+registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming quotes and transactions(v1.08)", function (context) {
   // Disclaimer: we are not affiliated with the data providers or the API providers.
   window.oandaDemo = getIndiParameter(context, "oandaDemo")
   window.oandaAccountId = getIndiParameter(context, "oandaAccountId")
@@ -197,7 +197,7 @@ registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming 
                 data.data[instrument[0]] = price
                 data.data[instrument[1]] = 1
 
-                window.oandaApiLoader.oandaQuotes[res.instrument] = {
+                window.oandaApiLoader.oandaQuotes[instrument[0] + "/" + instrument[1]] = {
                   ask: ask,
                   bid: bid
                 }
@@ -302,7 +302,7 @@ registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming 
 
     for (var i in cryptocurrenciesList) {
       window.oandaApiLoader.cryptocurrenciesList[cryptocurrenciesList[i].displayName] = cryptocurrenciesList[i]
-      window.oandaApiLoader.oandaQuotes[cryptocurrenciesList[i].symbolName.replace("/", "_")] = null
+      window.oandaApiLoader.oandaQuotes[cryptocurrenciesList[i].symbolName] = null
     }
 
     addExtraSymbols(cryptocurrenciesList)
