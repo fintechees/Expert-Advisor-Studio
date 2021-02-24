@@ -1,4 +1,4 @@
-registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming quotes and transactions(v1.08)", function (context) {
+registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming quotes and transactions(v1.09)", function (context) {
   // Disclaimer: we are not affiliated with the data providers or the API providers.
   window.oandaDemo = getIndiParameter(context, "oandaDemo")
   window.oandaAccountId = getIndiParameter(context, "oandaAccountId")
@@ -255,29 +255,35 @@ registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming 
     createTakeover(chartId, changeCallback, removeCallback)
 
     var cryptocurrenciesList = [{
+      symbolName: "AUD/CAD",
+      displayName: "AUD/CAD (Oanda)"
+    }, {
+      symbolName: "AUD/CHF",
+      displayName: "AUD/CHF (Oanda)"
+    }, {
       symbolName: "AUD/JPY",
       displayName: "AUD/JPY (Oanda)"
-    }, {
-      symbolName: "GBP/JPY",
-      displayName: "GBP/JPY (Oanda)"
-    }, {
-      symbolName: "GBP/AUD",
-      displayName: "GBP/AUD (Oanda)"
-    }, {
-      symbolName: "USD/JPY",
-      displayName: "USD/JPY (Oanda)"
-    }, {
-      symbolName: "EUR/USD",
-      displayName: "EUR/USD (Oanda)"
-    }, {
-      symbolName: "USD/CHF",
-      displayName: "USD/CHF (Oanda)"
     }, {
       symbolName: "AUD/USD",
       displayName: "AUD/USD (Oanda)"
     }, {
-      symbolName: "AUD/CAD",
-      displayName: "AUD/CAD (Oanda)"
+      symbolName: "EUR/GBP",
+      displayName: "EUR/GBP (Oanda)"
+    }, {
+      symbolName: "EUR/JPY",
+      displayName: "EUR/JPY (Oanda)"
+    }, {
+      symbolName: "EUR/USD",
+      displayName: "EUR/USD (Oanda)"
+    }, {
+      symbolName: "GBP/AUD",
+      displayName: "GBP/AUD (Oanda)"
+    }, {
+      symbolName: "GBP/CHF",
+      displayName: "GBP/CHF (Oanda)"
+    }, {
+      symbolName: "GBP/JPY",
+      displayName: "GBP/JPY (Oanda)"
     }, {
       symbolName: "GBP/USD",
       displayName: "GBP/USD (Oanda)"
@@ -285,17 +291,11 @@ registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming 
       symbolName: "USD/CAD",
       displayName: "USD/CAD (Oanda)"
     }, {
-      symbolName: "EUR/JPY",
-      displayName: "EUR/JPY (Oanda)"
+      symbolName: "USD/CHF",
+      displayName: "USD/CHF (Oanda)"
     }, {
-      symbolName: "AUD/CHF",
-      displayName: "AUD/CHF (Oanda)"
-    }, {
-      symbolName: "EUR/GBP",
-      displayName: "EUR/GBP (Oanda)"
-    }, {
-      symbolName: "GBP/CHF",
-      displayName: "GBP/CHF (Oanda)"
+      symbolName: "USD/JPY",
+      displayName: "USD/JPY (Oanda)"
     }]
 
     window.oandaApiLoader.oandaQuotes = []
