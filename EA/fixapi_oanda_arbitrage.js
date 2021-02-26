@@ -1,14 +1,30 @@
 registerEA(
   "fixapi_oanda_arbitrage",
-  "A test EA to trade arbitrage based on the price difference between FIX API and Oanda(v1.05)",
-  [],
+  "A test EA to trade arbitrage based on the price difference between FIX API and Oanda(v1.06)",
+  [{
+    name: "autoLoad",
+    value: true,
+    required: true,
+    type: PARAMETER_TYPE.BOOLEAN,
+    range: null
+  }, {
+    name: "autoSave",
+    value: true,
+    required: true,
+    type: PARAMETER_TYPE.BOOLEAN,
+    range: null
+  }],
   function (context) { // Init()
     var account = getAccount(context, 0)
     var brokerName = getBrokerNameOfAccount(account)
     var accountId = getAccountIdOfAccount(account)
+    window.autoLoadArbitrageStats = getEAParameter(context, "autoLoad")
+    window.autoSaveArbitrageStats = getEAParameter(context, "autoSave")
+    window.latestDay = new Date().getDay()
 
     if (typeof window.oandaLoaded != "undefined" && window.oandaLoaded) {
       window.latestFIXTickTime = new Date().getTime()
+      window.latestSaveTime = window.latestFIXTickTime
 
       if (typeof window.arbitrageStatistics == "undefined") {
         for (var i in window.oandaApiLoader.oandaQuotes) {
@@ -17,30 +33,46 @@ registerEA(
 
         window.arbitrageStatistics = []
 
-        window.loadArbitrageStatistics = function (symbolNames, arbitrageStatistics) {
-          var bLoaded = false
+        for (var i in window.oandaApiLoader.oandaQuotes) {
+          window.arbitrageStatistics[i] = {
+            h: [],
+            h2: [],
+            ph: [],
+            ph2: []
+          }
+          for (var j = 0; j <= 23; j++) {
+            window.arbitrageStatistics[i].h.push(0)
+            window.arbitrageStatistics[i].h2.push(0)
+            window.arbitrageStatistics[i].ph.push(0)
+            window.arbitrageStatistics[i].ph2.push(0)
+          }
+        }
 
+        window.loadArbitrageStatistics = function (arbitrageStatistics) {
           if (typeof localStorage.reservedZone != "undefined") {
             var reservedZone = JSON.parse(localStorage.reservedZone)
 
-            if (typeof reservedZone.arbitrageStatistics != "undefined") {
-              for (var i in reservedZone.arbitrageStatistics) {
-                arbitrageStatistics[reservedZone.arbitrageStatistics[i].symbolName] = {
-                  h: reservedZone.arbitrageStatistics[i].h
+            if (typeof reservedZone.arbitrageStatistics != "undefined" && typeof reservedZone.arbitrageStatistics.statistics != "undefined") {
+              if (new Date(reservedZone.arbitrageStatistics.latestSaveTime).getDay() < window.latestDay) {
+                for (var i in reservedZone.arbitrageStatistics.statistics) {
+                  var statistics = reservedZone.arbitrageStatistics.statistics[i]
+                  arbitrageStatistics[statistics.symbolName] = {
+                    h: 0,
+                    h2: 0,
+                    ph: statistics.h,
+                    ph2: statistics.h2
+                  }
                 }
-              }
-
-              bLoaded = true
-            }
-          }
-
-          if (!bLoaded) {
-            for (var i in symbolNames) {
-              arbitrageStatistics[i] = {
-                h: []
-              }
-              for (var j = 0; j <= 23; j++) {
-                arbitrageStatistics[i].h.push(0)
+              } else {
+                for (var i in reservedZone.arbitrageStatistics.statistics) {
+                  var statistics = reservedZone.arbitrageStatistics.statistics[i]
+                  arbitrageStatistics[statistics.symbolName] = {
+                    h: statistics.h,
+                    h2: statistics.h2,
+                    ph: statistics.ph,
+                    ph2: statistics.ph2
+                  }
+                }
               }
             }
           }
@@ -53,12 +85,18 @@ registerEA(
             reservedZone = JSON.parse(localStorage.reservedZone)
           }
 
-          reservedZone.arbitrageStatistics = []
+          reservedZone.arbitrageStatistics = {
+            latestSaveTime: new Date().getTime(),
+            statistics: []
+          }
 
           for (var i in arbitrageStatistics) {
-            reservedZone.arbitrageStatistics.push({
+            reservedZone.arbitrageStatistics.statistics.push({
               symbolName: i,
-              h: arbitrageStatistics[i].h
+              h: arbitrageStatistics[i].h,
+              h2: arbitrageStatistics[i].h2,
+              ph: arbitrageStatistics[i].ph,
+              ph2: arbitrageStatistics[i].ph2
             })
           }
 
@@ -69,59 +107,9 @@ registerEA(
           window.arbitrageStatistics[symbolName].h[hour]++
         }
 
-        window.loadArbitrageStatistics(window.oandaApiLoader.oandaQuotes, window.arbitrageStatistics)
-
-        var script = document.createElement("script")
-        document.body.appendChild(script)
-        script.onload = function () {
-          window.renderArbitrageChart = function () {
-            var ctx = document.getElementById("arbitrage_chart").getContext("2d")
-            var labels = []
-            var data = []
-            for (var i = 0; i <= 23; i++) {
-              labels.push(i + "")
-              data.push(0)
-            }
-
-            window.currentChartSymbolName = "EUR/USD"
-
-            window.arbitrageChart = new Chart(ctx, {
-                type: "line",
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: window.currentChartSymbolName,
-                        backgroundColor: "#FFFFFF",
-                        borderColor: "#0099FF",
-                        data: data
-                    }]
-                },
-                options: {
-                  responsive: true,
-                  maintainAspectRatio: false
-                }
-            })
-          }
-
-          window.updateArbitrageChart = function (symbolName, bAll, hour) {
-            if (bAll) {
-              for (var i = 0; i <= 23; i++) {
-                window.arbitrageChart.data.datasets[0].data[i] = window.arbitrageStatistics[symbolName].h[i]
-              }
-            } else {
-              window.arbitrageChart.data.datasets[0].data[hour] = window.arbitrageStatistics[symbolName].h[hour]
-            }
-
-            window.arbitrageChart.update()
-          }
-
-          window.renderArbitrageChart()
+        window.countArbitrage2 = function (symbolName, hour) {
+          window.arbitrageStatistics[symbolName].h2[hour]++
         }
-        script.onerror = function () {
-          alert("Failed to load required libs. Please refresh this page again.")
-        }
-        script.async = true
-        script.src = "https://cdn.jsdelivr.net/npm/chart.js@2.8.0"
       }
 
       if (typeof $("#arbitrage_dashboard").html() != "undefined") {
@@ -139,6 +127,7 @@ registerEA(
           '</div>' +
         '</div>' +
         '<div class="actions">' +
+          '<div class="ui button" id="btn_load_arbitrage_statistics">Load</div>' +
           '<div class="ui button" id="btn_save_arbitrage_statistics">Save</div>' +
         '</div>' +
       '</div>'
@@ -152,7 +141,7 @@ registerEA(
             {title: "Instruments"},
             {title: "FIX-Oanda",
   					render: function (data, type, row) {
-  							if (data >= 0) {
+  							if (data > 0) {
   								return '<p style = "background:#21BA45;color:#FFFFFF" >' + data + '</p>'
   							} else {
   								return '<p style = "background:#FFFFFF;color:#DB2828" >' + data + '</p>'
@@ -161,7 +150,7 @@ registerEA(
   					},
             {title: "Oanda-FIX",
   					render: function (data, type, row) {
-                if (data >= 0) {
+                if (data > 0) {
                   return '<p style = "background:#21BA45;color:#FFFFFF" >' + data + '</p>'
                 } else {
                   return '<p style = "background:#FFFFFF;color:#DB2828" >' + data + '</p>'
@@ -171,7 +160,7 @@ registerEA(
             {title: "Oanda"},
             {title: "Op"}
   				],
-          ordering: true,
+          ordering: false,
           searching: true,
           bPaginate: false,
           bLengthChange: false,
@@ -194,8 +183,9 @@ registerEA(
             {
               targets: -1,
               data: null,
-              defaultContent: '<button id="btn_check_arbitrage" class="ui button" style="padding:0;background:#FFFFFF"><i class="tachometer alternate green icon"></i></button>' +
-                              '<button id="btn_send_order" class="ui button" style="padding:0;background:#FFFFFF"><i class="edit grey icon"></i></button>'
+              defaultContent: '<button id="btn_check_arbitrage" class="ui button" style="padding:0;background:#FFFFFF"><i class="tachometer alternate blue icon"></i></button>' +
+                              '<button id="btn_sell" class="ui button" style="padding:0;background:#FFFFFF;color:#DB2828">S</button>' +
+                              '<button id="btn_buy" class="ui button" style="padding:0;background:#FFFFFF;color:#21BA45">B</button>'
             }
           ]
   			})
@@ -218,9 +208,17 @@ registerEA(
             }
 
             window.currentChartSymbolName = data[0]
-            window.arbitrageChart.data.datasets[0].label = window.currentChartSymbolName
+            window.arbitrageChart.data.datasets[0].label = window.currentChartSymbolName + "(F-O)"
+            window.arbitrageChart.data.datasets[1].label = window.currentChartSymbolName + "(O-F)"
+            window.arbitrageChart.data.datasets[2].label = window.currentChartSymbolName + "(F-O)"
+            window.arbitrageChart.data.datasets[3].label = window.currentChartSymbolName + "(O-F)"
             window.updateArbitrageChart(data[0], true, -1)
+            window.updateArbitrageChart2(data[0], true, -1)
           }
+        })
+
+        $("#btn_load_arbitrage_statistics").on("click", function () {
+          window.loadArbitrageStatistics(window.arbitrageStatistics)
         })
 
         $("#btn_save_arbitrage_statistics").on("click", function () {
@@ -230,8 +228,116 @@ registerEA(
 
       $("#arbitrage_dashboard").modal("show")
 
-      if (typeof window.renderArbitrageChart != "undefined") {
-        window.renderArbitrageChart()
+      if (window.autoLoadArbitrageStats) {
+        window.loadArbitrageStatistics(window.arbitrageStatistics)
+      }
+
+      if (typeof window.initArbitrageChart != "undefined") {
+        window.initArbitrageChart(window.arbitrageStatistics)
+      } else {
+        var script = document.createElement("script")
+        document.body.appendChild(script)
+        script.onload = function () {
+          window.initArbitrageChart = function (arbitrageStatistics) {
+            var ctx = document.getElementById("arbitrage_chart").getContext("2d")
+            window.currentChartSymbolName = "EUR/USD"
+            var statistics = arbitrageStatistics[window.currentChartSymbolName]
+
+            var labels = []
+            var data = []
+            var data2 = []
+            var pdata = []
+            var pdata2 = []
+            for (var i = 0; i <= 23; i++) {
+              labels.push(i + "")
+              data.push(statistics.h[i])
+              data2.push(statistics.h2[i])
+              pdata.push(statistics.ph[i])
+              pdata2.push(statistics.ph2[i])
+            }
+
+            window.arbitrageChart = new Chart(ctx, {
+                type: "line",
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: window.currentChartSymbolName + "(F-O)",
+                        backgroundColor: "rgba(255,255,255,0)",
+                        borderColor: "#DB2828",
+                        data: data
+                    }, {
+                        label: window.currentChartSymbolName + "(O-F)",
+                        backgroundColor: "rgba(255,255,255,0)",
+                        borderColor: "#21BA45",
+                        data: data2
+                    }, {
+                        label: window.currentChartSymbolName + "(F-O)",
+                        backgroundColor: "rgba(255,255,255,0)",
+                        borderColor: "#DB2828",
+                        borderDash: [2, 3],
+                        data: pdata
+                    }, {
+                        label: window.currentChartSymbolName + "(O-F)",
+                        backgroundColor: "rgba(255,255,255,0)",
+                        borderColor: "#21BA45",
+                        borderDash: [2, 3],
+                        data: pdata2
+                    }]
+                },
+                options: {
+                  responsive: true,
+                  maintainAspectRatio: false
+                }
+            })
+          }
+
+          window.updateArbitrageChart = function (symbolName, bAll, hour) {
+            if (bAll) {
+              for (var i = 0; i <= 23; i++) {
+                window.arbitrageChart.data.datasets[0].data[i] = window.arbitrageStatistics[symbolName].h[i]
+                window.arbitrageChart.data.datasets[2].data[i] = window.arbitrageStatistics[symbolName].ph[i]
+              }
+            } else {
+              window.arbitrageChart.data.datasets[0].data[hour] = window.arbitrageStatistics[symbolName].h[hour]
+            }
+
+            window.arbitrageChart.update()
+          }
+
+          window.updateArbitrageChart2 = function (symbolName, bAll, hour) {
+            if (bAll) {
+              for (var i = 0; i <= 23; i++) {
+                window.arbitrageChart.data.datasets[1].data[i] = window.arbitrageStatistics[symbolName].h2[i]
+                window.arbitrageChart.data.datasets[3].data[i] = window.arbitrageStatistics[symbolName].ph2[i]
+              }
+            } else {
+              window.arbitrageChart.data.datasets[1].data[hour] = window.arbitrageStatistics[symbolName].h2[hour]
+            }
+
+            window.arbitrageChart.update()
+          }
+
+          window.updatePrevArbitrage = function () {
+            for (var i in window.arbitrageStatistics) {
+              window.arbitrageStatistics[i].ph = window.arbitrageStatistics[i].h
+              window.arbitrageStatistics[i].ph2 = window.arbitrageStatistics[i].h2
+              window.arbitrageStatistics[i].h = []
+              window.arbitrageStatistics[i].h2 = []
+
+              for (var j = 0; j <= 23; j++) {
+                window.arbitrageStatistics[i].h.push(0)
+                window.arbitrageStatistics[i].h2.push(0)
+              }
+            }
+          }
+
+          window.initArbitrageChart(window.arbitrageStatistics)
+        }
+        script.onerror = function () {
+          alert("Failed to load required libs. Please refresh this page again.")
+        }
+        script.async = true
+        script.src = "https://cdn.jsdelivr.net/npm/chart.js@2.8.0"
       }
 
       window.arbitrageNotification = ""
@@ -246,13 +352,25 @@ registerEA(
       if (typeof window.latestFIXTickTime == "undefined" || typeof window.latestOandaTickTime == "undefined") return
 
       var currTime = new Date().getTime()
+      var hour = new Date(currTime).getHours()
+      var day = new Date(currTime).getDay()
       if (currTime - window.latestOandaTickTime > 30000) {
         window.oandaApiLoader.resetupSocket()
         window.oandaLoaded = false
         return
       }
 
-      window.latestFIXTickTime = new Date().getTime()
+      if (window.latestDay != day) {
+        window.updatePrevArbitrage()
+      }
+
+      if (window.autoSaveArbitrageStats && currTime - window.latestSaveTime > 60000) {
+        window.saveArbitrageStatistics(window.arbitrageStatistics)
+        window.latestSaveTime = currTime
+      }
+
+      window.latestFIXTickTime = currTime
+      window.latestDay = day
 
       var account = getAccount(context, 0)
       var brokerName = getBrokerNameOfAccount(account)
@@ -291,7 +409,6 @@ registerEA(
         })
 
         if (bidOanda > askFIXAPI) {
-          var hour = new Date().getHours()
           window.countArbitrage(symbolName, hour)
           if (symbolName == window.currentChartSymbolName) {
             window.updateArbitrageChart(symbolName, false, hour)
@@ -300,10 +417,9 @@ registerEA(
           printMessage(msg)
         }
         if (bidFIXAPI > askOanda) {
-          var hour = new Date().getHours()
-          window.countArbitrage(symbolName, hour)
+          window.countArbitrage2(symbolName, hour)
           if (symbolName == window.currentChartSymbolName) {
-            window.updateArbitrageChart(symbolName, false, hour)
+            window.updateArbitrageChart2(symbolName, false, hour)
           }
           var msg = new Date() + " " + symbolName + " Chance!! FIXAPI Bid: " + bidFIXAPI + ", Oanda Ask: " + askOanda + ", Difference: " + (bidFIXAPI - askOanda) + "\n"
           printMessage(msg)
