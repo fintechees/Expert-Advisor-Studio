@@ -1,6 +1,6 @@
 registerEA(
   "fixapi_oanda_arbitrage",
-  "A test EA to trade arbitrage based on the price difference between FIX API and Oanda(v1.06)",
+  "A test EA to trade arbitrage based on the price difference between FIX API and Oanda(v1.07)",
   [{
     name: "autoLoad",
     value: true,
@@ -13,6 +13,12 @@ registerEA(
     required: true,
     type: PARAMETER_TYPE.BOOLEAN,
     range: null
+  }, {
+    name: "backgroundColor",
+    value: "#dfc29a",
+    required: true,
+    type: PARAMETER_TYPE.STRING,
+    range: null
   }],
   function (context) { // Init()
     var account = getAccount(context, 0)
@@ -20,6 +26,7 @@ registerEA(
     var accountId = getAccountIdOfAccount(account)
     window.autoLoadArbitrageStats = getEAParameter(context, "autoLoad")
     window.autoSaveArbitrageStats = getEAParameter(context, "autoSave")
+    window.arbitrageBgColor = getEAParameter(context, "backgroundColor")
     window.latestDay = new Date().getDay()
 
     if (typeof window.oandaLoaded != "undefined" && window.oandaLoaded) {
@@ -57,10 +64,14 @@ registerEA(
                 for (var i in reservedZone.arbitrageStatistics.statistics) {
                   var statistics = reservedZone.arbitrageStatistics.statistics[i]
                   arbitrageStatistics[statistics.symbolName] = {
-                    h: 0,
-                    h2: 0,
+                    h: [],
+                    h2: [],
                     ph: statistics.h,
                     ph2: statistics.h2
+                  }
+                  for (var j = 0; j <= 23; j++) {
+                    arbitrageStatistics[symbolName].h.push(0)
+                    arbitrageStatistics[symbolName].h2.push(0)
                   }
                 }
               } else {
@@ -116,23 +127,42 @@ registerEA(
         $("#arbitrage_dashboard").remove()
       }
 
-      var panel = '<div class="ui fullscreen modal" id="arbitrage_dashboard">' +
-        '<div class="content">' +
-          '<div class="ui grid">' +
-            '<div class="ten wide column"><canvas id="arbitrage_chart" style="height:100%"></canvas></div>' +
-            '<div class="six wide column">' +
-              '<table id="arbitrage_prices" class="cell-border">' +
-              '</table>' +
-            '</div>' +
+      var arbitrageChartPanel = '<div id="arbitrage_chart_dashboard" style="background:' + window.arbitrageBgColor + ';height:100%">' +
+        '<div class="row" style="background:' + window.arbitrageBgColor + ';text-align:center">' +
+          '<div class="ui buttons">' +
+            // '<div class="ui button" style="background:' + window.arbitrageBgColor + '" id="btn_show_arbitrage_prices">List</div>' +
+            '<div class="ui button" style="background:' + window.arbitrageBgColor + '" id="btn_load_arbitrage_statistics">Load</div>' +
+            '<div class="ui button" style="background:' + window.arbitrageBgColor + '" id="btn_save_arbitrage_statistics">Save</div>' +
           '</div>' +
         '</div>' +
-        '<div class="actions">' +
-          '<div class="ui button" id="btn_load_arbitrage_statistics">Load</div>' +
-          '<div class="ui button" id="btn_save_arbitrage_statistics">Save</div>' +
+        '<div class="row">' +
+          '<table id="arbitrage_prices" class="cell-border">' +
+          '</table>' +
+        '</div>' +
+        '<div class="row">' +
+          '<div class="chart-container" style="background:' + window.arbitrageBgColor + ';position:relative;height:35vh">' +
+            '<canvas id="arbitrage_chart"></canvas>' +
+          '</div>' +
         '</div>' +
       '</div>'
 
-      $("#reserved_zone").html(panel)
+      var arbitragePricesPanel = '<div class="ui fullscreen modal" id="arbitrage_prices_dashboard">' +
+        '<div class="content">' +
+        '</div>' +
+      '</div>'
+
+      $("#reserved_zone").html(arbitragePricesPanel)
+
+      if (getLayoutId() != 3) {
+  			changeLayout(3)
+  		}
+
+  		window.chartIds = getLayout(2)
+  		for (var i in window.chartIds) {
+  			moveLayout(window.chartIds[i], 1)
+  		}
+
+      embedHtml(arbitrageChartPanel, 2)
 
       if (!$.fn.dataTable.isDataTable("#arbitrage_prices")) {
   			window.arbitragePricesTable = $("#arbitrage_prices").DataTable({
@@ -144,7 +174,7 @@ registerEA(
   							if (data > 0) {
   								return '<p style = "background:#21BA45;color:#FFFFFF" >' + data + '</p>'
   							} else {
-  								return '<p style = "background:#FFFFFF;color:#DB2828" >' + data + '</p>'
+  								return '<p style = "background:' + window.arbitrageBgColor + ';color:#DB2828" >' + data + '</p>'
   							}
   						}
   					},
@@ -153,15 +183,21 @@ registerEA(
                 if (data > 0) {
                   return '<p style = "background:#21BA45;color:#FFFFFF" >' + data + '</p>'
                 } else {
-                  return '<p style = "background:#FFFFFF;color:#DB2828" >' + data + '</p>'
+                  return '<p style = "background:' + window.arbitrageBgColor + ';color:#DB2828" >' + data + '</p>'
                 }
   						}
   					},
             {title: "Oanda"},
             {title: "Op"}
   				],
+          headerCallback: function (thead, data, start, end, display) {
+            $(thead).css("background-color", window.arbitrageBgColor)
+          },
+          rowCallback: function (row, data, index) {
+            $("td", row).css("background-color", window.arbitrageBgColor)
+          },
           ordering: false,
-          searching: true,
+          searching: false,
           bPaginate: false,
           bLengthChange: false,
           bFilter: false,
@@ -183,9 +219,9 @@ registerEA(
             {
               targets: -1,
               data: null,
-              defaultContent: '<button id="btn_check_arbitrage" class="ui button" style="padding:0;background:#FFFFFF"><i class="tachometer alternate blue icon"></i></button>' +
-                              '<button id="btn_sell" class="ui button" style="padding:0;background:#FFFFFF;color:#DB2828">S</button>' +
-                              '<button id="btn_buy" class="ui button" style="padding:0;background:#FFFFFF;color:#21BA45">B</button>'
+              defaultContent: '<button id="btn_check_arbitrage" class="ui button" style="padding:0;background:' + window.arbitrageBgColor + '"><i class="tachometer alternate blue icon"></i></button>' +
+                              '<button id="btn_sell" class="ui button" style="padding:0;background:' + window.arbitrageBgColor + ';color:#DB2828">S</button>' +
+                              '<button id="btn_buy" class="ui button" style="padding:0;background:' + window.arbitrageBgColor + ';color:#21BA45">B</button>'
             }
           ]
   			})
@@ -225,8 +261,6 @@ registerEA(
           window.saveArbitrageStatistics(window.arbitrageStatistics)
         })
   		}
-
-      $("#arbitrage_dashboard").modal("show")
 
       if (window.autoLoadArbitrageStats) {
         window.loadArbitrageStatistics(window.arbitrageStatistics)
@@ -346,6 +380,11 @@ registerEA(
     }
   },
   function (context) { // Deinit()
+    embedHtml("", 2)
+
+		for (var i in window.chartIds) {
+			moveLayout(window.chartIds[i], 2)
+		}
   },
   function (context) { // OnTick()
     if (typeof window.oandaLoaded != "undefined" && window.oandaLoaded) {
@@ -413,16 +452,16 @@ registerEA(
           if (symbolName == window.currentChartSymbolName) {
             window.updateArbitrageChart(symbolName, false, hour)
           }
-          var msg = new Date() + " " + symbolName + " Chance!! Oanda Bid: " + bidOanda + ", FIXAPI Ask: " + askFIXAPI + ", Difference: " + (bidOanda - askFIXAPI) + "\n"
-          printMessage(msg)
+          // var msg = new Date() + " " + symbolName + " Chance!! Oanda Bid: " + bidOanda + ", FIXAPI Ask: " + askFIXAPI + ", Difference: " + (bidOanda - askFIXAPI) + "\n"
+          // printMessage(msg)
         }
         if (bidFIXAPI > askOanda) {
           window.countArbitrage2(symbolName, hour)
           if (symbolName == window.currentChartSymbolName) {
             window.updateArbitrageChart2(symbolName, false, hour)
           }
-          var msg = new Date() + " " + symbolName + " Chance!! FIXAPI Bid: " + bidFIXAPI + ", Oanda Ask: " + askOanda + ", Difference: " + (bidFIXAPI - askOanda) + "\n"
-          printMessage(msg)
+          // var msg = new Date() + " " + symbolName + " Chance!! FIXAPI Bid: " + bidFIXAPI + ", Oanda Ask: " + askOanda + ", Difference: " + (bidFIXAPI - askOanda) + "\n"
+          // printMessage(msg)
         }
       }
     }
