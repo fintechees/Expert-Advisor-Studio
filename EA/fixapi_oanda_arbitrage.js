@@ -1,6 +1,6 @@
 registerEA(
   "fixapi_oanda_arbitrage",
-  "A test EA to trade arbitrage based on the price difference between FIX API and Oanda(v1.07)",
+  "A test EA to trade arbitrage based on the price difference between FIX API and Oanda(v1.08)",
   [{
     name: "autoLoad",
     value: true,
@@ -399,17 +399,12 @@ registerEA(
         return
       }
 
-      if (window.latestDay != day) {
-        window.updatePrevArbitrage()
-      }
-
       if (window.autoSaveArbitrageStats && currTime - window.latestSaveTime > 60000) {
         window.saveArbitrageStatistics(window.arbitrageStatistics)
         window.latestSaveTime = currTime
       }
 
       window.latestFIXTickTime = currTime
-      window.latestDay = day
 
       var account = getAccount(context, 0)
       var brokerName = getBrokerNameOfAccount(account)
@@ -419,6 +414,13 @@ registerEA(
       var symbolName = currentTick.symbolName
       var askFIXAPI = currentTick.ask
       var bidFIXAPI = currentTick.bid
+
+      if (window.latestDay != day) {
+        window.updatePrevArbitrage()
+        window.updateArbitrageChart(symbolName, true, -1)
+        window.updateArbitrageChart2(symbolName, true, -1)
+        window.latestDay = day
+      }
 
       if (window.oandaApiLoader.oandaQuotes[symbolName] == null) return
 
