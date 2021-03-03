@@ -1,4 +1,4 @@
-registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming quotes and transactions(v1.10)", function (context) {
+registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming quotes and transactions(v1.11)", function (context) {
   // Disclaimer: we are not affiliated with the data providers or the API providers.
 },
 [{
@@ -35,8 +35,8 @@ function (context) { // Init
   window.oandaAccountId = getIndiParameter(context, "oandaAccountId")
   window.oandaTradeKey = getIndiParameter(context, "oandaTradeKey")
 
-  if (typeof window.changeCallback == "undefined") {
-    window.changeCallback = function (ctx) {
+  if (typeof window.oandaChangeCallback == "undefined") {
+    window.oandaChangeCallback = function (ctx) {
       var symbolName = getExtraSymbolName(ctx)
 
       if (typeof window.oandaApiLoader.currenciesList[symbolName] != "undefined") {
@@ -134,8 +134,8 @@ function (context) { // Init
     }
   }
 
-  if (typeof window.removeCallback == "undefined") {
-    window.removeCallback = function (ctx) {
+  if (typeof window.oandaRemoveCallback == "undefined") {
+    window.oandaRemoveCallback = function (ctx) {
       var chartId = getChartHandleByContext(ctx)
       unsetTakeoverMode(chartId)
       takeoverLoad(chartId, [])
@@ -303,7 +303,7 @@ function (context) { // Init
           baseCurrencyPrice: null,
           termCurrencyPrice: null
         }
-        createTakeover(chartIds[i], window.changeCallback, window.removeCallback)
+        createTakeover(chartIds[i], window.oandaChangeCallback, window.oandaRemoveCallback)
       }
     }
 
@@ -369,7 +369,7 @@ function (context) { // Init
       baseCurrencyPrice: null,
       termCurrencyPrice: null
     }
-    createTakeover(chartId, window.changeCallback, window.removeCallback)
+    createTakeover(chartId, window.oandaChangeCallback, window.oandaRemoveCallback)
   }
 },
 function (context) { // Deinit
