@@ -29,9 +29,10 @@ A repository for trading robots(EA) which can be running on Web browser
 
 We started a live stream on Youtube
 
-Please access our video stream page to see how we trade arbitrage in real-time.
+Please access our video stream page to see how we trade arbitrage in real-time(FIX API quotes vs Oanda).
 Recommendation:
 https://twitter.com/Fintechee1
+![Trading Arbitrage(FIX API vs Oanda) via Fintechee](https://github.com/fintechee/Expert-Advisor-Studio/blob/master/arbitragechance.png)
 Alternative:
 https://www.fintechee.com/videostreaming/
 
