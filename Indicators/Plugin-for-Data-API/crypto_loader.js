@@ -1,74 +1,102 @@
-registerIndicator("fintechee_crypto_loader", "A plugin to load the specific cryptocurrency's streaming quotes(v1.0)", function (context) {
+registerIndicator("fintechee_crypto_loader", "A plugin to load the specific cryptocurrency's streaming quotes(v1.02)", function (context) {
   // Disclaimer: we are not affiliated with the data providers or the API providers.
-  var changeCallback = function (ctx) {
-    var symbolName = getExtraSymbolName(ctx)
+},
+[],
+[{
+  name: DATA_NAME.TIME,
+  index: 0
+}],
+[{
+  name: "crypto",
+  visible: false
+}],
+WHERE_TO_RENDER.CHART_WINDOW,
+function (context) {
+  setDefaultIndicator("fintechee_crypto_loader", true)
 
-    if (typeof window.fintecheeCryptoLoader.cryptocurrenciesList[symbolName] != "undefined") {
-      var chartId = getChartHandleByContext(ctx)
-      var symbol = window.fintecheeCryptoLoader.cryptocurrenciesList[symbolName].symbolName.split("/")
-      var baseCurrency = symbol[0]
-      var termCurrency = symbol[1]
+  if (typeof window.cryptoChangeCallback == "undefined") {
+    window.cryptoChangeCallback = function (ctx) {
+      var symbolName = getExtraSymbolName(ctx)
 
-      setTakeoverMode(chartId)
-      changeChartMenuItemName(ctx)
-      var timeFrame = getTimeFrame(ctx)
+      if (typeof window.fintecheeCryptoLoader.cryptocurrenciesList[symbolName] != "undefined") {
+        var chartId = getChartHandleByContext(ctx)
+        var symbol = window.fintecheeCryptoLoader.cryptocurrenciesList[symbolName].symbolName.split("/")
+        var baseCurrency = symbol[0]
+        var termCurrency = symbol[1]
 
-      window.fintecheeCryptoLoader.ticksList.add(baseCurrency)
-      window.fintecheeCryptoLoader.ticksList.add(termCurrency)
-      var chart = window.fintecheeCryptoLoader.charts[chartId + ""]
-      chart.timeFrame = timeFrame
-      chart.baseCurrency = baseCurrency
-      chart.termCurrency = termCurrency
+        setTakeoverMode(chartId)
+        changeChartMenuItemName(ctx)
+        var timeFrame = getTimeFrame(ctx)
 
-      $.ajax({
-        type: "GET",
-        url: "https://api.coincap.io/v2/candles",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        data: {
-          exchange: "poloniex",
-          interval: timeFrame.toLowerCase(),
-          baseId: baseCurrency,
-          quoteId: termCurrency
-        },
-        success: function (res) {
-          if (typeof res.data != "undefined") {
-            var data = []
-
-            if (Array.isArray(res.data)) {
-              for (var i in res.data) {
-                var ohlc = res.data[i]
-
-                data.push({
-                  time: Math.floor(ohlc.period / 1000),
-                  volume: parseFloat(ohlc.volume),
-                  open: parseFloat(ohlc.open),
-                  high: parseFloat(ohlc.high),
-                  low: parseFloat(ohlc.low),
-                  close: parseFloat(ohlc.close)
-                })
-              }
-
-              takeoverLoad(chartId, data)
-            }
+        window.fintecheeCryptoLoader.ticksList.add(baseCurrency)
+        window.fintecheeCryptoLoader.ticksList.add(termCurrency)
+        if (typeof window.fintecheeCryptoLoader.charts[chartId + ""] == "undefined") {
+          window.fintecheeCryptoLoader.charts[chartId + ""] = {
+            chartId: chartId,
+            timeFrame: null,
+            baseCurrency: null,
+            termCurrency: null,
+            baseCurrencyPrice: null,
+            termCurrencyPrice: null
           }
         }
-      })
+        var chart = window.fintecheeCryptoLoader.charts[chartId + ""]
+        chart.timeFrame = timeFrame
+        chart.baseCurrency = baseCurrency
+        chart.termCurrency = termCurrency
 
-      window.fintecheeCryptoLoader.setupSocket()
-    } else {
+        $.ajax({
+          type: "GET",
+          url: "https://api.coincap.io/v2/candles",
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          data: {
+            exchange: "poloniex",
+            interval: timeFrame.toLowerCase(),
+            baseId: baseCurrency,
+            quoteId: termCurrency
+          },
+          success: function (res) {
+            if (typeof res.data != "undefined") {
+              var data = []
+
+              if (Array.isArray(res.data)) {
+                for (var i in res.data) {
+                  var ohlc = res.data[i]
+
+                  data.push({
+                    time: Math.floor(ohlc.period / 1000),
+                    volume: parseFloat(ohlc.volume),
+                    open: parseFloat(ohlc.open),
+                    high: parseFloat(ohlc.high),
+                    low: parseFloat(ohlc.low),
+                    close: parseFloat(ohlc.close)
+                  })
+                }
+
+                takeoverLoad(chartId, data)
+              }
+            }
+          }
+        })
+
+        window.fintecheeCryptoLoader.setupSocket()
+      } else {
+        var chartId = getChartHandleByContext(ctx)
+        unsetTakeoverMode(chartId)
+        takeoverLoad(chartId, [])
+        delete window.fintecheeCryptoLoader.charts[chartId + ""]
+      }
+    }
+  }
+
+  if (typeof window.cryptoRemoveCallback == "undefined") {
+    window.cryptoRemoveCallback = function (ctx) {
       var chartId = getChartHandleByContext(ctx)
       unsetTakeoverMode(chartId)
       takeoverLoad(chartId, [])
       delete window.fintecheeCryptoLoader.charts[chartId + ""]
     }
-  }
-
-  var removeCallback = function (ctx) {
-    var chartId = getChartHandleByContext(ctx)
-    unsetTakeoverMode(chartId)
-    takeoverLoad(chartId, [])
-    delete window.fintecheeCryptoLoader.charts[chartId + ""]
   }
 
   var chartId = getChartHandleByContext(context)
@@ -153,15 +181,20 @@ registerIndicator("fintechee_crypto_loader", "A plugin to load the specific cryp
       }
     }
 
-    window.fintecheeCryptoLoader.charts[chartId + ""] = {
-      chartId: chartId,
-      timeFrame: null,
-      baseCurrency: null,
-      termCurrency: null,
-      baseCurrencyPrice: null,
-      termCurrencyPrice: null
+    var chartIds = getLayout(1).concat(getLayout(2)).concat(getLayout(3)).concat(getLayout(4))
+    for (var i in chartIds) {
+      if (typeof window.fintecheeCryptoLoader.charts[chartIds[i] + ""] == "undefined") {
+        window.fintecheeCryptoLoader.charts[chartIds[i] + ""] = {
+          chartId: chartIds[i],
+          timeFrame: null,
+          baseCurrency: null,
+          termCurrency: null,
+          baseCurrencyPrice: null,
+          termCurrencyPrice: null
+        }
+        createTakeover(chartIds[i], window.cryptoChangeCallback, window.cryptoRemoveCallback)
+      }
     }
-    createTakeover(chartId, changeCallback, removeCallback)
 
     var cryptocurrenciesList = [{
       symbolName: "ethereum/bitcoin",
@@ -181,16 +214,9 @@ registerIndicator("fintechee_crypto_loader", "A plugin to load the specific cryp
       baseCurrencyPrice: null,
       termCurrencyPrice: null
     }
-    createTakeover(chartId, changeCallback, removeCallback)
+    createTakeover(chartId, window.cryptoChangeCallback, window.cryptoRemoveCallback)
   }
 },
-[],
-[{
-  name: DATA_NAME.TIME,
-  index: 0
-}],
-[{
-  name: "crypto",
-  visible: false
-}],
-WHERE_TO_RENDER.CHART_WINDOW)
+function (context) {
+
+})
