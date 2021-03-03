@@ -1,6 +1,6 @@
 registerEA(
   "fixapi_oanda_arbitrage",
-  "A test EA to trade arbitrage based on the price difference between FIX API and Oanda(v1.08)",
+  "A test EA to trade arbitrage based on the price difference between FIX API and Oanda(v1.09)",
   [{
     name: "autoLoad",
     value: true,
@@ -35,7 +35,7 @@ registerEA(
 
       if (typeof window.arbitrageStatistics == "undefined") {
         for (var i in window.oandaApiLoader.oandaQuotes) {
-          getQuotes(context, brokerName, accountId, i)
+          getQuotes(context, brokerName, accountId, i.replace("_", "/"))
         }
 
         window.arbitrageStatistics = []
@@ -70,8 +70,8 @@ registerEA(
                     ph2: statistics.h2
                   }
                   for (var j = 0; j <= 23; j++) {
-                    arbitrageStatistics[symbolName].h.push(0)
-                    arbitrageStatistics[symbolName].h2.push(0)
+                    arbitrageStatistics[statistics.symbolName].h.push(0)
+                    arbitrageStatistics[statistics.symbolName].h2.push(0)
                   }
                 }
               } else {
