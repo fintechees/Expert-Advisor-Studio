@@ -30,6 +30,9 @@ A repository for trading robots(EA) which can be running on Web browser
 We started a live stream on Youtube
 
 Please access our video stream page to see how we trade arbitrage in real-time.
+Recommendation:
+https://twitter.com/Fintechee1
+Alternative:
 https://www.fintechee.com/videostreaming/
 
 Please access our demo to run the EAs:
