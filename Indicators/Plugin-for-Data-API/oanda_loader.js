@@ -9,15 +9,13 @@ registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming 
   range: null
 }, {
   name: "oandaAccountId",
-  // value: "XXX-XXX-XXXXXXXX-XXX",
-  value: "101-001-18042600-001",
+  value: "XXX-XXX-XXXXXXXX-XXX",
   required: true,
   type: PARAMETER_TYPE.STRING,
   range: null
 }, {
   name: "oandaTradeKey",
-  // value: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-  value: "8662218152da93574a62447f2a21dbbf-47312d8e2360b0b57529d7bd256b6bb7",
+  value: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
   required: true,
   type: PARAMETER_TYPE.STRING,
   range: null
