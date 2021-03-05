@@ -1,4 +1,56 @@
 # Expert Advisor Studio
+
+.. image:: https://img.shields.io/pypi/v/python-telegram-bot.svg
+   :target: https://pypi.org/project/python-telegram-bot/
+   :alt: PyPi Package Version
+
+.. image:: https://img.shields.io/pypi/pyversions/python-telegram-bot.svg
+   :target: https://pypi.org/project/python-telegram-bot/
+   :alt: Supported Python versions
+
+.. image:: https://img.shields.io/badge/Bot%20API-5.0-blue?logo=telegram
+   :target: https://core.telegram.org/bots/api-changelog
+   :alt: Supported Bot API versions
+
+.. image:: https://img.shields.io/pypi/dm/python-telegram-bot
+   :target: https://pypistats.org/packages/python-telegram-bot
+   :alt: PyPi Package Monthly Download
+
+.. image:: https://readthedocs.org/projects/python-telegram-bot/badge/?version=stable
+   :target: https://python-telegram-bot.readthedocs.io/en/stable/?badge=stable
+   :alt: Documentation Status
+
+.. image:: https://img.shields.io/pypi/l/python-telegram-bot.svg
+   :target: https://www.gnu.org/licenses/lgpl-3.0.html
+   :alt: LGPLv3 License
+
+.. image:: https://github.com/python-telegram-bot/python-telegram-bot/workflows/GitHub%20Actions/badge.svg
+   :target: https://github.com/python-telegram-bot/python-telegram-bot/
+   :alt: Github Actions workflow
+
+.. image:: https://codecov.io/gh/python-telegram-bot/python-telegram-bot/branch/master/graph/badge.svg
+   :target: https://codecov.io/gh/python-telegram-bot/python-telegram-bot
+   :alt: Code coverage
+
+.. image:: http://isitmaintained.com/badge/resolution/python-telegram-bot/python-telegram-bot.svg
+   :target: http://isitmaintained.com/project/python-telegram-bot/python-telegram-bot
+   :alt: Median time to resolve an issue
+
+.. image:: https://api.codacy.com/project/badge/Grade/99d901eaa09b44b4819aec05c330c968
+   :target: https://www.codacy.com/app/python-telegram-bot/python-telegram-bot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=python-telegram-bot/python-telegram-bot&amp;utm_campaign=Badge_Grade
+   :alt: Code quality
+
+.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
+    :target: https://github.com/psf/black
+
+.. image:: https://img.shields.io/badge/Telegram-Group-blue.svg?logo=telegram
+   :target: https://telegram.me/pythontelegrambotgroup
+   :alt: Telegram Group
+
+.. image:: https://img.shields.io/badge/IRC-Channel-blue.svg
+   :target: https://webchat.freenode.net/?channels=##python-telegram-bot
+   :alt: IRC Bridge
+
 A repository for trading robots(EA) which can be running on Web browser
 
 ## Features
