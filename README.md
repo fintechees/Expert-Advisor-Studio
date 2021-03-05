@@ -39,6 +39,8 @@ We started a live stream on Youtube
 Please access our video stream page to see how we trade arbitrage in real-time(FIX API quotes vs Oanda).
 Recommendation:
 https://twitter.com/Fintechee1
+![Trading Arbitrage(FIX API vs Oanda) via Fintechee](https://github.com/fintechee/Expert-Advisor-Studio/blob/master/arbitrageyoutube.png)
+
 ![Trading Arbitrage(FIX API vs Oanda) via Fintechee](https://github.com/fintechee/Expert-Advisor-Studio/blob/master/arbitragechance.png)
 Alternative:
 https://www.fintechee.com/videostreaming/
