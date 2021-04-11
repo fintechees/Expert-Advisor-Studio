@@ -89,13 +89,15 @@ Please check this tutorial(https://www.fintechee.com/expert-advisor-cpp-compiler
 2021.3.3 two APIs were modified.
 
 1. registerIndicator
-We Added three parameters to this API. They are all callback functions: OnInit, OnDeinit, and OnRender. We added them to extend the functions in Fintechee and make our indicators much easier to manage and monitor. When you add an indicator to the chart, the OnInit callback function would be called. When you remove an indicator from the chart, the OnDeinit function would be called. After the main callback function is called, the OnRender function would be triggerred. The OnRender function is very useful to add your own renderer to the platform. Our platform's renderer is based on D3js. If you are not familiar with it, you can use other alternative JS chart systems, such as ChartJS.
+
+We Added three parameters to this API. They are all callback functions: OnInit, OnDeinit, and OnRender. We added them to extend the functions in Fintechee and make our indicators much easier to manage and monitor. When you add an indicator to the chart, the OnInit callback function would be called. When you remove an indicator from the chart, the OnDeinit function would be called. After the main callback function is called, the OnRender function would be triggered. The OnRender function is very useful to add your own renderer to the platform. Our platform's renderer is based on D3js. If you are not familiar with it, you can use other alternative JS chart systems, such as ChartJS.
 
 And, these callback functions are new features. Other platforms have no these parameters. Fortunately, this API is compatible with the older versions, so, you don't need to modify your old indicators.
 
 2. registerEA
-We added one more parameter to this API, it's a callback function to receive message when the transaction was triggerred.
-For example, if you send an order to the backend, you don't need to block your process. Everything in our platform is ASYNC. So, you can continue to do analysis and just make this callback function available to wait for the notification from the backend. If the order is filled and a new trade is opened, then you will get notified.
+
+We added one more parameter to this API, it's a callback function to receive a message when the transaction was triggered.
+For example, if you send an order to the backend, you don't need to block your process. Everything on our platform is ASYNC. So, you can continue to do analysis and just make this callback function available to wait for the notification from the backend. If the order is filled and a new trade is opened, then you will get notified.
 
 And, this callback function is a new feature. Other platforms have no this parameter. Fortunately, this API is compatible with the older versions, so, you don't need to modify your old EAs.
 
