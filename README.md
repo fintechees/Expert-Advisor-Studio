@@ -12,7 +12,7 @@
     <img src="https://img.shields.io/badge/FIX--API-Fintechee-red" alt="Fintechee ~ Fintech Trading Platform ~ FIX API ~ Expert Advisor Studio ~ White Label" />
   </a>
   <a href="https://www.fintechee.com/web-trader/">
-    <img src="https://img.shields.io/badge/WEB--Trader-Fintechee-red" alt="Fintechee ~ Fintech Trading Platform ~ WEB Trader ~ Expert Advisor Studio ~ White Label" />
+    <img src="https://img.shields.io/badge/WEB--Trader-Fintechee-yellow" alt="Fintechee ~ Fintech Trading Platform ~ WEB Trader ~ Expert Advisor Studio ~ White Label" />
   </a>
   <a href="https://twitter.com/Fintechee1">
   <img alt="Fintechee ~ Expert Advisor Studio ~ Twitter" src="https://img.shields.io/badge/Social-Twitter-steelblue" />
