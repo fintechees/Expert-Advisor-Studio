@@ -58,6 +58,7 @@
 18. Multiple accounts management on the frontend(useful for trading arbitrage)
 19. Multiple charts management(responsive UI layout)
 20. Investor mode(guest mode, read-only)
+21. Integration with Binance API on the backend
 
 ...... Many features, you can explore them on your own
 
