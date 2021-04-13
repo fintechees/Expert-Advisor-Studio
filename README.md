@@ -26,9 +26,6 @@
   <a href="https://www.angelinvestmentnetwork.org/">
     <img src="https://img.shields.io/badge/Investor-Fintech__Angel-orange" alt="Fintechee ~ Angel Investment Network ~ Fintech Industry" />
   </a>
-  <a href="http://thinkmill.com.au/?utm_source=github&utm_medium=badge&utm_campaign=react-boilerplate">
-    <img alt="Supported by Thinkmill" src="https://thinkmill.github.io/badge/heart.svg" />
-  </a>
 </div>
 
 <br />
