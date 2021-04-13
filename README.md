@@ -2,7 +2,7 @@
 
 <br />
 
-<div align="center"><strong>Expert Advisor Studio</strong></div>
+<h1 align="center">Expert Advisor Studio</h1>
 <div align="center">The most sophisticated Github repository for creating expert advisors(trading robots) and making automated trading doable on the Web browser.</div>
 
 <br />
