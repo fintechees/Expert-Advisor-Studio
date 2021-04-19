@@ -1,6 +1,3 @@
-<img src="https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/architecture.png" alt="Expert Advisor Studio Fintechee's Architecture" align="center" />
-
-<br />
 
 <h1 align="center">Expert Advisor Studio</h1>
 <div align="center">The most sophisticated Github repository for creating expert advisors(trading robots) and making automated trading doable on the Web browser.</div>
@@ -33,6 +30,12 @@
 <div align="center">
   <sub>Created by <a href="https://www.fintechee.com/">Fintechee</a></sub>
 </div>
+
+<img src="https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/c_cpp_compiler.gif" alt="Expert Advisor Studio Fintechee's C Mql Compiler" align="center" />
+
+<img src="https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/architecture.png" alt="Expert Advisor Studio Fintechee's Architecture" align="center" />
+
+<br />
 
 ## Features
 1. Javascript SDK, Compatible with C/C++/MQL
