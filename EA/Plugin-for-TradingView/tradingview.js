@@ -1,6 +1,6 @@
 registerEA(
   "tradingview_widget",
-  "A plugin to integrate with the widget of TradingView(v1.0)",
+  "A plugin to embed the widget of TradingView(v1.0)",
   [],
   function (context) { // Init()
     // Disclaimer: we are not affiliated with the widget providers or the API providers.
