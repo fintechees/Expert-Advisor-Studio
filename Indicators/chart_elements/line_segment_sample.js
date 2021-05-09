@@ -1,4 +1,5 @@
-registerIndicator("line_segment", "A line segment implemented by using custom indicator(v1.0)", function (context) {
+// This is just an example to implement chart elements by using custom indicator.
+registerIndicator("line_segment_sample", "A line segment implemented by using custom indicator(v1.0)", function (context) {
 },[{
   name: "color",
   value: "#AAA",
