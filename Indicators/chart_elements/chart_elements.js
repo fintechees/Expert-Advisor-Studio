@@ -1,4 +1,4 @@
-registerIndicator("chart_elements", "A manager for the chart elements implemented by using custom indicator(v1.0)", function (context) {
+registerIndicator("chart_elements", "A manager for the chart elements implemented by using custom indicator(v1.01)", function (context) {
 },[{
   name: "color",
   value: "#AAA",
@@ -449,15 +449,14 @@ function (context) { // Render()
       }
     }
   } else {
-    btnLineSegment = window.chartElements.canvas[chartHandle].selectAll(".btnLineSegment").data([{
-      chartHandle: chartHandle,
-      color: color,
-      strokeWidth: strokeWidth,
-      label: "Button1"
-    }])
+    btnLineSegment = window.chartElements.canvas[chartHandle].selectAll(".btnLineSegment").data(buttons)
+    btnLineSegmentTxt = window.chartElements.canvas[chartHandle].selectAll(".btnLineSegmentTxt").data(buttons)
 
     btnLineSegment
       .attr("cy", height - 15)
+
+    btnLineSegmentTxt
+      .attr("y", height - 15)
   }
 
   window.chartElements.barNum[chartHandle] = barNum
