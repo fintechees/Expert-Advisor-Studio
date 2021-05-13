@@ -1,4 +1,4 @@
-registerIndicator("chart_elements", "A manager for the chart elements implemented by using custom indicator(v1.01)", function (context) {
+registerIndicator("chart_elements", "A manager for the chart elements implemented by using custom indicator(v1.02)", function (context) {
 },[{
   name: "color",
   value: "#AAA",
@@ -32,9 +32,9 @@ function (context) { // Init()
     .on("drag", function (d) {
       if (d.type == "lineSegment") {
         if (d3.select(this).attr("class").includes("lineSegmentStarts")) {
-          window.chartElements.lineSegment.dragStart(this, d3.event.x, d3.event.y, d)
+          window.chartElements.lineSegment.dragStart(d3.event.x, d3.event.y, d)
         } else if (d3.select(this).attr("class").includes("lineSegmentEnds")) {
-          window.chartElements.lineSegment.dragEnd(this, d3.event.x, d3.event.y, d)
+          window.chartElements.lineSegment.dragEnd(d3.event.x, d3.event.y, d)
         }
       }
     })
@@ -133,7 +133,7 @@ function (context) { // Init()
           window.chartElements.save()
           this.render(chartHandle)
         },
-        dragStart: function (svgObj, x, y, d) {
+        dragStart: function (x, y, d) {
           var chartHandle = d.chartHandle
           var timeArr = window.chartElements.timeArr[chartHandle]
           var barNum = window.chartElements.barNum[chartHandle]
@@ -160,7 +160,7 @@ function (context) { // Init()
 
           d.startIdx = startIdx + cursor
 
-          d3.select(svgObj)
+          d3.select("#lineSegmentStarts_" + d.id)
             .attr("cx", xScale(startIdx)).attr("cy", val)
           d3.select("#lineSegments_" + d.id)
             .attr("x1", xScale(startIdx)).attr("y1", val)
@@ -170,7 +170,7 @@ function (context) { // Init()
 
           d.startTime = timeArr[d.startIdx]
         },
-        dragEnd: function (svgObj, x, y, d) {
+        dragEnd: function (x, y, d) {
           var chartHandle = d.chartHandle
           var timeArr = window.chartElements.timeArr[chartHandle]
           var barNum = window.chartElements.barNum[chartHandle]
@@ -197,7 +197,7 @@ function (context) { // Init()
 
           d.endIdx = endIdx + cursor
 
-          d3.select(svgObj)
+          d3.select("#lineSegmentEnds_" + d.id)
             .attr("cx", xScale(endIdx)).attr("cy", val)
           d3.select("#lineSegments_" + d.id)
             .attr("x2", xScale(endIdx)).attr("y2", val)
