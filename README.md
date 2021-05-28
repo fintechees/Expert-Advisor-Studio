@@ -39,6 +39,10 @@
 
 <br />
 
+## Campaign
+We started a campaign ONLY for Github users. Every Github user can get a free license to use our FIX API trading platform individual version(without tech support). The license will expire by the end of 2021.
+Please check out the campaign page to know more details: https://www.fintechee.com/marketing/campaign/
+
 ## Features
 1. Javascript SDK, Compatible with C/C++/MQL
 2. WEB-based
