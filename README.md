@@ -77,6 +77,8 @@ Actually, the usage is different from Nodejs, so, you DON'T need to use "node xx
 And, it's much EASIER to run them. Because they are browser-based, so, what you need to do is just open the WEB trader of Fintechee and copy-paste the source codes into the CONSOLE panel of the WEB trader and then click the RUN button. Then everything is DONE.
 Each file in this repo is indepenedent to each other. You can use them respectively.
 
+WEB Trader: https://www.fintechee.com/web-trader/
+
 ## Live Stream
 
 We started a live stream on Youtube
