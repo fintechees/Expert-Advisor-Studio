@@ -79,6 +79,10 @@ Each file in this repo is indepenedent to each other. You can use them respectiv
 
 WEB Trader: https://www.fintechee.com/web-trader/
 
+Plugins' usage: https://www.fintechee.com/plugins/
+
+How to compile C/C++/MQL: https://www.fintechee.com/expert-advisor-cpp-compiler/
+
 ## Live Stream
 
 We started a live stream on Youtube
