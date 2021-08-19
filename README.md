@@ -41,7 +41,10 @@
 
 ## New!!
 We built a forum for sharing trading signals and trading skills.
-https://fintechee.org
+https://www.fintechee.org
+
+We reformed it last weekend, now, we are trying to restore the trading signals. If you are urgent, please check this page to follow:
+https://www.fintechee.com/shared.html
 
 ## Campaign
 We started a campaign ONLY for Github users. Every Github user can get a free license to use our FIX API trading platform individual version(without tech support). The license will expire by the end of 2021.
