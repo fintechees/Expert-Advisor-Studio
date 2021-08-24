@@ -39,7 +39,9 @@
 
 <br />
 
-## New!!
+## News!!
+https://github.com/fintechee transferred this repo to https://github.com/fintechees on Aug 25th 2021.
+
 We built a forum for sharing trading signals and trading skills.
 https://www.fintechee.org
 
