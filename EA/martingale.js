@@ -1,6 +1,6 @@
 registerEA(
 	"sample_martingale",
-	"A test EA based on Martingale algorithm(v1.0)",
+	"A test EA based on Martingale algorithm(v1.01)",
 	[{ // parameters
 		name: "period",
 		value: 5,
@@ -56,8 +56,8 @@ registerEA(
 
 			if (openPrice > highPrice) highPrice = openPrice
 			if (openPrice < lowPrice) lowPrice = openPrice
-			if (getOrderType(openTrade) == ORDER_TYPE.BUY) orientation = ORDER_TYPE.BUY
-			if (getOrderType(openTrade) == ORDER_TYPE.SELL) orientation = ORDER_TYPE.SELL
+			if (getOrderType(openTrade) == ORDER_TYPE.OP_BUY) orientation = ORDER_TYPE.OP_BUY
+			if (getOrderType(openTrade) == ORDER_TYPE.OP_SELL) orientation = ORDER_TYPE.OP_SELL
 		}
 
 		var arrClose = getData(context, window.chartHandle, DATA_NAME.CLOSE)
