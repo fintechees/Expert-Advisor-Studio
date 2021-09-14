@@ -1,4 +1,4 @@
-	registerIndicator("toggle_trading_signals", "Toggle the display of the trading signals(v1.02)", function (context) {
+	registerIndicator("toggle_trading_signals", "Toggle the display of the trading signals(v1.03)", function (context) {
 	},[{
 		name: "opacityPendingOrder",
 		value: 0,
@@ -48,14 +48,14 @@
 		canvas.selectAll(".cc_k_c_p_o_l").style("opacity", opacityPendingOrder2)
 		canvas.selectAll(".cc_k_c_p_o_t_l").style("opacity", opacityPendingOrder2)
 		canvas.selectAll(".cc_k_c_p_o_s_l").style("opacity", opacityPendingOrder2)
-		canvas.selectAll(".cc_k_c_p_o_b").style("opacity", opacityPendingOrder2)
+		canvas.selectAll(".cc_k_c_p_o_b").style("opacity", opacityPendingOrder)
 		canvas.selectAll(".cc_k_c_p_o_t").style("opacity", opacityPendingOrder2)
 		canvas.selectAll(".cc_k_c_o_t_t_l").style("opacity", opacityOpenTrade2)
 		canvas.selectAll(".cc_k_c_o_t_s_l").style("opacity", opacityOpenTrade2)
-		canvas.selectAll(".cc_k_c_o_t_b").style("opacity", opacityOpenTrade2)
+		canvas.selectAll(".cc_k_c_o_t_b").style("opacity", opacityOpenTrade)
 		canvas.selectAll(".cc_k_c_o_t_t").style("opacity", opacityOpenTrade2)
-		canvas.selectAll(".cc_k_c_h_t_o_b").style("opacity", opacityHistoryTrade2)
-		canvas.selectAll(".cc_k_c_h_t_c_b").style("opacity", opacityHistoryTrade2)
+		canvas.selectAll(".cc_k_c_h_t_o_b").style("opacity", opacityHistoryTrade)
+		canvas.selectAll(".cc_k_c_h_t_c_b").style("opacity", opacityHistoryTrade)
 		canvas.selectAll(".cc_k_c_h_t_o_t").style("opacity", opacityHistoryTrade2)
 		canvas.selectAll(".cc_k_c_h_t_c_t").style("opacity", opacityHistoryTrade2)
 		canvas.selectAll(".cc_k_c_h_t_l").style("opacity", opacityHistoryTrade2)
