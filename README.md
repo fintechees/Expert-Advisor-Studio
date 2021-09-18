@@ -158,6 +158,11 @@ For example, if you send an order to the backend, you don't need to block your p
 
 And, this callback function is a new feature. Other platforms have no this parameter. Fortunately, this API is compatible with the older versions, so, you don't need to modify your old EAs.
 
+2021.9.18 Added three APIs useful when the onTransaction event is triggered.
+1. getLatestTransBrokerName
+2. getLatestTransAccountId
+3. getLatestTrans
+
 ```javascript
 var BROKER_NAME = {
 	DEMO: "CC Demo"
