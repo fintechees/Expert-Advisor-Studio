@@ -1,6 +1,6 @@
 registerEA(
   "test_loading_tensorflow",
-  "A test EA to load Tensorflow(v1.0)",
+  "A test EA to load Tensorflow2.0 (v1.0)",
   [{ // parameters
     name: "url",
     value: "https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js",
