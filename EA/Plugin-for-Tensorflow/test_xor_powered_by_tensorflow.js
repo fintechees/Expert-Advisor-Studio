@@ -1,6 +1,6 @@
 registerEA(
   "test_xor_powered_by_tensorflow",
-  "A test EA to train XOR by using Tensorflow(v1.0)",
+  "A test EA to train XOR by using Tensorflow2.0 (v1.0)",
   [{ // parameters
     name: "tfjs",
     value: "https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js",
