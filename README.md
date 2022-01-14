@@ -44,6 +44,8 @@ https://github.com/fintechee transferred this repo to https://github.com/fintech
 
 We built a forum for sharing trading signals and trading skills.
 https://www.fintechee.org
+Now(2022-01) we are reforming it.
+The number of generating ssl cert exceeded the rate limit, so we need to wait until we are allowed to generate cert.
 
 We reformed it last weekend, now, we are trying to restore the trading signals. If you are urgent, please check this page to follow:
 https://www.fintechee.com/shared.html
