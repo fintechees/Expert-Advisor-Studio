@@ -87,7 +87,7 @@ I received a lot of questions that asked how to use the Javasacript files in thi
 Actually, the usage is different from Nodejs, so, you DON'T need to use "node xxx.js" to run it.
 And, it's much EASIER to run them. Because they are browser-based, so, what you need to do is just open the WEB trader of Fintechee and copy-paste the source codes into the CONSOLE panel of the WEB trader and then click the RUN button. Then everything is DONE.
 Each file in this repo is indepenedent to each other. You can use them respectively.
-EAs are stored ONLY on your LOCAL browser. We use Web LocalStorage. The secrets of your trading strategies are protected.
+EAs and indicators are stored ONLY on your LOCAL browser and NEVER uploaded to the server side. We use Web LocalStorage. The secrets of your trading strategies are protected.
 
 WEB Trader: https://www.fintechee.com/web-trader/
 
