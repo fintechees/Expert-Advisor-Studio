@@ -1,6 +1,6 @@
 	registerEA(
 		"mql_indicator_loader_plugin",
-		"mql_plugin to make MQL-based indicators runnable on Fintechee(v1.07)",
+		"mql_plugin to make MQL-based indicators runnable on Fintechee(v1.08)",
 		[{ // parameters
 			name: "definition",
 			value: "",
@@ -262,11 +262,11 @@
 								var md = window.mqlIndicators[obj.name].module.UTF8ToString(mode)
 								var arr = getDataFromIndi(obj.context, indiHandle, md)
 								if (md == "jaws") {
-									return arr[arr.length - jaw_shift - shift - 1]
+									return arr[arr.length - shift - 1]
 								} else if (md == "teeth") {
-									return arr[arr.length - teeth_shift - shift - 1]
+									return arr[arr.length - shift - 1]
 								} else {
-									return arr[arr.length - lips_shift - shift - 1]
+									return arr[arr.length - shift - 1]
 								}
 							}, "diiiiiii")
 							var jiAOInit = Module.addFunction(function (uid, symbol, timeframe) {
@@ -345,7 +345,7 @@
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
 								var md = window.mqlIndicators[obj.name].module.UTF8ToString(mode)
 								var arr = getDataFromIndi(obj.context, indiHandle, md)
-								return arr[arr.length - bands_shift - shift - 1]
+								return arr[arr.length - shift - 1]
 							}, "diiiii")
 							var jiBandsOnArray = Module.addFunction(function (uid, array, total, period, deviation, bands_shift, mode, shift) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
@@ -374,7 +374,7 @@
 								}], dataInput, total)
 								var md = window.mqlIndicators[obj.name].module.UTF8ToString(mode)
 								var arr = getDataOnArray(dataOutput, md)
-								return arr[arr.length - bands_shift - shift - 1]
+								return arr[arr.length - shift - 1]
 							}, "diiiidiii")
 							var jiBullsPowerInit = Module.addFunction(function (uid, symbol, timeframe, period, applied_price) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
@@ -510,7 +510,7 @@
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
 								var md = window.mqlIndicators[obj.name].module.UTF8ToString(mode)
 								var arr = getDataFromIndi(obj.context, indiHandle, md)
-								return arr[arr.length - ma_shift - shift - 1]
+								return arr[arr.length - shift - 1]
 							}, "diiiii")
 							var jiEnvelopesOnArray = Module.addFunction(function (uid, array, total, ma_period, ma_method, ma_shift, deviation, mode, shift) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
@@ -540,7 +540,7 @@
 								}], dataInput, total)
 								var md = window.mqlIndicators[obj.name].module.UTF8ToString(mode)
 								var arr = getDataOnArray(dataOutput, md)
-								return arr[arr.length - ma_shift - shift - 1]
+								return arr[arr.length - shift - 1]
 							}, "diiiiiidii")
 							var jiFractalsInit = Module.addFunction(function (uid, symbol, timeframe) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
@@ -577,7 +577,7 @@
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
 								var md = window.mqlIndicators[obj.name].module.UTF8ToString(mode)
 								var arr = getDataFromIndi(obj.context, indiHandle, md)
-								return arr[arr.length - ichimoku_shift - shift - 1]
+								return arr[arr.length - shift - 1]
 							}, "diiiii")
 							var jiMAInit = Module.addFunction(function (uid, symbol, timeframe, ma_period, ma_shift, ma_method, applied_price) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
@@ -609,7 +609,7 @@
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
 								var method = window.mqlIndicators[obj.name].module.UTF8ToString(ma_method)
 								var arr = getDataFromIndi(obj.context, indiHandle, method)
-								return arr[arr.length - ma_shift - shift - 1]
+								return arr[arr.length - shift - 1]
 							}, "diiiii")
 							var jiMAOnArray = Module.addFunction(function (uid, array, total, ma_period, ma_shift, ma_method, shift) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
@@ -642,7 +642,7 @@
 									dataOutput = calcIndicatorOnArray("sma_for_mql", params, dataInput, total)
 								}
 								var arr = getDataOnArray(dataOutput, method)
-								return arr[arr.length - ma_shift - shift - 1]
+								return arr[arr.length - shift - 1]
 							}, "diiiiiii")
 							var jiMACDInit = Module.addFunction(function (uid, symbol, timeframe, fast_ema_period, slow_ema_period, signal_period, applied_price) {
 								var obj = window.mqlIndicatorsBuffer[uid + ""]
@@ -1394,4 +1394,3 @@
 		function (context) { // OnTick()
 		}
 	)
-
