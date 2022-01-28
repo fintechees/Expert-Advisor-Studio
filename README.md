@@ -41,6 +41,7 @@
 
 ## News!!
 We created a new version(FIX Bridge) for individual traders. It's for free FOREVER!!
+
 Download link:
 https://www.fintechee.com/assets/fix-api/fintecheefixbridge.7z
 
