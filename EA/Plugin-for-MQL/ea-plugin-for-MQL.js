@@ -1,6 +1,6 @@
 	registerEA(
 		"mql_ea_loader_plugin",
-		"mql_plugin to make MQL-based EAs runnable on Fintechee(v1.12)",
+		"mql_plugin to make MQL-based EAs runnable on Fintechee(v1.13)",
 		[{ // parameters
 			name: "definition",
 			value: "",
