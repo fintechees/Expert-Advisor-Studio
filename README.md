@@ -40,6 +40,10 @@
 <br />
 
 ## News!!
+We created a new version(FIX Bridge) for individual traders. It's for free FOREVER!!
+Download link:
+https://www.fintechee.com/assets/fix-api/fintecheefixbridge.7z
+
 https://github.com/fintechee transferred this repo to https://github.com/fintechees on Aug 25th 2021.
 
 We built a forum for sharing trading signals and trading skills.
