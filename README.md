@@ -45,20 +45,18 @@ We created a new version(FIX Bridge) for individual traders. It's for free FOREV
 Download link:
 https://www.fintechee.com/assets/fix-api/fintecheefixbridge.7z
 
-https://github.com/fintechee transferred this repo to https://github.com/fintechees on Aug 25th 2021.
-
-We built a forum for sharing trading signals and trading skills.
-https://www.fintechee.org
-
-## Trading Signals
-https://www.fintechee.com/shared.html
-
-## Campaign
+## Campaign(2022)
 We started a new campaign(2022) ONLY for InteractiveBroker users. Every InteractiveBroker user can get a free license to use our FIX API trading platform individual version. The license will expire by the end of June 2022.
 We haven't updated our campaign page: https://www.fintechee.com/marketing/campaign/
 So, if you want to join this campaign, please send a request email to admin@fintechee.com.
 
 We will update the necessary files for the FIX API trading platform individual version regularly in our Github repository: https://github.com/fintechee/FIX-API-Pro/
+
+## Community and Trading Signals
+We built a forum for sharing trading signals and trading skills.
+https://www.fintechee.org
+
+https://www.fintechee.com/shared.html
 
 ## Features
 1. Javascript SDK, Compatible with C/C++/MQL
@@ -337,3 +335,6 @@ function lwma (dataInput, dataOutput, calculatedLength, period) {
 Please check our site for details. [Fintechee](https://www.fintechee.com/sdk-trading/)
 
 MIT License
+
+https://github.com/fintechee transferred this repo to https://github.com/fintechees on Aug 25th 2021.
+
