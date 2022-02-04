@@ -54,8 +54,9 @@ https://www.fintechee.org
 https://www.fintechee.com/shared.html
 
 ## Campaign
-We started a campaign ONLY for Github users. Every Github user can get a free license to use our FIX API trading platform individual version(without tech support). The license will expire by the end of 2021.
-Please check out the campaign page to know more details: https://www.fintechee.com/marketing/campaign/
+We started a new campaign(2022) ONLY for InteractiveBroker users. Every InteractiveBroker user can get a free license to use our FIX API trading platform individual version. The license will expire by the end of June 2022.
+We haven't updated our campaign page: https://www.fintechee.com/marketing/campaign/
+So, if you want to join this campaign, please send a request email to admin@fintechee.com.
 
 We will update the necessary files for the FIX API trading platform individual version regularly in our Github repository: https://github.com/fintechee/FIX-API-Pro/
 
