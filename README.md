@@ -46,9 +46,14 @@ Download link:
 https://www.fintechee.com/assets/fix-api/fintecheefixbridge.7z
 
 ## Campaign(2022)
-We started a new campaign(2022) ONLY for InteractiveBroker users. Every InteractiveBroker user can get a free license to use our FIX API trading platform individual version. The license will expire by the end of June 2022.
-We haven't updated our campaign page: https://www.fintechee.com/marketing/campaign/
-So, if you want to join this campaign, please send a request email to admin@fintechee.com.
+We started a new campaign(2022). Everyone can get a free license to use our FIX API trading platform individual version if he/she matches any one of the conditions below. The license will expire by the end of 2022.
+
+A. Our partners' client
+B. Github user
+C. Youtuber
+D. Coupon
+
+We have updated our campaign page: https://www.fintechee.com/marketing/campaign/
 
 We will update the necessary files for the FIX API trading platform individual version regularly in our Github repository: https://github.com/fintechee/FIX-API-Pro/
 
