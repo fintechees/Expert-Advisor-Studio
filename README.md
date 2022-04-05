@@ -64,29 +64,31 @@ https://www.fintechee.org
 https://www.fintechee.com/shared.html
 
 ## Features
-1. Javascript SDK, Compatible with C/C++/MQL
-2. WEB-based
-3. You can import any data(historical/streaming) as long as you have data source.
-4. Market Maker Bot(You can send transactions to blockchains' SWAP smart contracts)
-5. Integration with crypto wallets(Scatter & Metamask)
-6. Integration with Artificial Intelligence(AI)
-7. Integration with DEX and Clearing House
-8. Custom Indicators(You can create compound indicators -- make an indicator calculated based on another indicator)
-9. You can analyze Bitcoin or Ether's options by using our plugins.
-10. FIX API individual version(Your browser -> local Java Package -> FIX API straightforward)
-11. White label enabled
-12. MFA - Multiple Factor Authentication
-13. Dashboard for broker's manager
-14. APP(Android, already listed on our website and published on Google Play)
-15. Source codes generator
-16. Spread betting
-17. Price aggregator(automated order router)
-18. Multiple accounts management on the frontend(useful for trading arbitrage)
-19. Multiple charts management(responsive UI layout)
-20. Investor mode(guest mode, read-only)
-21. Integration with Binance API on the backend
 
-...... Many features, you can explore them on your own
+<table>
+<tr><td><strong>WEB-based</strong></td><td>Javascript SDK</td></tr>
+<tr><td><strong>Compatibility</strong></td><td>Compatible with C/C++/MQL</td></tr>
+<tr><td><strong>Any Data</strong></td><td>You can import any data(historical/streaming) as long as you have data source.</td></tr>
+<tr><td><strong>Auto Market Maker</strong></td><td>You can send transactions to blockchains' SWAP smart contracts via Market Maker Bot</td></tr>
+<tr><td><strong>Crypto Payment Gateway</strong></td><td>Integration with crypto wallets(Scatter & Metamask)</td></tr>
+<tr><td><strong>AI Enabled</strong></td><td>Integration with Artificial Intelligence(AI)</td></tr>
+<tr><td><strong>DEX</strong></td><td>Integration with DEX and Clearing House</td></tr>
+<tr><td><strong>Technical</strong></td><td>Custom Indicators(You can create compound indicators -- make an indicator calculated based on another indicator)</td></tr>
+<tr><td><strongTrading Options</strong></td><td>You can analyze Bitcoin or Ether's options by using our plugins.</td></tr>
+<tr><td><strong>FIX API</strong></td><td>FIX API individual version(Your browser -> local Java Package -> FIX API straightforward)</td></tr>
+<tr><td><strong>White Label Enabled</strong></td><td>We offer a FIX API institutional version and a dashboard for brokers' managers.</td></tr>
+<tr><td><strong>MFA Enabled</strong></td><td>Multiple Factor Authentication makes trading more secure</td></tr>
+<tr><td><strong>APP Supported</strong></td><td>APP(Android, already listed on our website and published on Google Play)</td></tr>
+<tr><td><strong>EA Code Generator</strong></td><td>We offer toolkits for generating Expert Advisor source codes.</td></tr>
+<tr><td><strong>More Trading Instruments</strong></td><td>Our FIX API-based backend supports Spread Betting.</td></tr>
+<tr><td><strong>Price Aggregator</strong></td><td>We have 20+ liquidity providers and our backend supports automated order router to make you trade via the cheapest trading channel.</td></tr>
+<tr><td><strong>MAM-based Frontend</strong></td><td>Multiple accounts management on the frontend(useful for trading arbitrage)</td></tr>
+<tr><td><strong>MAM-based Backend</strong></td><td>Our FIX API supports MAM to make the platform operable by individuals.</td></tr>
+<tr><td><strong>Multiple Charts Management</strong></td><td>Our WEB trader terminal(trader room) is designed to be responsive(UI layout).</td></tr>
+<tr><td><strong>Investor Mode</strong></td><td>Investor mode(guest mode, read-only) is allowed.</td></tr>
+<tr><td><strong>Binance API</strong></td><td>Integration with Binance API on the backend</td></tr>
+<tr><td><strong>Many Features</strong></td><td>...... Many features, you can explore them on your own.</td></tr>
+</table>
 
 ## Usage
 
