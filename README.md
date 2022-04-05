@@ -74,7 +74,7 @@ https://www.fintechee.com/shared.html
 <tr><td><strong>AI Enabled</strong></td><td>Integration with Artificial Intelligence(AI)</td></tr>
 <tr><td><strong>DEX</strong></td><td>Integration with DEX and Clearing House</td></tr>
 <tr><td><strong>Technical</strong></td><td>Custom Indicators(You can create compound indicators -- make an indicator calculated based on another indicator)</td></tr>
-<tr><td><strongTrading Options</strong></td><td>You can analyze Bitcoin or Ether's options by using our plugins.</td></tr>
+<tr><td><strong>Trading Options</strong></td><td>You can analyze Bitcoin or Ether's options by using our plugins.</td></tr>
 <tr><td><strong>FIX API</strong></td><td>FIX API individual version(Your browser -> local Java Package -> FIX API straightforward)</td></tr>
 <tr><td><strong>White Label Enabled</strong></td><td>We offer a FIX API institutional version and a dashboard for brokers' managers.</td></tr>
 <tr><td><strong>MFA Enabled</strong></td><td>Multiple Factor Authentication makes trading more secure</td></tr>
