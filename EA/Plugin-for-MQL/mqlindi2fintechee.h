@@ -203,78 +203,78 @@ const char* convertMAMethod (int ma_method) {
   }
 }
 
-void (*jPrint) (int, const string);
+void (*jPrint) (int, const char*);
 void (*jSetIndexShift) (int, int, int);
 long (*jChartID) (int);
 int (*jChartPeriod) (int, long);
 const char* (*jChartSymbol) (int, long);
 int (*jPeriod) (int);
 const char* (*jSymbol) (int);
-int (*jiTimeInit) (int, const string, const char*);
+int (*jiTimeInit) (int, const char*, const char*);
 datetime (*jiTime) (int, int, int);
-int (*jiOpenInit) (int, const string, const char*);
+int (*jiOpenInit) (int, const char*, const char*);
 double (*jiOpen) (int, int, int);
-int (*jiHighInit) (int, const string, const char*);
+int (*jiHighInit) (int, const char*, const char*);
 double (*jiHigh) (int, int, int);
-int (*jiLowInit) (int, const string, const char*);
+int (*jiLowInit) (int, const char*, const char*);
 double (*jiLow) (int, int, int);
-int (*jiCloseInit) (int, const string, const char*);
+int (*jiCloseInit) (int, const char*, const char*);
 double (*jiClose) (int, int, int);
-int (*jiVolumeInit) (int, const string, const char*);
+int (*jiVolumeInit) (int, const char*, const char*);
 long (*jiVolume) (int, int, int);
 int (*jiHighest) (int, int, const char*, int, int);
 int (*jiLowest) (int, int, const char*, int, int);
-int (*jiACInit) (int, const string, const char*);
+int (*jiACInit) (int, const char*, const char*);
 double (*jiAC) (int, int, int);
-int (*jiADXInit) (int, const string, const char*, int, int);
+int (*jiADXInit) (int, const char*, const char*, int, int);
 double (*jiADX) (int, int, const char*, int);
-int (*jiAlligatorInit) (int, const string, const char*, int, int, int, int, int, int, const char*, int);
+int (*jiAlligatorInit) (int, const char*, const char*, int, int, int, int, int, int, const char*, int);
 double (*jiAlligator) (int, int, int, int, int, const char*, int);
-int (*jiAOInit) (int, const string, const char*);
+int (*jiAOInit) (int, const char*, const char*);
 double (*jiAO) (int, int, int);
-int (*jiATRInit) (int, const string, const char*, int);
+int (*jiATRInit) (int, const char*, const char*, int);
 double (*jiATR) (int, int, int);
-int (*jiBearsPowerInit) (int, const string, const char*, int, int);
+int (*jiBearsPowerInit) (int, const char*, const char*, int, int);
 double (*jiBearsPower) (int, int, int);
-int (*jiBandsInit) (int, const string, const char*, int, double, int, int);
+int (*jiBandsInit) (int, const char*, const char*, int, double, int, int);
 double (*jiBands) (int, int, int, const char*, int);
 double (*jiBandsOnArray) (int, double*, int, int, double, int, const char*, int);
-int (*jiBullsPowerInit) (int, const string, const char*, int, int);
+int (*jiBullsPowerInit) (int, const char*, const char*, int, int);
 double (*jiBullsPower) (int, int, int);
-int (*jiCCIInit) (int, const string, const char*, int, int);
+int (*jiCCIInit) (int, const char*, const char*, int, int);
 double (*jiCCI) (int, int, int);
 double (*jiCCIOnArray) (int, double*, int, int, int);
-int (*jiCustomInit) (int, const string, const char*, const string, const char*);
+int (*jiCustomInit) (int, const char*, const char*, const char*, const char*);
 double (*jiCustom) (int, int, const char*, int);
-int (*jiDeMarkerInit) (int, const string, const char*, int);
+int (*jiDeMarkerInit) (int, const char*, const char*, int);
 double (*jiDeMarker) (int, int, int);
-int (*jiEnvelopesInit) (int, const string, const char*, int, const char*, int, int, double);
+int (*jiEnvelopesInit) (int, const char*, const char*, int, const char*, int, int, double);
 double (*jiEnvelopes) (int, int, int, const char*, int);
 double (*jiEnvelopesOnArray) (int, double*, int, int, const char*, int, double, const char*, int);
-int (*jiFractalsInit) (int, const string, const char*);
+int (*jiFractalsInit) (int, const char*, const char*);
 double (*jiFractals) (int, int, const char*, int);
-int (*jiIchimokuInit) (int, const string, const char*, int, int, int);
+int (*jiIchimokuInit) (int, const char*, const char*, int, int, int);
 double (*jiIchimoku) (int, int, int, const char*, int);
-int (*jiMAInit) (int, const string, const char*, int, int, int, int);
+int (*jiMAInit) (int, const char*, const char*, int, int, int, int);
 double (*jiMA) (int, int, int, const char*, int);
 double (*jiMAOnArray) (int, double*, int, int, int, const char*, int);
-int (*jiMACDInit) (int, const string, const char*, int, int, int, int);
+int (*jiMACDInit) (int, const char*, const char*, int, int, int, int);
 double (*jiMACD) (int, int, const char*, int);
-int (*jiMomentumInit) (int, const string, const char*, int, int);
+int (*jiMomentumInit) (int, const char*, const char*, int, int);
 double (*jiMomentum) (int, int, int);
 double (*jiMomentumOnArray) (int, double*, int, int, int);
-int (*jiRSIInit) (int, const string, const char*, int, int);
+int (*jiRSIInit) (int, const char*, const char*, int, int);
 double (*jiRSI) (int, int, int);
 double (*jiRSIOnArray) (int, double*, int, int, int);
-int (*jiRVIInit) (int, const string, const char*, int);
+int (*jiRVIInit) (int, const char*, const char*, int);
 double (*jiRVI) (int, int, const char*, int);
-int (*jiSARInit) (int, const string, const char*, double, double);
+int (*jiSARInit) (int, const char*, const char*, double, double);
 double (*jiSAR) (int, int, int);
-int (*jiStochasticInit) (int, const string, const char*, int, int, int, const char*);
+int (*jiStochasticInit) (int, const char*, const char*, int, int, int, const char*);
 double (*jiStochastic) (int, int, const char*, int);
-int (*jiWPRInit) (int, const string, const char*, int);
+int (*jiWPRInit) (int, const char*, const char*, int);
 double (*jiWPR) (int, int, int);
-double (*jMarketInfo) (int, const string, int);
+double (*jMarketInfo) (int, const char*, int);
 
 EM_JS(bool, jVeriSig, (const char* fintechee_data, const char* fintechee_signature, const char* fintechee_public_key), {
   return Asyncify.handleSleep(function (wakeUp) {
@@ -1347,7 +1347,7 @@ void setDataOutput (int uid, int length, double* buffer) {
   }
 }
 EMSCRIPTEN_KEEPALIVE
-void setjPrint (void (*f) (int, const string)) {
+void setjPrint (void (*f) (int, const char*)) {
   jPrint = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1375,7 +1375,7 @@ void setjSymbol (const char* (*f) (int)) {
   jSymbol = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiTimeInit (int (*f) (int, const string, const char*)) {
+void setjiTimeInit (int (*f) (int, const char*, const char*)) {
   jiTimeInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1383,7 +1383,7 @@ void setjiTime (datetime (*f) (int, int, int)) {
   jiTime = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiOpenInit (int (*f) (int, const string, const char*)) {
+void setjiOpenInit (int (*f) (int, const char*, const char*)) {
   jiOpenInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1391,7 +1391,7 @@ void setjiOpen (double (*f) (int, int, int)) {
   jiOpen = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiHighInit (int (*f) (int, const string, const char*)) {
+void setjiHighInit (int (*f) (int, const char*, const char*)) {
   jiHighInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1399,7 +1399,7 @@ void setjiHigh (double (*f) (int, int, int)) {
   jiHigh = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiLowInit (int (*f) (int, const string, const char*)) {
+void setjiLowInit (int (*f) (int, const char*, const char*)) {
   jiLowInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1407,7 +1407,7 @@ void setjiLow (double (*f) (int, int, int)) {
   jiLow = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiCloseInit (int (*f) (int, const string, const char*)) {
+void setjiCloseInit (int (*f) (int, const char*, const char*)) {
   jiCloseInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1415,7 +1415,7 @@ void setjiClose (double (*f) (int, int, int)) {
   jiClose = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiVolumeInit (int (*f) (int, const string, const char*)) {
+void setjiVolumeInit (int (*f) (int, const char*, const char*)) {
   jiVolumeInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1431,7 +1431,7 @@ void setjiLowest (int (*f) (int, int, const char*, int, int)) {
   jiLowest = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiACInit (int (*f) (int, const string, const char*)) {
+void setjiACInit (int (*f) (int, const char*, const char*)) {
   jiACInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1439,7 +1439,7 @@ void setjiAC (double (*f) (int, int, int)) {
   jiAC = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiADXInit (int (*f) (int, const string, const char*, int, int)) {
+void setjiADXInit (int (*f) (int, const char*, const char*, int, int)) {
   jiADXInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1447,7 +1447,7 @@ void setjiADX (double (*f) (int, int, const char*, int)) {
   jiADX = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiAlligatorInit (int (*f) (int, const string, const char*, int, int, int, int, int, int, const char*, int)) {
+void setjiAlligatorInit (int (*f) (int, const char*, const char*, int, int, int, int, int, int, const char*, int)) {
   jiAlligatorInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1455,7 +1455,7 @@ void setjiAlligator (double (*f) (int, int, int, int, int, const char*, int)) {
   jiAlligator = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiAOInit (int (*f) (int, const string, const char*)) {
+void setjiAOInit (int (*f) (int, const char*, const char*)) {
   jiAOInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1463,7 +1463,7 @@ void setjiAO (double (*f) (int, int, int)) {
   jiAO = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiATRInit (int (*f) (int, const string, const char*, int)) {
+void setjiATRInit (int (*f) (int, const char*, const char*, int)) {
   jiATRInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1471,7 +1471,7 @@ void setjiATR (double (*f) (int, int, int)) {
   jiATR = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiBearsPowerInit (int (*f) (int, const string, const char*, int, int)) {
+void setjiBearsPowerInit (int (*f) (int, const char*, const char*, int, int)) {
   jiBearsPowerInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1479,7 +1479,7 @@ void setjiBearsPower (double (*f) (int, int, int)) {
   jiBearsPower = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiBandsInit (int (*f) (int, const string, const char*, int, double, int, int)) {
+void setjiBandsInit (int (*f) (int, const char*, const char*, int, double, int, int)) {
   jiBandsInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1491,7 +1491,7 @@ void setjiBandsOnArray (double (*f) (int, double*, int, int, double, int, const 
   jiBandsOnArray = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiBullsPowerInit (int (*f) (int, const string, const char*, int, int)) {
+void setjiBullsPowerInit (int (*f) (int, const char*, const char*, int, int)) {
   jiBullsPowerInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1499,7 +1499,7 @@ void setjiBullsPower (double (*f) (int, int, int)) {
   jiBullsPower = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiCCIInit (int (*f) (int, const string, const char*, int, int)) {
+void setjiCCIInit (int (*f) (int, const char*, const char*, int, int)) {
   jiCCIInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1511,7 +1511,7 @@ void setjiCCIOnArray (double (*f) (int, double*, int, int, int)) {
   jiCCIOnArray = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiCustomInit (int (*f) (int, const string, const char*, const string, const char*)) {
+void setjiCustomInit (int (*f) (int, const char*, const char*, const char*, const char*)) {
   jiCustomInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1519,7 +1519,7 @@ void setjiCustom (double (*f) (int, int, const char*, int)) {
   jiCustom = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiDeMarkerInit (int (*f) (int, const string, const char*, int)) {
+void setjiDeMarkerInit (int (*f) (int, const char*, const char*, int)) {
   jiDeMarkerInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1527,7 +1527,7 @@ void setjiDeMarker (double (*f) (int, int, int)) {
   jiDeMarker = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiEnvelopesInit (int (*f) (int, const string, const char*, int, const char*, int, int, double)) {
+void setjiEnvelopesInit (int (*f) (int, const char*, const char*, int, const char*, int, int, double)) {
   jiEnvelopesInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1539,7 +1539,7 @@ void setjiEnvelopesOnArray (double (*f) (int, double*, int, int, const char*, in
   jiEnvelopesOnArray = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiFractalsInit (int (*f) (int, const string, const char*)) {
+void setjiFractalsInit (int (*f) (int, const char*, const char*)) {
   jiFractalsInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1547,7 +1547,7 @@ void setjiFractals (double (*f) (int, int, const char*, int)) {
   jiFractals = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiIchimokuInit (int (*f) (int, const string, const char*, int, int, int)) {
+void setjiIchimokuInit (int (*f) (int, const char*, const char*, int, int, int)) {
   jiIchimokuInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1555,7 +1555,7 @@ void setjiIchimoku (double (*f) (int, int, int, const char*, int)) {
   jiIchimoku = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiMAInit (int (*f) (int, const string, const char*, int, int, int, int)) {
+void setjiMAInit (int (*f) (int, const char*, const char*, int, int, int, int)) {
   jiMAInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1567,7 +1567,7 @@ void setjiMAOnArray (double (*f) (int, double*, int, int, int, const char*, int)
   jiMAOnArray = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiMACDInit (int (*f) (int, const string, const char*, int, int, int, int)) {
+void setjiMACDInit (int (*f) (int, const char*, const char*, int, int, int, int)) {
   jiMACDInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1575,7 +1575,7 @@ void setjiMACD (double (*f) (int, int, const char*, int)) {
   jiMACD = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiMomentumInit (int (*f) (int, const string, const char*, int, int)) {
+void setjiMomentumInit (int (*f) (int, const char*, const char*, int, int)) {
   jiMomentumInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1587,7 +1587,7 @@ void setjiMomentumOnArray (double (*f) (int, double*, int, int, int)) {
   jiMomentumOnArray = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiRSIInit (int (*f) (int, const string, const char*, int, int)) {
+void setjiRSIInit (int (*f) (int, const char*, const char*, int, int)) {
   jiRSIInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1599,7 +1599,7 @@ void setjiRSIOnArray (double (*f) (int, double*, int, int, int)) {
   jiRSIOnArray = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiRVIInit (int (*f) (int, const string, const char*, int)) {
+void setjiRVIInit (int (*f) (int, const char*, const char*, int)) {
   jiRVIInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1607,7 +1607,7 @@ void setjiRVI (double (*f) (int, int, const char*, int)) {
   jiRVI = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiSARInit (int (*f) (int, const string, const char*, double, double)) {
+void setjiSARInit (int (*f) (int, const char*, const char*, double, double)) {
   jiSARInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1615,7 +1615,7 @@ void setjiSAR (double (*f) (int, int, int)) {
   jiSAR = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiStochasticInit (int (*f) (int, const string, const char*, int, int, int, const char*)) {
+void setjiStochasticInit (int (*f) (int, const char*, const char*, int, int, int, const char*)) {
   jiStochasticInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1623,7 +1623,7 @@ void setjiStochastic (double (*f) (int, int, const char*, int)) {
   jiStochastic = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjiWPRInit (int (*f) (int, const string, const char*, int)) {
+void setjiWPRInit (int (*f) (int, const char*, const char*, int)) {
   jiWPRInit = f;
 }
 EMSCRIPTEN_KEEPALIVE
@@ -1631,7 +1631,7 @@ void setjiWPR (double (*f) (int, int, int)) {
   jiWPR = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjMarketInfo (double (*f) (int, const string, int)) {
+void setjMarketInfo (double (*f) (int, const char*, int)) {
   jMarketInfo = f;
 }
 
@@ -1642,7 +1642,7 @@ void Print (const Type & arg, const Types &... args) {
   stringstream s;
   s << arg;
   ((s << args), ..., (s << endl));
-  jPrint(iFintecheeUID, s.str());
+  jPrint(iFintecheeUID, s.str().c_str());
 }
 
 // todo
@@ -1651,7 +1651,7 @@ void Comment (const Type & arg, const Types &... args) {
   stringstream s;
   s << arg;
   ((s << args), ..., (s << endl));
-  jPrint(iFintecheeUID, s.str());
+  jPrint(iFintecheeUID, s.str().c_str());
 }
 
 // todo
@@ -1660,7 +1660,7 @@ void Alert (const Type & arg, const Types &... args) {
   stringstream s;
   s << arg;
   ((s << args), ..., (s << endl));
-  jPrint(iFintecheeUID, s.str());
+  jPrint(iFintecheeUID, s.str().c_str());
 }
 
 bool PlaySound (const string name) {
@@ -1704,7 +1704,7 @@ datetime iTime (const string symbol, int timeframe, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("Chart_") + symbol + string("_") + string(tf);
   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-    int handle = jiTimeInit(iFintecheeUID, symbol, tf);
+    int handle = jiTimeInit(iFintecheeUID, symbol.c_str(), tf);
     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
   }
   return jiTime(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], shift);
@@ -1716,7 +1716,7 @@ double iOpen (const string symbol, int timeframe, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("Chart_") + symbol + string("_") + string(tf);
   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-    int handle = jiOpenInit(iFintecheeUID, symbol, tf);
+    int handle = jiOpenInit(iFintecheeUID, symbol.c_str(), tf);
     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
   }
   return jiOpen(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], shift);
@@ -1728,7 +1728,7 @@ double iHigh (const string symbol, int timeframe, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("Chart_") + symbol + string("_") + string(tf);
   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-    int handle = jiHighInit(iFintecheeUID, symbol, tf);
+    int handle = jiHighInit(iFintecheeUID, symbol.c_str(), tf);
     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
   }
   return jiHigh(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], shift);
@@ -1740,7 +1740,7 @@ double iLow (const string symbol, int timeframe, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("Chart_") + symbol + string("_") + string(tf);
   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-    int handle = jiLowInit(iFintecheeUID, symbol, tf);
+    int handle = jiLowInit(iFintecheeUID, symbol.c_str(), tf);
     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
   }
   return jiLow(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], shift);
@@ -1752,7 +1752,7 @@ double iClose (const string symbol, int timeframe, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("Chart_") + symbol + string("_") + string(tf);
   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-    int handle = jiCloseInit(iFintecheeUID, symbol, tf);
+    int handle = jiCloseInit(iFintecheeUID, symbol.c_str(), tf);
     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
   }
   return jiClose(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], shift);
@@ -1764,7 +1764,7 @@ long iVolume (const string symbol, int timeframe, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("Chart_") + symbol + string("_") + string(tf);
   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-    int handle = jiVolumeInit(iFintecheeUID, symbol, tf);
+    int handle = jiVolumeInit(iFintecheeUID, symbol.c_str(), tf);
     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
   }
   return jiVolume(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], shift);
@@ -1776,7 +1776,7 @@ int iHighest (const string symbol, int timeframe, int type, int count, int start
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("Chart_") + symbol + string("_") + string(tf);
   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-    int handle = jiTimeInit(iFintecheeUID, symbol, tf);
+    int handle = jiTimeInit(iFintecheeUID, symbol.c_str(), tf);
     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
   }
   return jiHighest(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], convertMode(type, INDI_OHLC), count, start);
@@ -1794,7 +1794,7 @@ int iLowest (const string symbol, int timeframe, int type, int count, int start)
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("Chart_") + symbol + string("_") + string(tf);
   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-    int handle = jiTimeInit(iFintecheeUID, symbol, tf);
+    int handle = jiTimeInit(iFintecheeUID, symbol.c_str(), tf);
     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
   }
   return jiLowest(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], convertMode(type, INDI_OHLC), count, start);
@@ -1813,7 +1813,7 @@ double iAC (const string symbol, int timeframe, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iAC_") + symbol + string("_") + string(tf);
   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-    int handle = jiACInit(iFintecheeUID, symbol, tf);
+    int handle = jiACInit(iFintecheeUID, symbol.c_str(), tf);
     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
   }
   return jiAC(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], shift);
@@ -1826,7 +1826,7 @@ double iADX (const string symbol, int timeframe, int period, int applied_price, 
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iADX_") + symbol + string("_") + string(tf) + string("_") + to_string(period) + string("_") + to_string(applied_price);
   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-    int handle = jiADXInit(iFintecheeUID, symbol, tf, period, applied_price);
+    int handle = jiADXInit(iFintecheeUID, symbol.c_str(), tf, period, applied_price);
     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
   }
   return jiADX(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], convertMode(mode, INDI_ADX), shift);
@@ -1843,7 +1843,7 @@ double iAlligator (
   string strID = string("iAlligator_") + symbol + string("_") + string(tf) + string("_") +
     to_string(jaw_period) + string("_") + to_string(jaw_shift) + string("_") + to_string(teeth_period) + string("_") + to_string(teeth_shift) + string("_") + to_string(lips_period) + string("_") + to_string(lips_shift) + string("_") + to_string(ma_method) + string("_") + to_string(applied_price);
   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-    int handle = jiAlligatorInit(iFintecheeUID, symbol, tf, jaw_period, jaw_shift, teeth_period, teeth_shift, lips_period, lips_shift, convertMAMethod(ma_method), applied_price);
+    int handle = jiAlligatorInit(iFintecheeUID, symbol.c_str(), tf, jaw_period, jaw_shift, teeth_period, teeth_shift, lips_period, lips_shift, convertMAMethod(ma_method), applied_price);
     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
   }
   return jiAlligator(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], jaw_shift, teeth_shift, lips_shift, convertMode(mode, INDI_ALLIGATOR), shift);
@@ -1858,7 +1858,7 @@ double iAO (const string symbol, int timeframe, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iAO_") + symbol + string("_") + string(tf);
   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-    int handle = jiAOInit(iFintecheeUID, symbol, tf);
+    int handle = jiAOInit(iFintecheeUID, symbol.c_str(), tf);
     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
   }
   return jiAO(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], shift);
@@ -1871,7 +1871,7 @@ double iATR (const string symbol, int timeframe, int period, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iATR_") + symbol + string("_") + string(tf) + string("_") + to_string(period);
   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-    int handle = jiATRInit(iFintecheeUID, symbol, tf, period);
+    int handle = jiATRInit(iFintecheeUID, symbol.c_str(), tf, period);
     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
   }
   return jiATR(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], shift);
@@ -1884,7 +1884,7 @@ double iBearsPower (const string symbol, int timeframe, int period, int applied_
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iBearsPower_") + symbol + string("_") + string(tf) + string("_") + to_string(period) + string("_") + to_string(applied_price);
   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-    int handle = jiBearsPowerInit(iFintecheeUID, symbol, tf, period, applied_price);
+    int handle = jiBearsPowerInit(iFintecheeUID, symbol.c_str(), tf, period, applied_price);
     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
   }
   return jiBearsPower(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], shift);
@@ -1897,7 +1897,7 @@ double iBands (const string symbol, int timeframe, int period, double deviation,
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iBands_") + symbol + string("_") + string(tf) + string("_") + to_string(period) + string("_") + to_string(deviation) + string("_") + to_string(bands_shift) + string("_") + to_string(applied_price);
   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-    int handle = jiBandsInit(iFintecheeUID, symbol, tf, period, deviation, bands_shift, applied_price);
+    int handle = jiBandsInit(iFintecheeUID, symbol.c_str(), tf, period, deviation, bands_shift, applied_price);
     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
   }
   return jiBands(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], bands_shift, convertMode(mode, INDI_BANDS), shift);
@@ -1913,7 +1913,7 @@ double iBullsPower (const string symbol, int timeframe, int period, int applied_
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iBullsPower_") + symbol + string("_") + string(tf) + string("_") + to_string(period) + string("_") + to_string(applied_price);
   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-    int handle = jiBullsPowerInit(iFintecheeUID, symbol, tf, period, applied_price);
+    int handle = jiBullsPowerInit(iFintecheeUID, symbol.c_str(), tf, period, applied_price);
     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
   }
   return jiBullsPower(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], shift);
@@ -1926,7 +1926,7 @@ double iCCI (const string symbol, int timeframe, int period, int applied_price, 
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iCCI_") + symbol + string("_") + string(tf) + string("_") + to_string(period) + string("_") + to_string(applied_price);
   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-    int handle = jiCCIInit(iFintecheeUID, symbol, tf, period, applied_price);
+    int handle = jiCCIInit(iFintecheeUID, symbol.c_str(), tf, period, applied_price);
     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
   }
   return jiCCI(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], shift);
@@ -1962,7 +1962,7 @@ double iCustom (const string symbol, int timeframe, const string name, Ts&&... a
 
   string strID = string("iCustom_") + symbol + string("_") + string(tf) + string("_") + string(name) + string("_") + s.str();
   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-    int handle = jiCustomInit(iFintecheeUID, symbol, tf, name, s.str().c_str());
+    int handle = jiCustomInit(iFintecheeUID, symbol.c_str(), tf, name.c_str(), s.str().c_str());
     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
   }
   return jiCustom(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], mode, shift);
@@ -1976,7 +1976,7 @@ double iDeMarker (const string symbol, int timeframe, int period, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iDeMarker_") + symbol + string("_") + string(tf) + string("_") + to_string(period);
   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-    int handle = jiDeMarkerInit(iFintecheeUID, symbol, tf, period);
+    int handle = jiDeMarkerInit(iFintecheeUID, symbol.c_str(), tf, period);
     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
   }
   return jiDeMarker(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], shift);
@@ -1989,7 +1989,7 @@ double iEnvelopes (const string symbol, int timeframe, int ma_period, int ma_met
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iEnvelopes_") + symbol + string("_") + string(tf) + string("_") + to_string(ma_period) + string("_") + to_string(ma_method) + string("_") + to_string(ma_shift) + string("_") + to_string(applied_price) + string("_") + to_string(deviation);
   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-    int handle = jiEnvelopesInit(iFintecheeUID, symbol, tf, ma_period, convertMAMethod(ma_method), ma_shift, applied_price, deviation);
+    int handle = jiEnvelopesInit(iFintecheeUID, symbol.c_str(), tf, ma_period, convertMAMethod(ma_method), ma_shift, applied_price, deviation);
     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
   }
   return jiEnvelopes(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], ma_shift, convertMode(mode, INDI_ENVELOPES), shift);
@@ -2005,7 +2005,7 @@ double iFractals (const string symbol, int timeframe, int mode, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iFractals_") + symbol + string("_") + string(tf);
   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-    int handle = jiFractalsInit(iFintecheeUID, symbol, tf);
+    int handle = jiFractalsInit(iFintecheeUID, symbol.c_str(), tf);
     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
   }
   return jiFractals(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], convertMode(mode, INDI_FRACTALS), shift);
@@ -2014,34 +2014,34 @@ double iFractals (long symbol, int timeframe, int mode, int shift) {
   return iFractals("", timeframe, mode, shift);
 }
 
- double iIchimoku (const string symbol, int timeframe, int tenkan_sen, int kijun_sen, int senkou_span_b, int mode, int shift) {
-   const char* tf = convertTimeFrame(timeframe);
-   string strID = string("iIchimoku_") + symbol + string("_") + string(tf) + string("_") + to_string(tenkan_sen) + string("_") + to_string(kijun_sen) + string("_") + to_string(senkou_span_b);
-   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-     int handle = jiIchimokuInit(iFintecheeUID, symbol, tf, tenkan_sen, kijun_sen, senkou_span_b);
-     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
-   }
-   if (mode == MODE_TENKANSEN) {
-     return jiIchimoku(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], 0, convertMode(mode, INDI_ICHIMOKU), shift);
-   } else if (mode == MODE_KIJUNSEN) {
-     return jiIchimoku(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], 0, convertMode(mode, INDI_ICHIMOKU), shift);
-   } else if (mode == MODE_SENKOUSPANA) {
-     return jiIchimoku(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], kijun_sen, convertMode(mode, INDI_ICHIMOKU), shift);
-   } else if (mode == MODE_SENKOUSPANB) {
-     return jiIchimoku(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], kijun_sen, convertMode(mode, INDI_ICHIMOKU), shift);
-   } else {
-     return jiIchimoku(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], -kijun_sen, convertMode(mode, INDI_ICHIMOKU), shift);
-   }
- }
- double iIchimoku (long symbol, int timeframe, int tenkan_sen, int kijun_sen, int senkou_span_b, int mode, int shift) {
-   return iIchimoku("", timeframe, tenkan_sen, kijun_sen, senkou_span_b, mode, shift);
- }
+double iIchimoku (const string symbol, int timeframe, int tenkan_sen, int kijun_sen, int senkou_span_b, int mode, int shift) {
+  const char* tf = convertTimeFrame(timeframe);
+  string strID = string("iIchimoku_") + symbol + string("_") + string(tf) + string("_") + to_string(tenkan_sen) + string("_") + to_string(kijun_sen) + string("_") + to_string(senkou_span_b);
+  if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
+   int handle = jiIchimokuInit(iFintecheeUID, symbol.c_str(), tf, tenkan_sen, kijun_sen, senkou_span_b);
+   paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
+  }
+  if (mode == MODE_TENKANSEN) {
+   return jiIchimoku(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], 0, convertMode(mode, INDI_ICHIMOKU), shift);
+  } else if (mode == MODE_KIJUNSEN) {
+   return jiIchimoku(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], 0, convertMode(mode, INDI_ICHIMOKU), shift);
+  } else if (mode == MODE_SENKOUSPANA) {
+   return jiIchimoku(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], kijun_sen, convertMode(mode, INDI_ICHIMOKU), shift);
+  } else if (mode == MODE_SENKOUSPANB) {
+   return jiIchimoku(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], kijun_sen, convertMode(mode, INDI_ICHIMOKU), shift);
+  } else {
+   return jiIchimoku(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], -kijun_sen, convertMode(mode, INDI_ICHIMOKU), shift);
+  }
+}
+double iIchimoku (long symbol, int timeframe, int tenkan_sen, int kijun_sen, int senkou_span_b, int mode, int shift) {
+  return iIchimoku("", timeframe, tenkan_sen, kijun_sen, senkou_span_b, mode, shift);
+}
 
 double iMA (const string symbol, int timeframe, int ma_period, int ma_shift, int ma_method, int applied_price, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iMA_") + symbol + string("_") + string(tf) + string("_") + to_string(ma_period) + string("_") + to_string(ma_shift) + string("_") + to_string(ma_method) + string("_") + to_string(applied_price);
   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-    int handle = jiMAInit(iFintecheeUID, symbol, tf, ma_period, ma_shift, ma_method, applied_price);
+    int handle = jiMAInit(iFintecheeUID, symbol.c_str(), tf, ma_period, ma_shift, ma_method, applied_price);
     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
   }
   return jiMA(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], ma_shift, convertMAMethod(ma_method), shift);
@@ -2057,7 +2057,7 @@ double iMACD (const string symbol, int timeframe, int fast_ema_period, int slow_
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iMACD_") + symbol + string("_") + string(tf) + string("_") + to_string(fast_ema_period) + string("_") + to_string(slow_ema_period) + string("_") + to_string(signal_period) + string("_") + to_string(applied_price);
   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-    int handle = jiMACDInit(iFintecheeUID, symbol, tf, fast_ema_period, slow_ema_period, signal_period, applied_price);
+    int handle = jiMACDInit(iFintecheeUID, symbol.c_str(), tf, fast_ema_period, slow_ema_period, signal_period, applied_price);
     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
   }
   return jiMACD(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], convertMode(mode, INDI_MACD), shift);
@@ -2070,7 +2070,7 @@ double iMomentum (const string symbol, int timeframe, int period, int applied_pr
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iMomentum_") + symbol + string("_") + string(tf) + string("_") + to_string(period) + string("_") + to_string(applied_price);
   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-    int handle = jiMomentumInit(iFintecheeUID, symbol, tf, period, applied_price);
+    int handle = jiMomentumInit(iFintecheeUID, symbol.c_str(), tf, period, applied_price);
     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
   }
   return jiMomentum(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], shift);
@@ -2086,7 +2086,7 @@ double iRSI (const string symbol, int timeframe, int period, int applied_price, 
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iRSI_") + symbol + string("_") + string(tf) + string("_") + to_string(period) + string("_") + to_string(applied_price);
   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-    int handle = jiRSIInit(iFintecheeUID, symbol, tf, period, applied_price);
+    int handle = jiRSIInit(iFintecheeUID, symbol.c_str(), tf, period, applied_price);
     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
   }
   return jiRSI(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], shift);
@@ -2102,7 +2102,7 @@ double iRVI (const string symbol, int timeframe, int period, int mode, int shift
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iRVI_") + symbol + string("_") + string(tf) + string("_") + to_string(period);
   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-    int handle = jiRVIInit(iFintecheeUID, symbol, tf, period);
+    int handle = jiRVIInit(iFintecheeUID, symbol.c_str(), tf, period);
     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
   }
   return jiRVI(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], convertMode(mode, INDI_RVI), shift);
@@ -2115,7 +2115,7 @@ double iSAR (const string symbol, int timeframe, double step, double maximum, in
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iSAR_") + symbol + string("_") + string(tf) + string("_") + to_string(step) + string("_") + to_string(maximum);
   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-    int handle = jiSARInit(iFintecheeUID, symbol, tf, step, maximum);
+    int handle = jiSARInit(iFintecheeUID, symbol.c_str(), tf, step, maximum);
     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
   }
   return jiSAR(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], shift);
@@ -2128,7 +2128,7 @@ double iStochastic (const string symbol, int timeframe, int Kperiod, int Dperiod
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iStochastic_") + symbol + string("_") + string(tf) + string("_") + to_string(Kperiod) + string("_") + to_string(Dperiod) + string("_") + to_string(slowing) + string("_") + to_string(method);
   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-    int handle = jiStochasticInit(iFintecheeUID, symbol, tf, Kperiod, Dperiod, slowing, convertMAMethod(method));
+    int handle = jiStochasticInit(iFintecheeUID, symbol.c_str(), tf, Kperiod, Dperiod, slowing, convertMAMethod(method));
     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
   }
   return jiStochastic(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], convertMode(mode, INDI_STOCHASTIC), shift);
@@ -2141,7 +2141,7 @@ double iWPR (const string symbol, int timeframe, int period, int shift) {
   const char* tf = convertTimeFrame(timeframe);
   string strID = string("iWPR_") + symbol + string("_") + string(tf) + string("_") + to_string(period);
   if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
-    int handle = jiWPRInit(iFintecheeUID, symbol, tf, period);
+    int handle = jiWPRInit(iFintecheeUID, symbol.c_str(), tf, period);
     paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
   }
   return jiWPR(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], shift);
@@ -2168,7 +2168,7 @@ bool GlobalVariableDel (const string name) {
 }
 
 double MarketInfo (const string symbol, int type) {
-  return jMarketInfo(iFintecheeUID, symbol, type);
+  return jMarketInfo(iFintecheeUID, symbol.c_str(), type);
 }
 double MarketInfo (long symbol, int type) {
   return MarketInfo("", type);
