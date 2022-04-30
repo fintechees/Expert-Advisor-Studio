@@ -395,7 +395,7 @@ function (context) { // Init()
           '</div>' +
         '</div>'
 
-        $("#reserved_zone").html($("#reserved_zone").html() + panel)
+        $("#reserved_zone").append(panel)
         window.subscriptionIds = []
       } else {
         loaded = true
