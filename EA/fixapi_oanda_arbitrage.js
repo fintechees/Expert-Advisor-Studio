@@ -151,7 +151,7 @@ registerEA(
         '</div>' +
       '</div>'
 
-      $("#reserved_zone").html($("#reserved_zone").html() + arbitragePricesPanel)
+      $("#reserved_zone").append(arbitragePricesPanel)
 
       if (getLayoutId() != 3) {
   			changeLayout(3)
