@@ -1,6 +1,6 @@
 registerEA(
 "cryptocurrency_option_trading_platform",
-"A plugin to trade cryptocurrency options(v0.07)",
+"A plugin to trade cryptocurrency options(v0.08)",
 [{
 	name: "interval",
 	value: 30,
@@ -395,7 +395,7 @@ function (context) { // Init()
           '</div>' +
         '</div>'
 
-        $("#reserved_zone").html(panel)
+        $("#reserved_zone").html($("#reserved_zone").html() + panel)
         window.subscriptionIds = []
       } else {
         loaded = true
