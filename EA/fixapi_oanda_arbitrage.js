@@ -1,6 +1,6 @@
 registerEA(
   "fixapi_oanda_arbitrage",
-  "A test EA to trade arbitrage based on the price difference between FIX API and Oanda(v1.09)",
+  "A test EA to trade arbitrage based on the price difference between FIX API and Oanda(v1.10)",
   [{
     name: "autoLoad",
     value: true,
@@ -151,7 +151,7 @@ registerEA(
         '</div>' +
       '</div>'
 
-      $("#reserved_zone").html(arbitragePricesPanel)
+      $("#reserved_zone").html($("#reserved_zone").html() + arbitragePricesPanel)
 
       if (getLayoutId() != 3) {
   			changeLayout(3)
