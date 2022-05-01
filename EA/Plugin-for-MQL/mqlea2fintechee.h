@@ -1395,6 +1395,10 @@ double Bid;
 double Point;
 int Digits;
 
+int OnInit (void);
+
+void OnDeinit (const int);
+
 void OnTick (void);
 
 void setParam (int uid, const struct Parameter & parameter) {
