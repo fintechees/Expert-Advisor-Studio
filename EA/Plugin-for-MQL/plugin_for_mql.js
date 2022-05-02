@@ -72,7 +72,7 @@ registerEA(
 								var timeFrame = getChartTimeFrameByContext(context)
 
 								window.mqlIndicatorsBuffer[uid + ""] = {
-									name: definition.name,
+									name: currDefinition.name,
 									context: context,
 									brokerName: brokerName,
 									accountId: accountId,
@@ -139,7 +139,7 @@ registerEA(
 									buffObj.dataInput.push(buffer)
 								}
 
-								for (var i in definition.dataOutput) {
+								for (var i in currDefinition.dataOutput) {
 									buffer = indiObj.module._malloc(buffLen * nByteDouble)
 
 									for (var j = 0; j < dataOutput.length; j++) {
@@ -1338,7 +1338,7 @@ registerEA(
 								var timeFrame = getEAParameter(context, "timeframe")
 
 								window.mqlEAsBuffer[uid + ""] = {
-									name: definition.name,
+									name: currDefinition.name,
 									context: context,
 									brokerName: brokerName,
 									accountId: accountId,
