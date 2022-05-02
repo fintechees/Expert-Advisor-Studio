@@ -1349,23 +1349,23 @@ registerEA(
 									objs: typeof localStorage.mqlObjs != "undefined" ? JSON.parse(localStorage.mqlObjs) : [],
 									lock: false,
 									convertTimeFrame: function () {
-										if (TIME_FRAME.M1 == timeframe) {
+										if (TIME_FRAME.M1 == timeFrame) {
 											return 1
-										} else if (TIME_FRAME.M5 == timeframe) {
+										} else if (TIME_FRAME.M5 == timeFrame) {
 											return 5
-										} else if (TIME_FRAME.M15 == timeframe) {
+										} else if (TIME_FRAME.M15 == timeFrame) {
 											return 15
-										} else if (TIME_FRAME.M30 == timeframe) {
+										} else if (TIME_FRAME.M30 == timeFrame) {
 											return 30
-										} else if (TIME_FRAME.H1 == timeframe) {
+										} else if (TIME_FRAME.H1 == timeFrame) {
 											return 60
-										} else if (TIME_FRAME.H4 == timeframe) {
+										} else if (TIME_FRAME.H4 == timeFrame) {
 											return 240
-										} else if (TIME_FRAME.D == timeframe) {
+										} else if (TIME_FRAME.D == timeFrame) {
 											return 1440
-										} else if (TIME_FRAME.W == timeframe) {
+										} else if (TIME_FRAME.W == timeFrame) {
 											return 10080
-										} else if (TIME_FRAME.M == timeframe) {
+										} else if (TIME_FRAME.M == timeFrame) {
 											return 43200
 										} else {
 											return 0
