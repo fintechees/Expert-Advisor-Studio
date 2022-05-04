@@ -1,5 +1,5 @@
 registerEA(
-"copytrading_locally",
+"copy_trading_locally",
 "A simple EA to copy trading locally(v1.0)",
 [{
 	name: "fromAccountId",
