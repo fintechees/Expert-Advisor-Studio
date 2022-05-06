@@ -2499,7 +2499,7 @@ registerEA(
 								    data[i] = window.mqlEAs[obj.name].module.getValue(input + i * nByteDouble, "double")
 								  }
 								  if (typeof obj.neuralNetworks[nnName] != "undefined" && typeof obj.neuralNetworks[nnName].perceptron != "undefined") {
-								    return obj.neuralNetworks[nnName].perceptron.activate(input)[0]
+								    return obj.neuralNetworks[nnName].perceptron.activate(data)[0]
 								  } else {
 										return 0.5
 									}
