@@ -329,6 +329,8 @@ int (*jARROW_CHECKCreate) (int, long, const char*, datetime, double);
 int (*jARROW_CHECKDelete) (int, const char*);
 int (*jIsTesting) ();
 double (*jMarketInfo) (int, const char*, int);
+int (*jCreateNeuralNetwork) (int, const char*, const char*);
+double (*jActivateNeuralNetwork) (int, const char*, double*, int);
 
 EM_JS(int, jOrderSend, (int uid, const char* symbol, const char* cmd, double volume, double price, int slippage, double stoploss, double takeprofit, const char* comment, int magic, datetime expiration, int arrow_color), {
    return Asyncify.handleSleep(function (wakeUp) {
@@ -1882,6 +1884,14 @@ EMSCRIPTEN_KEEPALIVE
 void setjMarketInfo (double (*f) (int, const char*, int)) {
   jMarketInfo = f;
 }
+EMSCRIPTEN_KEEPALIVE
+void setjCreateNeuralNetwork (int (*f) (int, const char*, const char*)) {
+  jCreateNeuralNetwork = f;
+}
+EMSCRIPTEN_KEEPALIVE
+void setjActivateNeuralNetwork (double (*f) (int, const char*, double*, int)) {
+  jActivateNeuralNetwork = f;
+}
 
 }
 
@@ -2751,4 +2761,12 @@ bool VeriSig (const string fintechee_data, const string fintechee_signature, con
   }
 
   return false;
+}
+
+bool CreateNeuralNetwork (const string nnName, const string nnJson) {
+  return jCreateNeuralNetwork(iFintecheeUID, nnName.c_str(), nnJson.c_str()) == 1;
+}
+
+double ActivateNeuralNetwork (const string nnName, double* input, int inputNum) {
+  return jActivateNeuralNetwork(iFintecheeUID, nnName.c_str(), input, inputNum);
 }
