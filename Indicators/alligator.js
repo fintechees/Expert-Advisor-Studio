@@ -1,5 +1,5 @@
 registerIndicator(
-    "alligator", "A series of Bill Williams' indicators(v1.01)", function (context) {
+    "alligator", "A series of Bill Williams' indicators(v1.02)", function (context) {
 		var dataInput = getDataInput(context, 0)
 		var dataOutputJaws = getDataOutput(context, "jaws")
 		var dataOutputTeeth = getDataOutput(context, "teeth")
@@ -93,11 +93,11 @@ registerIndicator(
 		name: "teeth",
 		visible: true,
 		renderType: RENDER_TYPE.LINE,
-		color: "#4EC2B4"
+		color: "#DE5029"
 	},{
 		name: "lips",
 		visible: true,
 		renderType: RENDER_TYPE.LINE,
-		color: "#DE5029"
+		color: "#4EC2B4"
 	}],
 	WHERE_TO_RENDER.CHART_WINDOW)
