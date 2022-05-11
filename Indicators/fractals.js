@@ -1,6 +1,6 @@
 registerIndicator(
 "fractals",
-"Fractals(v1.0)",
+"Fractals(v1.01)",
 function (context) {
 	    var dataInputHigh = getDataInput(context, 0)
 	    var dataInputLow = getDataInput(context, 1)
@@ -22,93 +22,102 @@ function (context) {
 	        ptr = 2
 	    }
 
-	    var bFound = false
+	    var bHFound = false
+			var bLFound = false
 	    var highest = null
 	    var lowest = null
 
 	    while (ptr < dataInputHigh.length - 2) {
-	        bFound = false
+	        bHFound = false
 	        highest = dataInputHigh[ptr]
 
 	        if (highest > dataInputHigh[ptr - 1] && highest > dataInputHigh[ptr - 2] && highest > dataInputHigh[ptr + 1] && highest > dataInputHigh[ptr + 2]) {
-	            bFound = true
+	            bHFound = true
 	            dataOutputUp[ptr] = highest
 	        }
-	        if (!bFound && ptr >= 3) {
+	        if (!bHFound && ptr >= 3) {
 	            if (highest > dataInputHigh[ptr - 1] && highest > dataInputHigh[ptr - 2] && highest > dataInputHigh[ptr - 3] && highest > dataInputHigh[ptr + 1] && highest > dataInputHigh[ptr + 2]) {
-	                bFound = true
+	                bHFound = true
 	                dataOutputUp[ptr] = highest
 	            }
 	        }
-	        if (!bFound && ptr >= 4) {
+	        if (!bHFound && ptr >= 4) {
 	            if (highest > dataInputHigh[ptr - 1] && highest > dataInputHigh[ptr - 2] && highest > dataInputHigh[ptr - 3] && highest > dataInputHigh[ptr - 4] && highest > dataInputHigh[ptr + 1] && highest > dataInputHigh[ptr + 2]) {
-	                bFound = true
+	                bHFound = true
 	                dataOutputUp[ptr] = highest
 	            }
 	        }
-	        if (!bFound && ptr >= 5) {
+	        if (!bHFound && ptr >= 5) {
 	            if (highest > dataInputHigh[ptr - 1] && highest > dataInputHigh[ptr - 2] && highest > dataInputHigh[ptr - 3] && highest > dataInputHigh[ptr - 4] && highest > dataInputHigh[ptr - 5] && highest > dataInputHigh[ptr + 1] && highest > dataInputHigh[ptr + 2]) {
-	                bFound = true
+	                bHFound = true
 	                dataOutputUp[ptr] = highest
 	            }
 	        }
-	        if (!bFound && ptr >= 6) {
+	        if (!bHFound && ptr >= 6) {
 	            if (highest > dataInputHigh[ptr - 1] && highest > dataInputHigh[ptr - 2] && highest > dataInputHigh[ptr - 3] && highest > dataInputHigh[ptr - 4] && highest > dataInputHigh[ptr - 5] && highest > dataInputHigh[ptr - 6] && highest > dataInputHigh[ptr + 1] && highest > dataInputHigh[ptr + 2]) {
-	                bFound = true
+	                bHFound = true
 	                dataOutputUp[ptr] = highest
 	            }
 	        }
 
-	        bFound = false
+	        bLFound = false
 	        lowest = dataInputLow[ptr]
 
 	        if (lowest < dataInputLow[ptr - 1] && lowest < dataInputLow[ptr - 2] && lowest < dataInputLow[ptr + 1] && lowest < dataInputLow[ptr + 2]) {
-	            bFound = true
+	            bLFound = true
 	            dataOutputDown[ptr] = lowest
 	        }
-	        if (!bFound && ptr >= 3) {
+	        if (!bLFound && ptr >= 3) {
 	            if (lowest < dataInputLow[ptr - 1] && lowest < dataInputLow[ptr - 2] && lowest < dataInputLow[ptr - 3] && lowest < dataInputLow[ptr + 1] && lowest < dataInputLow[ptr + 2]) {
-	                bFound = true
+	                bLFound = true
 	                dataOutputDown[ptr] = lowest
 	            }
 	        }
-	        if (!bFound && ptr >= 4) {
+	        if (!bLFound && ptr >= 4) {
 	            if (lowest < dataInputLow[ptr - 1] && lowest < dataInputLow[ptr - 2] && lowest < dataInputLow[ptr - 3] && lowest < dataInputLow[ptr - 4] && lowest < dataInputLow[ptr + 1] && lowest < dataInputLow[ptr + 2]) {
-	                bFound = true
+	                bLFound = true
 	                dataOutputDown[ptr] = lowest
 	            }
 	        }
-	        if (!bFound && ptr >= 5) {
+	        if (!bLFound && ptr >= 5) {
 	            if (lowest < dataInputLow[ptr - 1] && lowest < dataInputLow[ptr - 2] && lowest < dataInputLow[ptr - 3] && lowest < dataInputLow[ptr - 4] && lowest < dataInputLow[ptr - 5] && lowest < dataInputLow[ptr + 1] && lowest < dataInputLow[ptr + 2]) {
-	                bFound = true
+	                bLFound = true
 	                dataOutputDown[ptr] = lowest
 	            }
 	        }
-	        if (!bFound && ptr >= 6) {
+	        if (!bLFound && ptr >= 6) {
 	            if (lowest < dataInputLow[ptr - 1] && lowest < dataInputLow[ptr - 2] && lowest < dataInputLow[ptr - 3] && lowest < dataInputLow[ptr - 4] && lowest < dataInputLow[ptr - 5] && lowest < dataInputLow[ptr - 6] && lowest < dataInputLow[ptr + 1] && lowest < dataInputLow[ptr + 2]) {
-	                bFound = true
+	                bLFound = true
 	                dataOutputDown[ptr] = lowest
 	            }
 	        }
 
 	        ptr++
 	    }
-	},
-[], [{
-	name: "High",
-	index: 0
-}, {
-	name: "Low",
-	index: 1
-}], [{
-	name: "fractalsUp",
-	visible: true,
-	renderType: "Round",
-	color: "green"
-}, {
-	name: "fractalsDown",
-	visible: true,
-	renderType: "Round",
-	color: "red"
-}],
-"CHART_WINDOW")
+
+			if (!bHFound) {
+				dataOutputUp[dataInputHigh.length - 3] = 0
+			}
+			if (!bLFound) {
+				dataOutputDown[dataInputLow.length - 3] = 0
+			}
+	},[],
+	[{
+	    name: DATA_NAME.HIGH,
+	    index: 0
+	},{
+	    name: DATA_NAME.LOW,
+	    index: 1
+	}],
+	[{
+	    name: "fractalsUp",
+	    visible: true,
+	    renderType: RENDER_TYPE.ROUND,
+	    color: "green"
+	},{
+	    name: "fractalsDown",
+	    visible: true,
+	    renderType: RENDER_TYPE.ROUND,
+	    color: "red"
+	}],
+	WHERE_TO_RENDER.CHART_WINDOW)
