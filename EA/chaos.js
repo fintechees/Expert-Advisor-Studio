@@ -939,9 +939,13 @@ registerEA(
     } else if (signal == 0) {
       popupMessage("You received an OPEN SHORT signal!")
     } else if (signal == 3) {
-      popupMessage("You received a CLOSE LONG signal!")
+      if (bGetSignals) {
+        popupMessage("You received a CLOSE LONG signal!")
+      }
     } else if (signal == 2) {
-      popupMessage("You received a CLOSE SHORT signal!")
+      if (bGetSignals) {
+        popupMessage("You received a CLOSE SHORT signal!")
+      }
     }
   },
   function (context) { // OnTransaction()
