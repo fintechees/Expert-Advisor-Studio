@@ -937,7 +937,7 @@ registerEA(
     if (signal == 1) {
       popupMessage("You received an OPEN LONG signal!")
     } else if (signal == 0) {
-      popupMessage("You received a OPEN SHORT signal!")
+      popupMessage("You received an OPEN SHORT signal!")
     } else if (signal == 3) {
       popupMessage("You received a CLOSE LONG signal!")
     } else if (signal == 2) {
