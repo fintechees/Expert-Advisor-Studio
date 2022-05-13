@@ -87,6 +87,7 @@ https://www.fintechee.com/shared.html
 <tr><td><strong>Multiple Charts Management</strong></td><td>Our WEB trader terminal(trader room) is designed to be responsive(UI layout).</td></tr>
 <tr><td><strong>Investor Mode</strong></td><td>Investor mode(guest mode, read-only) is allowed.</td></tr>
 <tr><td><strong>Binance API</strong></td><td>Integration with Binance API on the backend</td></tr>
+<tr><td><strong>Trading Chaos</strong></td><td>EA based on Trading Chaos(Bill Williams' book)</td></tr>
 <tr><td><strong>Many Features</strong></td><td>...... Many features, you can explore them on your own.</td></tr>
 </table>
 
