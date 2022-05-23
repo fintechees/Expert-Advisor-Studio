@@ -35,30 +35,6 @@ function (context) {
 	            bHFound = true
 	            dataOutputUp[ptr] = highest
 	        }
-	        if (!bHFound && ptr >= 3) {
-	            if (highest > dataInputHigh[ptr - 1] && highest > dataInputHigh[ptr - 2] && highest > dataInputHigh[ptr - 3] && highest > dataInputHigh[ptr + 1] && highest > dataInputHigh[ptr + 2]) {
-	                bHFound = true
-	                dataOutputUp[ptr] = highest
-	            }
-	        }
-	        if (!bHFound && ptr >= 4) {
-	            if (highest > dataInputHigh[ptr - 1] && highest > dataInputHigh[ptr - 2] && highest > dataInputHigh[ptr - 3] && highest > dataInputHigh[ptr - 4] && highest > dataInputHigh[ptr + 1] && highest > dataInputHigh[ptr + 2]) {
-	                bHFound = true
-	                dataOutputUp[ptr] = highest
-	            }
-	        }
-	        if (!bHFound && ptr >= 5) {
-	            if (highest > dataInputHigh[ptr - 1] && highest > dataInputHigh[ptr - 2] && highest > dataInputHigh[ptr - 3] && highest > dataInputHigh[ptr - 4] && highest > dataInputHigh[ptr - 5] && highest > dataInputHigh[ptr + 1] && highest > dataInputHigh[ptr + 2]) {
-	                bHFound = true
-	                dataOutputUp[ptr] = highest
-	            }
-	        }
-	        if (!bHFound && ptr >= 6) {
-	            if (highest > dataInputHigh[ptr - 1] && highest > dataInputHigh[ptr - 2] && highest > dataInputHigh[ptr - 3] && highest > dataInputHigh[ptr - 4] && highest > dataInputHigh[ptr - 5] && highest > dataInputHigh[ptr - 6] && highest > dataInputHigh[ptr + 1] && highest > dataInputHigh[ptr + 2]) {
-	                bHFound = true
-	                dataOutputUp[ptr] = highest
-	            }
-	        }
 
 	        bLFound = false
 	        lowest = dataInputLow[ptr]
@@ -66,30 +42,6 @@ function (context) {
 	        if (lowest < dataInputLow[ptr - 1] && lowest < dataInputLow[ptr - 2] && lowest < dataInputLow[ptr + 1] && lowest < dataInputLow[ptr + 2]) {
 	            bLFound = true
 	            dataOutputDown[ptr] = lowest
-	        }
-	        if (!bLFound && ptr >= 3) {
-	            if (lowest < dataInputLow[ptr - 1] && lowest < dataInputLow[ptr - 2] && lowest < dataInputLow[ptr - 3] && lowest < dataInputLow[ptr + 1] && lowest < dataInputLow[ptr + 2]) {
-	                bLFound = true
-	                dataOutputDown[ptr] = lowest
-	            }
-	        }
-	        if (!bLFound && ptr >= 4) {
-	            if (lowest < dataInputLow[ptr - 1] && lowest < dataInputLow[ptr - 2] && lowest < dataInputLow[ptr - 3] && lowest < dataInputLow[ptr - 4] && lowest < dataInputLow[ptr + 1] && lowest < dataInputLow[ptr + 2]) {
-	                bLFound = true
-	                dataOutputDown[ptr] = lowest
-	            }
-	        }
-	        if (!bLFound && ptr >= 5) {
-	            if (lowest < dataInputLow[ptr - 1] && lowest < dataInputLow[ptr - 2] && lowest < dataInputLow[ptr - 3] && lowest < dataInputLow[ptr - 4] && lowest < dataInputLow[ptr - 5] && lowest < dataInputLow[ptr + 1] && lowest < dataInputLow[ptr + 2]) {
-	                bLFound = true
-	                dataOutputDown[ptr] = lowest
-	            }
-	        }
-	        if (!bLFound && ptr >= 6) {
-	            if (lowest < dataInputLow[ptr - 1] && lowest < dataInputLow[ptr - 2] && lowest < dataInputLow[ptr - 3] && lowest < dataInputLow[ptr - 4] && lowest < dataInputLow[ptr - 5] && lowest < dataInputLow[ptr - 6] && lowest < dataInputLow[ptr + 1] && lowest < dataInputLow[ptr + 2]) {
-	                bLFound = true
-	                dataOutputDown[ptr] = lowest
-	            }
 	        }
 
 	        ptr++
