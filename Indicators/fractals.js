@@ -1,6 +1,6 @@
 registerIndicator(
 "fractals",
-"Fractals(v1.01)",
+"Fractals(v1.02)",
 function (context) {
 	    var dataInputHigh = getDataInput(context, 0)
 	    var dataInputLow = getDataInput(context, 1)
