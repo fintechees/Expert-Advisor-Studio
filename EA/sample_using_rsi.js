@@ -1,6 +1,6 @@
 registerEA(
 		"sample_using_rsi",
-		"A test EA based on rsi(v1.0)",
+		"A test EA based on rsi(v1.01)",
 		[{ // parameters
 			name: "period",
 			value: 20,
@@ -15,24 +15,21 @@ registerEA(
 			var symbolName = "EUR/USD"
 
 			getQuotes (context, brokerName, accountId, symbolName)
-			window.chartHandle = getChartHandle(context, brokerName, accountId, symbolName, TIME_FRAME.M1)
+			context.chartHandle = getChartHandle(context, brokerName, accountId, symbolName, TIME_FRAME.M1)
 			var period = getEAParameter(context, "period")
-			window.indiHandle = getIndicatorHandle(context, brokerName, accountId, symbolName, TIME_FRAME.M1, "rsi", [{
+			context.indiHandle = getIndicatorHandle(context, brokerName, accountId, symbolName, TIME_FRAME.M1, "rsi", [{
 				name: "period",
 				value: period
 			}])
 		},
 		function (context) { // Deinit()
-			delete window.currTime
-			delete window.chartHandle
-			delete window.indiHandle
 		},
 		function (context) { // OnTick()
-			var arrTime = getData(context, window.chartHandle, DATA_NAME.TIME)
-			if (typeof window.currTime == "undefined") {
-				window.currTime = arrTime[arrTime.length - 1]
-			} else if (window.currTime != arrTime[arrTime.length - 1]) {
-				window.currTime = arrTime[arrTime.length - 1]
+			var arrTime = getData(context, context.chartHandle, DATA_NAME.TIME)
+			if (typeof context.currTime == "undefined") {
+				context.currTime = arrTime[arrTime.length - 1]
+			} else if (context.currTime != arrTime[arrTime.length - 1]) {
+				context.currTime = arrTime[arrTime.length - 1]
 			} else {
 				return
 			}
@@ -42,7 +39,7 @@ registerEA(
 			var accountId = getAccountIdOfAccount(account)
 			var symbolName = "EUR/USD"
 
-			var arrRsi = getData(context, window.indiHandle, "rsi")
+			var arrRsi = getData(context, context.indiHandle, "rsi")
 
 			var ask = null
 			var bid = null
