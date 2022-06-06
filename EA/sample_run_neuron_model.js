@@ -1,6 +1,6 @@
 registerEA(
 		"sample_run_neuron_model",
-		"A test EA to run neuron model(v1.03)",
+		"A test EA to run neuron model(v1.04)",
 		[{ // parameters
 			name: "period",
 			value: 20,
@@ -27,13 +27,13 @@ registerEA(
 			range: [0, 100]
 		}],
 		function (context) { // Init()
-			// We use localstorage.reservedZone to store the neural network network.
+			// We use localstorage.reservedZone to store the neural network.
 			// Please don't change the name "reservedZone" or your data stored in this zone will be removed while the version is updated.
 			if (typeof localStorage.reservedZone == "undefined") return
 
 			var reservedZone = JSON.parse(localStorage.reservedZone)
 			if (typeof reservedZone.sample_training_neuron_model == "undefined") return
-			window.myPerceptron = synaptic.Network.fromJSON(reservedZone.sample_training_neuron_model)
+			context.myPerceptron = synaptic.Network.fromJSON(reservedZone.sample_training_neuron_model)
 
 			var account = getAccount(context, 0)
 			var brokerName = getBrokerNameOfAccount(account)
@@ -41,25 +41,21 @@ registerEA(
 			var symbolName = "EUR/USD"
 
 			getQuotes (context, brokerName, accountId, symbolName)
-			window.chartHandle = getChartHandle(context, brokerName, accountId, symbolName, TIME_FRAME.M1)
+			context.chartHandle = getChartHandle(context, brokerName, accountId, symbolName, TIME_FRAME.M1)
 			var period = getEAParameter(context, "period")
-			window.indiHandle = getIndicatorHandle(context, brokerName, accountId, symbolName, TIME_FRAME.M1, "rsi", [{
+			context.indiHandle = getIndicatorHandle(context, brokerName, accountId, symbolName, TIME_FRAME.M1, "rsi", [{
 				name: "period",
 				value: period
 			}])
 		},
 		function (context) { // Deinit()
-			delete window.currTime
-			delete window.chartHandle
-			delete window.indiHandle
-			delete window.myPerceptron
 		},
 		function (context) { // OnTick()
-			var arrTime = getData(context, window.chartHandle, DATA_NAME.TIME)
-			if (typeof window.currTime == "undefined") {
-				window.currTime = arrTime[arrTime.length - 1]
-			} else if (window.currTime != arrTime[arrTime.length - 1]) {
-				window.currTime = arrTime[arrTime.length - 1]
+			var arrTime = getData(context, context.chartHandle, DATA_NAME.TIME)
+			if (typeof context.currTime == "undefined") {
+				context.currTime = arrTime[arrTime.length - 1]
+			} else if (context.currTime != arrTime[arrTime.length - 1]) {
+				context.currTime = arrTime[arrTime.length - 1]
 			} else {
 				return
 			}
@@ -73,7 +69,7 @@ registerEA(
 			var inputNum = getEAParameter(context, "inputNum")
 			var threshold = getEAParameter(context, "threshold")
 			var takeProfit = getEAParameter(context, "takeProfit")
-			var arrRsi = getData(context, window.indiHandle, "rsi")
+			var arrRsi = getData(context, context.indiHandle, "rsi")
 
 			if (inputNum + period - 1 > arrRsi.length) throw new Error("No enough data.")
 
@@ -83,7 +79,7 @@ registerEA(
 				input.push(arrRsi[i] / 100)
 			}
 
-			var result = window.myPerceptron.activate(input)[0]
+			var result = context.myPerceptron.activate(input)[0]
 			printMessage(result)
 
 			var ask = null
