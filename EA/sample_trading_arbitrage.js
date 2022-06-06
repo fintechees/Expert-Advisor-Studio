@@ -1,6 +1,6 @@
 registerEA(
 		"sample_trading_arbitrage",
-		"Two accounts signed up on the different servers are required to trade arbitrage. Additionally please make sure that you have signed in to both accounts and logged out from the accounts in investor mode.(v1.03)",
+		"Two accounts signed up on the different servers are required to trade arbitrage. Additionally please make sure that you have signed in to both accounts and logged out from the accounts in investor mode.(v1.04)",
 		[],// parameters
 		function (context) { // Init()
 			var account1 = getAccount(context, 0)
@@ -20,26 +20,23 @@ registerEA(
 			getQuotes (context, acc1.brokerName, acc1.accountId, acc1.symbolName)
 			getQuotes (context, acc2.brokerName, acc2.accountId, acc2.symbolName)
 
-			window.acc1 = acc1
-			window.acc2 = acc2
+			context.acc1 = acc1
+			context.acc2 = acc2
 		},
 		function (context) { // Deinit()
-			delete window.currTime
-			delete window.acc1
-			delete window.acc2
 		},
 		function (context) { // OnTick()
 			var currTime = new Date().getTime()
-			if (typeof window.currTime == "undefined") {
-				window.currTime = currTime
-			} else if (window.currTime <= currTime - 1000) {
-				window.currTime = currTime
+			if (typeof context.currTime == "undefined") {
+				context.currTime = currTime
+			} else if (context.currTime <= currTime - 1000) {
+				context.currTime = currTime
 			} else {
 				return
 			}
 
-			var acc1 = window.acc1
-			var acc2 = window.acc2
+			var acc1 = context.acc1
+			var acc2 = context.acc2
 
 			var ask1 = null
 			var ask2 = null
