@@ -1,6 +1,6 @@
 registerEA(
 	"sample_training_cnn_model",
-	"An EA sample to train neuron model(v1.0)",
+	"An EA sample to train neuron model(v1.01)",
 	[{
 		name: "version",
 		value: 1,
@@ -118,9 +118,7 @@ registerEA(
 	      window.trainCnn(window.tfModel, window.tensorSet, iterations, batchSize, bMonitor).then(function () {
 	        printMessage("Training is done!");
 
-	        (async () => {
-	          await window.tfModel.save("localstorage://" + tfModelName)
-	        })()
+					window.saveCnn(window.tfModel, tfModelName)
 
 	        var longCnt = 0
 	        var shortCnt = 0
@@ -275,23 +273,24 @@ registerEA(
 	    }
 
 			if (bContinue) {
-	      (async () => {
-	        try {
-	          window.tfModel = await window.tf.loadLayersModel("localstorage://" + tfModelName)
+        try {
+					window.loadCnn(tfModelName)
+					.then(function (tfModel) {
+						window.tfModel = tfModel
 
-	          if (typeof window.tensorSet != "undefined") {
+						if (typeof window.tensorSet != "undefined") {
 	            if (bMem) {
 	              if (bTest) {
 	                setTimeout(function () {context.testMyCnn()}, 5000)
-	              } else if (bContinue) {
+	              } else {
 	                setTimeout(function () {context.trainMyCnn()}, 5000)
 	              }
 	            }
 	          }
-	        } catch (e) {
-	          popupErrorMessage("Failed to load CNN model.")
-	        }
-	      })()
+					})
+        } catch (e) {
+          popupErrorMessage("Failed to load CNN model.")
+        }
 	    } else {
 	      context.buildMyCnn()
 	    }
