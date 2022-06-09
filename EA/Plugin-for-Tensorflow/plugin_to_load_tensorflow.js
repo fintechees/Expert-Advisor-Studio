@@ -1,6 +1,6 @@
 registerEA(
 	  "plugin_to_load_tensorflow",
-	  "A plugin to load Tensorflow(v1.0)",
+	  "A plugin to load Tensorflow(v1.01)",
 	  [{ // parameters
 	    name: "tfjs",
 	    value: "https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js",
@@ -102,6 +102,14 @@ registerEA(
 	              }
 	            })
 	          }
+
+						window.saveCnn = async function (tfModel, tfModelName) {
+	            await tfModel.save("localstorage://" + tfModelName)
+						}
+
+						window.loadCnn = async function (tfModelName) {
+							return await window.tf.loadLayersModel("localstorage://" + tfModelName)
+						}
 
 	          popupMessage("Tensorflow has been loaded successfully!")
 	        }
