@@ -1,6 +1,6 @@
 registerEA(
 	  "sample_running_cnn_model",
-	  "An EA sample to run neuron model(v1.0)",
+	  "An EA sample to run neuron model(v1.01)",
 	  [{ // parameters
 	    name: "version",
 	    value: 1,
@@ -67,11 +67,12 @@ registerEA(
 	      return result
 	    };
 
-	    (async () => {
-				var tfModelName = "Fintechee " + symbolName.replace("/", "") + "-" + timeFrame + "-" + inputNum + "-" + hiddenNum + "-" + predictNum + "-" + version
+			var tfModelName = "Fintechee " + symbolName.replace("/", "") + "-" + timeFrame + "-" + inputNum + "-" + hiddenNum + "-" + predictNum + "-" + version
 
-	      window.tfModel = await tf.loadLayersModel("localstorage://" + tfModelName)
-	    })()
+			window.loadCnn(tfModelName)
+			.then(function (tfModel) {
+				window.tfModel = tfModel
+			})
 
 	    var account = getAccount(context, 0)
 	    var brokerName = getBrokerNameOfAccount(account)
