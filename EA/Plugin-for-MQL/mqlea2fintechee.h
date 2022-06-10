@@ -335,10 +335,12 @@ double (*jActivateNeuralNetwork) (int, const char*, double*, int);
 EM_JS(int, jOrderSend, (int uid, const char* symbol, const char* cmd, double volume, double price, int slippage, double stoploss, double takeprofit, const char* comment, int magic, datetime expiration, int arrow_color), {
    return Asyncify.handleSleep(function (wakeUp) {
     try {
+      var obj = window.mqlEAsBuffer[uid + ""];
+      var UTF8ToString = window.mqlEAs[obj.name].module.UTF8ToString;
+
       var symbolName = UTF8ToString(symbol);
       const orderType = UTF8ToString(cmd);
       const cmmnt = UTF8ToString(comment);
-      var obj = window.mqlEAsBuffer[uid + ""];
       if (symbolName == "") {
         symbolName = obj.symbolName;
       }
@@ -441,12 +443,15 @@ EM_JS(int, jOrderDelete, (int uid, int ticket, int arrow_color), {
   });
 });
 
-EM_JS(bool, jVeriSig, (const char* fintechee_data, const char* fintechee_signature, const char* fintechee_public_key), {
+EM_JS(bool, jVeriSig, (int uid, const char* fintechee_data, const char* fintechee_signature, const char* fintechee_public_key), {
   return Asyncify.handleSleep(function (wakeUp) {
     if (typeof veriSig == "undefined") {
       wakeUp(false);
       return;
     }
+
+    var obj = window.mqlEAsBuffer[uid + ""];
+    var UTF8ToString = window.mqlEAs[obj.name].module.UTF8ToString;
 
     const data = UTF8ToString(fintechee_data);
     const signature = UTF8ToString(fintechee_signature);
@@ -465,6 +470,206 @@ EM_JS(bool, jVeriSig, (const char* fintechee_data, const char* fintechee_signatu
       printErrorMessage(e.message);
       wakeUp(false);
     })
+  });
+});
+
+EM_JS(void, jPreventCleanUp, (int uid), {
+  try {
+    window.mqlEAsBuffer[uid + ""].bPreventCleanUp = true;
+  } catch (e) {
+    printErrorMessage(e.message);
+  }
+});
+
+EM_JS(bool, jBuildCNN, (int uid, const char* name, int inputNum, int hiddenNum), {
+  return Asyncify.handleSleep(function (wakeUp) {
+    try {
+      var obj = window.mqlEAsBuffer[uid + ""];
+      var nnName = window.mqlEAs[obj.name].module.UTF8ToString(name);
+      if (nnName == "") {
+        printErrorMessage("Please enter the name of your CNN model.");
+        wakeUp(false);
+        return;
+      }
+
+      if (typeof window.buildCnn == "undefined") {
+        printErrorMessage("Please run the plugin to load your CNN model first.");
+        wakeUp(false);
+      } else {
+        window.buildCnn(inputNum, inputNum, hiddenNum, inputNum).then(function (tfModel) {
+          obj.neuralNetworks[nnName] = {
+            cnn: tfModel
+          };
+          wakeUp(true);
+        })
+        .catch(function (e) {
+          printErrorMessage(e.message);
+          wakeUp(false);
+        })
+      }
+    } catch (e) {
+      printErrorMessage(e.message);
+      wakeUp(false);
+    }
+  });
+});
+
+EM_JS(bool, jTrainCNN, (int uid, const char* name, double* dataInput, double* dataOutput, long trainingSetNum, int inputNum, long iterations, int batchSize, bool bMonitor), {
+  return Asyncify.handleSleep(function (wakeUp) {
+    try {
+      var obj = window.mqlEAsBuffer[uid + ""];
+      var nnName = window.mqlEAs[obj.name].module.UTF8ToString(name);
+      if (nnName == "") {
+        printErrorMessage("Please enter the name of your CNN model.");
+        wakeUp(false);
+        return;
+      }
+
+      if (typeof obj.neuralNetworks[nnName] != "undefined" && typeof obj.neuralNetworks[nnName].cnn != "undefined") {
+        if (typeof window.trainCnn == "undefined") {
+          printErrorMessage("Please run the plugin to load your CNN model first.");
+          wakeUp(false);
+        } else {
+          var nByteDouble = 8;
+          var trainingSetI = new Array(trainingSetNum * inputNum);
+          for (var i = 0; i < trainingSetI.length; i++) {
+            trainingSetI[i] = window.mqlEAs[obj.name].module.getValue(dataInput + i * nByteDouble, "double");
+          }
+          var trainingSetO = new Array(trainingSetNum * 2);
+          for (var i = 0; i < trainingSetO.length; i++) {
+            trainingSetO[i] = window.mqlEAs[obj.name].module.getValue(dataOutput + i * nByteDouble, "double");
+          }
+
+          var tensorSet = {
+            input: window.tf.tensor3d(trainingSetI, [trainingSetNum, inputNum, 1]),
+            output: window.tf.tensor2d(trainingSetO, [trainingSetNum, 2])
+          };
+
+          printMessage("Start training!");
+
+          window.trainCnn(obj.neuralNetworks[nnName].cnn, tensorSet, iterations, batchSize, bMonitor).then(function () {
+            printMessage("Training is done!");
+            wakeUp(true);
+          })
+          .catch(function (e) {
+            printErrorMessage(e.message);
+            wakeUp(false);
+          })
+        }
+      } else {
+        printErrorMessage("The specific CNN model doesn't exist.");
+        wakeUp(false);
+      }
+    } catch (e) {
+      printErrorMessage(e.message);
+      wakeUp(false);
+    }
+  });
+});
+
+EM_JS(double, jRunCNN, (int uid, const char* name, double* dataInput, int inputNum), {
+  return Asyncify.handleSleep(function (wakeUp) {
+    try {
+      var obj = window.mqlEAsBuffer[uid + ""];
+      var nnName = window.mqlEAs[obj.name].module.UTF8ToString(name);
+      if (nnName == "") {
+        printErrorMessage("Please enter the name of your CNN model.");
+        wakeUp(-1);
+        return;
+      }
+
+      if (typeof obj.neuralNetworks[nnName] != "undefined" && typeof obj.neuralNetworks[nnName].cnn != "undefined") {
+        if (typeof window.tf == "undefined") {
+          printErrorMessage("Please run the plugin to load your CNN model first.");
+          wakeUp(-1);
+        } else {
+          var nByteDouble = 8;
+          var trainingSetI = new Array(inputNum);
+          for (var i = 0; i < trainingSetI.length; i++) {
+            trainingSetI[i] = window.mqlEAs[obj.name].module.getValue(dataInput + i * nByteDouble, "double");
+          }
+
+          wakeUp(obj.neuralNetworks[nnName].cnn.predict(window.tf.tensor3d(trainingSetI, [1, inputNum, 1])).arraySync()[0][0]);
+        }
+      } else {
+        printErrorMessage("The specific CNN model doesn't exist.");
+        wakeUp(-1);
+      }
+    } catch (e) {
+      printErrorMessage(e.message);
+      wakeUp(-1);
+    }
+  });
+});
+
+EM_JS(bool, jSaveCNN, (int uid, const char* name), {
+  return Asyncify.handleSleep(function (wakeUp) {
+    try {
+      var obj = window.mqlEAsBuffer[uid + ""];
+      var nnName = window.mqlEAs[obj.name].module.UTF8ToString(name);
+      if (nnName == "") {
+        printErrorMessage("Please enter the name of your CNN model.");
+        wakeUp(false);
+        return;
+      }
+
+      if (typeof obj.neuralNetworks[nnName] != "undefined" && typeof obj.neuralNetworks[nnName].cnn != "undefined") {
+        if (typeof window.tf == "undefined") {
+          printErrorMessage("Please run the plugin to load your CNN model first.");
+          wakeUp(false);
+        } else {
+          window.saveCnn(obj.neuralNetworks[nnName].cnn, nnName).then(function () {
+            wakeUp(true);
+          })
+          .catch(function (msg) {
+            wakeUp(false);
+          })
+        }
+      } else {
+        printErrorMessage("The specific CNN model doesn't exist.");
+        wakeUp(false);
+      }
+    } catch (e) {
+      printErrorMessage(e.message);
+      wakeUp(false);
+    }
+  });
+});
+
+EM_JS(bool, jLoadCNN, (int uid, const char* name), {
+  return Asyncify.handleSleep(function (wakeUp) {
+    try {
+      var obj = window.mqlEAsBuffer[uid + ""];
+      var nnName = window.mqlEAs[obj.name].module.UTF8ToString(name);
+      if (nnName == "") {
+        printErrorMessage("Please enter the name of your CNN model.");
+        wakeUp(false);
+        return;
+      }
+
+      if (typeof window.tf == "undefined") {
+        printErrorMessage("Please run the plugin to load your CNN model first.");
+        wakeUp(false);
+      } else {
+        window.loadCnn(nnName).then(function (tfModel) {
+          if (typeof tfModel != "undefined") {
+            obj.neuralNetworks[nnName] = {
+              cnn: tfModel
+            };
+            wakeUp(true);
+          } else {
+            printErrorMessage("The specific CNN model doesn't exist.");
+            wakeUp(false);
+          }
+        })
+        .catch(function (msg) {
+          wakeUp(false);
+        })
+      }
+    } catch (e) {
+      printErrorMessage(e.message);
+      wakeUp(false);
+    }
   });
 });
 
@@ -2717,6 +2922,7 @@ double MarketInfo (long symbol, int type) {
   return MarketInfo("", type);
 }
 
+// Not compatible with MQL
 bool VeriSig (const string fintechee_data, const string fintechee_signature, const string fintechee_public_key, const string application_public_key) {
   string data = fintechee_data;
   string signature = fintechee_signature;
@@ -2738,7 +2944,7 @@ bool VeriSig (const string fintechee_data, const string fintechee_signature, con
   if (dataLen == 0 || signatureLen == 0 || publicKeyLen == 0 || appPublicKeyLen == 0) return false;
   if (publicKeyLen != appPublicKeyLen) return false;
   if (StringCompare(publicKey, appPublicKey) != 0) return false;
-  bool res = jVeriSig(data.c_str(), signature.c_str(), publicKey.c_str());
+  bool res = jVeriSig(iFintecheeUID, data.c_str(), signature.c_str(), publicKey.c_str());
 
   if (res) {
     std::vector<string> arr;
@@ -2763,10 +2969,42 @@ bool VeriSig (const string fintechee_data, const string fintechee_signature, con
   return false;
 }
 
+// Deprecated
 bool CreateNeuralNetwork (const string nnName, const string nnJson) {
   return jCreateNeuralNetwork(iFintecheeUID, nnName.c_str(), nnJson.c_str()) == 1;
 }
 
+// Deprecated
 double ActivateNeuralNetwork (const string nnName, double* input, int inputNum) {
   return jActivateNeuralNetwork(iFintecheeUID, nnName.c_str(), input, inputNum);
+}
+
+// Not compatible with MQL
+void PreventCleanUp () {
+  jPreventCleanUp(iFintecheeUID);
+}
+
+// Not compatible with MQL
+bool BuildCNN (const string nnName, int inputNum, int hiddenNum) {
+  return jBuildCNN(iFintecheeUID, nnName.c_str(), inputNum, hiddenNum);
+}
+
+// Not compatible with MQL
+bool TrainCNN (const string nnName, double* dataInput, double* dataOutput, long trainingSetNum, int inputNum, long iterations, int batchSize, bool bMonitor) {
+  return jTrainCNN(iFintecheeUID, nnName.c_str(), dataInput, dataOutput, trainingSetNum, inputNum, iterations, batchSize, bMonitor);
+}
+
+// Not compatible with MQL
+double RunCNN (const string nnName, double* dataInput, int inputNum) {
+  return jRunCNN(iFintecheeUID, nnName.c_str(), dataInput, inputNum);
+}
+
+// Not compatible with MQL
+bool SaveCNN (const string nnName) {
+  return jSaveCNN(iFintecheeUID, nnName.c_str());
+}
+
+// Not compatible with MQL
+bool LoadCNN (const string nnName) {
+  return jLoadCNN(iFintecheeUID, nnName.c_str());
 }

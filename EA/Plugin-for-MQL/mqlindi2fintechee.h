@@ -276,12 +276,15 @@ int (*jiWPRInit) (int, const char*, const char*, int);
 double (*jiWPR) (int, int, int);
 double (*jMarketInfo) (int, const char*, int);
 
-EM_JS(bool, jVeriSig, (const char* fintechee_data, const char* fintechee_signature, const char* fintechee_public_key), {
+EM_JS(bool, jVeriSig, (int uid, const char* fintechee_data, const char* fintechee_signature, const char* fintechee_public_key), {
   return Asyncify.handleSleep(function (wakeUp) {
     if (typeof veriSig == "undefined") {
       wakeUp(false);
       return;
     }
+
+    var obj = window.mqlIndicatorsBuffer[uid + ""];
+    var UTF8ToString = window.mqlIndicators[obj.name].module.UTF8ToString;
 
     const data = UTF8ToString(fintechee_data);
     const signature = UTF8ToString(fintechee_signature);
@@ -2174,6 +2177,7 @@ double MarketInfo (long symbol, int type) {
   return MarketInfo("", type);
 }
 
+// Not compatible with MQL
 bool VeriSig (const string fintechee_data, const string fintechee_signature, const string fintechee_public_key, const string application_public_key) {
   string data = fintechee_data;
   string signature = fintechee_signature;
@@ -2195,7 +2199,7 @@ bool VeriSig (const string fintechee_data, const string fintechee_signature, con
   if (dataLen == 0 || signatureLen == 0 || publicKeyLen == 0 || appPublicKeyLen == 0) return false;
   if (publicKeyLen != appPublicKeyLen) return false;
   if (StringCompare(publicKey, appPublicKey) != 0) return false;
-  bool res = jVeriSig(data.c_str(), signature.c_str(), publicKey.c_str());
+  bool res = jVeriSig(iFintecheeUID, data.c_str(), signature.c_str(), publicKey.c_str());
 
   if (res) {
     std::vector<string> arr;
