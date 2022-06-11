@@ -276,6 +276,17 @@ int (*jiWPRInit) (int, const char*, const char*, int);
 double (*jiWPR) (int, int, int);
 double (*jMarketInfo) (int, const char*, int);
 
+EM_JS(bool, jSCompareL, (int uid, const char* str, long l), {
+  try {
+    var obj = window.mqlIndicatorsBuffer[uid + ""];
+    var UTF8ToString = window.mqlIndicators[obj.name].module.UTF8ToString;
+    var s = UTF8ToString(str);
+    return parseInt(s) >= l;
+  } catch (e) {
+    return false;
+  }
+});
+
 EM_JS(bool, jVeriSig, (int uid, const char* fintechee_data, const char* fintechee_signature, const char* fintechee_public_key), {
   return Asyncify.handleSleep(function (wakeUp) {
     if (typeof veriSig == "undefined") {
@@ -2178,6 +2189,11 @@ double MarketInfo (long symbol, int type) {
 }
 
 // Not compatible with MQL
+bool SCompareL (const string str, long l) {
+  return jSCompareL(iFintecheeUID, str.c_str(), l);
+}
+
+// Not compatible with MQL
 bool VeriSig (const string fintechee_data, const string fintechee_signature, const string fintechee_public_key, const string application_public_key) {
   string data = fintechee_data;
   string signature = fintechee_signature;
@@ -2210,14 +2226,10 @@ bool VeriSig (const string fintechee_data, const string fintechee_signature, con
       arr.push_back(s);
     }
 
-    datetime expiryDate = 0;
-
     if (0 < arr.size()) {
-      expiryDate = std::stol(arr[0], nullptr);
-    }
-
-    if (expiryDate >= TimeCurrent()) {
-      return true;
+      if (SCompareL(arr[0], TimeCurrent())) {
+        return true;
+      }
     }
   }
 
