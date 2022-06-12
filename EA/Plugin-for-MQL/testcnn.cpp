@@ -5,9 +5,10 @@
 #define ITERATIONS 1000
 #define BATCH_SIZE 512
 
-double macdArr[ARR_NUM * INPUT_NUM];
-double oArr[ARR_NUM];
+double *macdArr;
+double *oArr;
 int cursor = 0;
+datetime currTime = 0;
 
 int OnInit (void) {
   PreventCleanUp();
@@ -16,24 +17,26 @@ int OnInit (void) {
 
 void OnTick(void) {
   if (cursor >= ARR_NUM) return;
+  if (currTime == iTime(NULL, 0, 0)) return;
+  currTime = iTime(NULL, 0, 0);
 
   double arr[INPUT_NUM];
   double highest = 0;
   double lowest = 9999999999;
   for (int i = 1; i <= INPUT_NUM; i++) {
-    arr[i] = iMACD(NULL, 0, 12, 26, 9, PRICE_CLOSE, MODE_MAIN, i);
-    if (arr[i] > highest) {
-      highest = arr[i];
+    arr[i - 1] = iMACD(NULL, 0, 12, 26, 9, PRICE_CLOSE, MODE_MAIN, i);
+    if (arr[i - 1] > highest) {
+      highest = arr[i - 1];
     }
-    if (arr[i] < lowest) {
-      lowest = arr[i];
+    if (arr[i - 1] < lowest) {
+      lowest = arr[i - 1];
     }
   }
   double height = highest - lowest;
   if (height <= 0) return;
 
-  for (int i = 1; i <= INPUT_NUM; i++) {
-    macdArr[cursor * ARR_NUM + i] = (arr[i] - lowest) / height;
+  for (int i = 0; i < INPUT_NUM; i++) {
+    macdArr[cursor * INPUT_NUM + i] = (arr[i] - lowest) / height;
   }
   oArr[cursor] = iOpen(NULL, 0, 0);
   cursor++;
@@ -42,8 +45,8 @@ void OnTick(void) {
 void OnDeinit (const int) {
   bool res = BuildCNN(NN_NAME, INPUT_NUM, HIDDEN_NUM);
   if (res) {
-    double trainingSetI[(cursor - 1) * INPUT_NUM];
-    double trainingSetO[(cursor - 1) * 2];
+    double *trainingSetI = (double *)malloc((cursor - 1) * INPUT_NUM);
+    double *trainingSetO = (double *)malloc((cursor - 1) * 2);
 
     for (int i = 0; i < cursor - 1; i++) {
       for (int j = 0; j < INPUT_NUM; j++) {
@@ -98,5 +101,10 @@ void OnDeinit (const int) {
       Print("Long: ", longCnt, ", ", (longWinCnt * 1.0 / lsCount));
       Print("Short: ", shortCnt, ", ", (shortWinCnt * 1.0 / lsCount));
     }
+
+    free(trainingSetI);
+    free(trainingSetO);
   }
+  free(macdArr);
+  free(oArr);
 }
