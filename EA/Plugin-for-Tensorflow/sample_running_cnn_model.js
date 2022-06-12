@@ -1,6 +1,6 @@
 registerEA(
 	  "sample_running_cnn_model",
-	  "An EA sample to run neuron model(v1.01)",
+	  "An EA sample to run neuron model(v1.02)",
 	  [{ // parameters
 	    name: "version",
 	    value: 1,
@@ -60,18 +60,19 @@ registerEA(
 	    context.runMyCnn = function (input) {
 	      if (typeof input == "undefined" || input.length == 0) return -1
 
-	      var result = window.tfModel.predict(tf.tensor3d(input, [1, inputNum, 1])).arraySync()[0][0]
+	      var result = window.runCnn(this.tfModel, input, inputNum)
 
 	      printMessage(result)
 
 	      return result
-	    };
+	    }
 
 			var tfModelName = "Fintechee " + symbolName.replace("/", "") + "-" + timeFrame + "-" + inputNum + "-" + hiddenNum + "-" + predictNum + "-" + version
 
+			context.tfModel = null
 			window.loadCnn(tfModelName)
 			.then(function (tfModel) {
-				window.tfModel = tfModel
+				context.tfModel = tfModel
 			})
 
 	    var account = getAccount(context, 0)
@@ -185,9 +186,9 @@ registerEA(
 	          input.push((arrMain[arrLen - i] - lowVal) / height)
 	        }
 
-	        var result = window.tfModel.predict(window.tf.tensor3d(input, [1, this.inputNum, 1])).arraySync()[0][0]
+	        var result = this.runMyCnn(input)
 
-	        return result >= 0.5 ? 1 : 0
+	        return result == -1 ? -1 : (result >= 0.5 ? 1 : 0)
 	      },
 	      upSl: 0,
 	      downSl: 0,
@@ -218,7 +219,7 @@ registerEA(
 	      return
 	    }
 
-	    if (window.tfModel == null) return
+	    if (context.tfModel == null) return
 	    var arrTime = getData(context, context.chartHandle, DATA_NAME.TIME)
 	    if (typeof context.currTime == "undefined") {
 	      context.currTime = arrTime[arrTime.length - 1]
