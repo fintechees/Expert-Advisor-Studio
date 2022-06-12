@@ -1,6 +1,6 @@
 registerEA(
 	  "sample_running_cnn_model",
-	  "An EA sample to run neuron model(v1.02)",
+	  "An EA sample to run neuron model(v1.03)",
 	  [{ // parameters
 	    name: "version",
 	    value: 1,
@@ -73,6 +73,9 @@ registerEA(
 			window.loadCnn(tfModelName)
 			.then(function (tfModel) {
 				context.tfModel = tfModel
+			})
+			.catch(function (e) {
+				popupErrorMessage("Failed to load the CNN model.")
 			})
 
 	    var account = getAccount(context, 0)
