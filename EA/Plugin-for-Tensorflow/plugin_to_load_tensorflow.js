@@ -1,6 +1,6 @@
 registerEA(
 	  "plugin_to_load_tensorflow",
-	  "A plugin to load Tensorflow(v1.02)",
+	  "A plugin to load Tensorflow(v1.03)",
 	  [{ // parameters
 	    name: "tfjs",
 	    value: "https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js",
@@ -127,6 +127,14 @@ registerEA(
 									}
 								})()
 							})
+						}
+
+						window.runCnn = async function (tfModel, input, inputNum) {
+							try {
+								return tfModel.predict(window.tf.tensor3d(input, [1, inputNum, 1])).arraySync()[0][0]
+							} catch (e) {
+								return -1
+							}
 						}
 
 	          popupMessage("Tensorflow has been loaded successfully!")
