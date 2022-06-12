@@ -5,8 +5,8 @@
 #define ITERATIONS 1000
 #define BATCH_SIZE 512
 
-double *macdArr;
-double *oArr;
+double macdArr[ARR_NUM * INPUT_NUM];
+double oArr[ARR_NUM];
 int cursor = 0;
 datetime currTime = 0;
 
@@ -45,8 +45,8 @@ void OnTick(void) {
 void OnDeinit (const int) {
   bool res = BuildCNN(NN_NAME, INPUT_NUM, HIDDEN_NUM);
   if (res) {
-    double *trainingSetI = (double *)malloc((cursor - 1) * INPUT_NUM);
-    double *trainingSetO = (double *)malloc((cursor - 1) * 2);
+    double trainingSetI[(cursor - 1) * INPUT_NUM];
+    double trainingSetO[(cursor - 1) * 2];
 
     for (int i = 0; i < cursor - 1; i++) {
       for (int j = 0; j < INPUT_NUM; j++) {
@@ -101,10 +101,5 @@ void OnDeinit (const int) {
       Print("Long: ", longCnt, ", ", (longWinCnt * 1.0 / lsCount));
       Print("Short: ", shortCnt, ", ", (shortWinCnt * 1.0 / lsCount));
     }
-
-    free(trainingSetI);
-    free(trainingSetO);
   }
-  free(macdArr);
-  free(oArr);
 }
