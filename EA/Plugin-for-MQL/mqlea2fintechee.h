@@ -600,7 +600,7 @@ EM_JS(double, jRunCNN, (int uid, const char* name, double* dataInput, int inputN
             trainingSetI[i] = window.mqlEAs[obj.name].module.getValue(dataInput + i * nByteDouble, "double");
           }
 
-          wakeUp(obj.neuralNetworks[nnName].cnn.predict(window.tf.tensor3d(trainingSetI, [1, inputNum, 1])).arraySync()[0][0]);
+          wakeUp(window.runCnn(obj.neuralNetworks[nnName].cnn, trainingSetI, inputNum));
         }
       } else {
         printErrorMessage("The specific CNN model doesn't exist.");
