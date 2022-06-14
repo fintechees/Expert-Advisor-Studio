@@ -2981,12 +2981,14 @@ bool VeriSig (const string fintechee_data, const string fintechee_signature, con
   return false;
 }
 
-// Deprecated
+// Not compatible with MQL
+// Uses Synaptic
 bool CreateNeuralNetwork (const string nnName, const string nnJson) {
   return jCreateNeuralNetwork(iFintecheeUID, nnName.c_str(), nnJson.c_str()) == 1;
 }
 
-// Deprecated
+// Not compatible with MQL
+// Uses Synaptic
 double ActivateNeuralNetwork (const string nnName, double* input, int inputNum) {
   return jActivateNeuralNetwork(iFintecheeUID, nnName.c_str(), input, inputNum);
 }
@@ -2997,26 +2999,31 @@ void PreventCleanUp () {
 }
 
 // Not compatible with MQL
+// Uses Tensorflow
 bool BuildCNN (const string nnName, int inputNum, int hiddenNum) {
   return jBuildCNN(iFintecheeUID, nnName.c_str(), inputNum, hiddenNum);
 }
 
 // Not compatible with MQL
+// Uses Tensorflow
 bool TrainCNN (const string nnName, double* dataInput, double* dataOutput, long trainingSetNum, int inputNum, long iterations, int batchSize, bool bMonitor) {
   return jTrainCNN(iFintecheeUID, nnName.c_str(), dataInput, dataOutput, trainingSetNum, inputNum, iterations, batchSize, bMonitor);
 }
 
 // Not compatible with MQL
+// Uses Tensorflow
 double RunCNN (const string nnName, double* dataInput, int inputNum) {
   return jRunCNN(iFintecheeUID, nnName.c_str(), dataInput, inputNum);
 }
 
 // Not compatible with MQL
+// Uses Tensorflow
 bool SaveCNN (const string nnName) {
   return jSaveCNN(iFintecheeUID, nnName.c_str());
 }
 
 // Not compatible with MQL
+// Uses Tensorflow
 bool LoadCNN (const string nnName) {
   return jLoadCNN(iFintecheeUID, nnName.c_str());
 }
