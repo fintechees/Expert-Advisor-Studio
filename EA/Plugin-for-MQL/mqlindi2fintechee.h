@@ -16,7 +16,7 @@
 #include <emscripten.h>
 using namespace std;
 
-typedef long datetime;
+typedef time_t datetime; // Please note that time_t can't handle dates beyond Y2038
 typedef int color;
 
 enum ENUM_TIMEFRAMES {
@@ -276,6 +276,7 @@ int (*jiWPRInit) (int, const char*, const char*, int);
 double (*jiWPR) (int, int, int);
 double (*jMarketInfo) (int, const char*, int);
 
+// Deprecated
 EM_JS(bool, jSCompareL, (int uid, const char* str, long l), {
   try {
     var obj = window.mqlIndicatorsBuffer[uid + ""];
@@ -2189,6 +2190,7 @@ double MarketInfo (long symbol, int type) {
 }
 
 // Not compatible with MQL
+// Deprecated
 bool SCompareL (const string str, long l) {
   return jSCompareL(iFintecheeUID, str.c_str(), l);
 }
@@ -2227,7 +2229,7 @@ bool VeriSig (const string fintechee_data, const string fintechee_signature, con
     }
 
     if (0 < arr.size()) {
-      if (SCompareL(arr[0], TimeCurrent())) {
+      if (std::stoll(arr[0]) >= TimeCurrent()) {
         return true;
       }
     }
