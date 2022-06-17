@@ -1,3 +1,105 @@
+function getHighestOnArray (dataInput, dataOutput, calculatedLength, period) {
+	var i = calculatedLength
+
+	if (calculatedLength > 0) {
+		i--
+	} else {
+		for (var j = 0; j < period - 1; j++) {
+			dataOutput[j] = 0
+		}
+
+		i = period - 1
+	}
+
+	var highest = -Number.MAX_VALUE
+
+	for (var j = i - period + 1; j < i; j++) {
+		if (dataInput[j] > highest) {
+			highest = dataInput[j]
+		}
+	}
+
+	for (var j = i; j < dataInput.length; j++) {
+		if (dataInput[j] > highest) {
+			highest = dataInput[j]
+		}
+		dataOutput[j] = highest
+		if (dataInput[j - period + 1] == highest) {
+			highest = -Number.MAX_VALUE
+
+			for (var k = j - period + 1 + 1; k <= j; k++) {
+				if (dataInput[k] > highest) {
+					highest = dataInput[k]
+				}
+			}
+		}
+	}
+}
+
+function getLowestOnArray (dataInput, dataOutput, calculatedLength, period) {
+	var i = calculatedLength
+
+	if (calculatedLength > 0) {
+		i--
+	} else {
+		for (var j = 0; j < period - 1; j++) {
+			dataOutput[j] = 0
+		}
+
+		i = period - 1
+	}
+
+	var lowest = Number.MAX_VALUE
+
+	for (var j = i - period + 1; j < i; j++) {
+		if (dataInput[j] < lowest) {
+			lowest = dataInput[j]
+		}
+	}
+
+	for (var j = i; j < dataInput.length; j++) {
+		if (dataInput[j] < lowest) {
+			lowest = dataInput[j]
+		}
+		dataOutput[j] = lowest
+		if (dataInput[j - period + 1] == lowest) {
+			lowest = Number.MAX_VALUE
+
+			for (var k = j - period + 1 + 1; k <= j; k++) {
+				if (dataInput[k] < lowest) {
+					lowest = dataInput[k]
+				}
+			}
+		}
+	}
+}
+
+function sumOnArray (dataInput, dataOutput, calculatedLength, period) {
+	var i = calculatedLength
+
+	if (calculatedLength > 0) {
+		i--
+	} else {
+		for (var j = 0; j < period - 1; j++) {
+			dataOutput[j] = 0
+		}
+
+		i = period - 1
+	}
+
+	var sum = 0
+
+	for (var j = i - period + 1; j < i; j++) {
+		sum += dataInput[j]
+	}
+
+	for (var j = i; j < dataInput.length; j++) {
+		sum += dataInput[j]
+		dataOutput[j] = sum
+		sum -= dataInput[j - period + 1]
+	}
+}
+
 function sma (dataInput, dataOutput, calculatedLength, period) {
 	var i = calculatedLength
 
