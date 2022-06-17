@@ -1,6 +1,6 @@
 registerEA(
 		"plugin_for_mql",
-		"mql_plugin to make MQL-based programs runnable on Fintechee(v1.03)",
+		"mql_plugin to make MQL-based programs runnable on Fintechee(v1.04)",
 		[],
 		function (context) { // Init()
 			if (typeof window.pluginForMql != "undefined") {
@@ -872,6 +872,22 @@ registerEA(
 									var arr = getDataFromIndi(obj.context, indiHandle, md)
 									return arr[arr.length - shift - 1]
 								}, "diiii")
+								var jiMFIInit = Module.addFunction(function (uid, symbol, timeframe, period) {
+									var obj = window.mqlIndicatorsBuffer[uid + ""]
+									var symbolName = window.mqlIndicators[obj.name].module.UTF8ToString(symbol)
+									var timeFrm = window.mqlIndicators[obj.name].module.UTF8ToString(timeframe)
+									symbolName = symbolName == "" ? obj.symbolName : symbolName
+									timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
+									return getIndicatorHandleFromIndi(obj.context, symbolName, timeFrm, "mfi", [{
+										name: "period",
+										value: period
+									}])
+								}, "iiiiiiii")
+								var jiMFI = Module.addFunction(function (uid, indiHandle, shift) {
+									var obj = window.mqlIndicatorsBuffer[uid + ""]
+									var arr = getDataFromIndi(obj.context, indiHandle, "mfi")
+									return arr[arr.length - shift - 1]
+								}, "diiii")
 								var jiMomentumInit = Module.addFunction(function (uid, symbol, timeframe, period, applied_price) {
 									var obj = window.mqlIndicatorsBuffer[uid + ""]
 									var symbolName = window.mqlIndicators[obj.name].module.UTF8ToString(symbol)
@@ -1124,6 +1140,8 @@ registerEA(
 									setjiMAOnArray: Module.cwrap("setjiMAOnArray", null, ["number"]),
 									setjiMACDInit: Module.cwrap("setjiMACDInit", null, ["number"]),
 									setjiMACD: Module.cwrap("setjiMACD", null, ["number"]),
+									setjiMFIInit: Module.cwrap("setjiMFIInit", null, ["number"]),
+									setjiMFI: Module.cwrap("setjiMFI", null, ["number"]),
 									setjiMomentumInit: Module.cwrap("setjiMomentumInit", null, ["number"]),
 									setjiMomentum: Module.cwrap("setjiMomentum", null, ["number"]),
 									setjiMomentumOnArray: Module.cwrap("setjiMomentumOnArray", null, ["number"]),
@@ -1198,6 +1216,8 @@ registerEA(
 								window.mqlIndicators[definition.name].setjiMAOnArray(jiMAOnArray)
 								window.mqlIndicators[definition.name].setjiMACDInit(jiMACDInit)
 								window.mqlIndicators[definition.name].setjiMACD(jiMACD)
+								window.mqlIndicators[definition.name].setjiMFIInit(jiMFIInit)
+								window.mqlIndicators[definition.name].setjiMFI(jiMFI)
 								window.mqlIndicators[definition.name].setjiMomentumInit(jiMomentumInit)
 								window.mqlIndicators[definition.name].setjiMomentum(jiMomentum)
 								window.mqlIndicators[definition.name].setjiMomentumOnArray(jiMomentumOnArray)
@@ -2262,6 +2282,22 @@ registerEA(
 									var arr = getData(obj.context, indiHandle, md)
 									return arr[arr.length - shift - 1]
 								}, "diiii")
+								var jiMFIInit = Module.addFunction(function (uid, symbol, timeframe, period) {
+									var obj = window.mqlEAsBuffer[uid + ""]
+									var symbolName = window.mqlEAs[obj.name].module.UTF8ToString(symbol)
+									var timeFrm = window.mqlEAs[obj.name].module.UTF8ToString(timeframe)
+									symbolName = symbolName == "" ? obj.symbolName : symbolName
+									timeFrm = timeFrm == "0" ? obj.timeFrame : timeFrm
+									return getIndicatorHandle(obj.context, obj.brokerName, obj.accountId, symbolName, timeFrm, "mfi", [{
+										name: "period",
+										value: period
+									}])
+								}, "iiiiiiii")
+								var jiMFI = Module.addFunction(function (uid, indiHandle, shift) {
+									var obj = window.mqlEAsBuffer[uid + ""]
+									var arr = getData(obj.context, indiHandle, "mfi")
+									return arr[arr.length - shift - 1]
+								}, "diiii")
 								var jiMomentumInit = Module.addFunction(function (uid, symbol, timeframe, period, applied_price) {
 									var obj = window.mqlEAsBuffer[uid + ""]
 									var symbolName = window.mqlEAs[obj.name].module.UTF8ToString(symbol)
@@ -2599,6 +2635,8 @@ registerEA(
 									setjiMAOnArray: Module.cwrap("setjiMAOnArray", null, ["number"]),
 									setjiMACDInit: Module.cwrap("setjiMACDInit", null, ["number"]),
 									setjiMACD: Module.cwrap("setjiMACD", null, ["number"]),
+									setjiMFIInit: Module.cwrap("setjiMFIInit", null, ["number"]),
+									setjiMFI: Module.cwrap("setjiMFI", null, ["number"]),
 									setjiMomentumInit: Module.cwrap("setjiMomentumInit", null, ["number"]),
 									setjiMomentum: Module.cwrap("setjiMomentum", null, ["number"]),
 									setjiMomentumOnArray: Module.cwrap("setjiMomentumOnArray", null, ["number"]),
@@ -2702,6 +2740,8 @@ registerEA(
 								window.mqlEAs[definition.name].setjiMAOnArray(jiMAOnArray)
 								window.mqlEAs[definition.name].setjiMACDInit(jiMACDInit)
 								window.mqlEAs[definition.name].setjiMACD(jiMACD)
+								window.mqlEAs[definition.name].setjiMFIInit(jiMFIInit)
+								window.mqlEAs[definition.name].setjiMFI(jiMFI)
 								window.mqlEAs[definition.name].setjiMomentumInit(jiMomentumInit)
 								window.mqlEAs[definition.name].setjiMomentum(jiMomentum)
 								window.mqlEAs[definition.name].setjiMomentumOnArray(jiMomentumOnArray)
