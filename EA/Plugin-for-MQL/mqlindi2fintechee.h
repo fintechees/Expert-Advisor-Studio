@@ -46,6 +46,11 @@ enum ENUM_MA_METHOD {
   MODE_SMMA = 2,
   MODE_LWMA = 3
 };
+enum ENUM_INIT_RETCODE {
+  INIT_SUCCEEDED = 0,
+  INIT_FAILED = -1,
+  INIT_PARAMETERS_INCORRECT = -1
+};
 
 const int MODE_MAIN = 0;
 const int MODE_SIGNAL = 1;
