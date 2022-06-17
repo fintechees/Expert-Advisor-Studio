@@ -260,6 +260,8 @@ double (*jiMA) (int, int, int, const char*, int);
 double (*jiMAOnArray) (int, double*, int, int, int, const char*, int);
 int (*jiMACDInit) (int, const char*, const char*, int, int, int, int);
 double (*jiMACD) (int, int, const char*, int);
+int (*jiMFIInit) (int, const char*, const char*, int);
+double (*jiMFI) (int, int, int);
 int (*jiMomentumInit) (int, const char*, const char*, int, int);
 double (*jiMomentum) (int, int, int);
 double (*jiMomentumOnArray) (int, double*, int, int, int);
@@ -1590,6 +1592,14 @@ void setjiMACD (double (*f) (int, int, const char*, int)) {
   jiMACD = f;
 }
 EMSCRIPTEN_KEEPALIVE
+void setjiMFIInit (int (*f) (int, const char*, const char*, int)) {
+  jiMFIInit = f;
+}
+EMSCRIPTEN_KEEPALIVE
+void setjiMFI (double (*f) (int, int, int)) {
+  jiMFI = f;
+}
+EMSCRIPTEN_KEEPALIVE
 void setjiMomentumInit (int (*f) (int, const char*, const char*, int, int)) {
   jiMomentumInit = f;
 }
@@ -2079,6 +2089,19 @@ double iMACD (const string symbol, int timeframe, int fast_ema_period, int slow_
 }
 double iMACD (long symbol, int timeframe, int fast_ema_period, int slow_ema_period, int signal_period, int applied_price, int mode, int shift) {
   return iMACD("", timeframe, fast_ema_period, slow_ema_period, signal_period, applied_price, mode, shift);
+}
+
+double iMFI (const string symbol, int timeframe, int period, int shift) {
+  const char* tf = convertTimeFrame(timeframe);
+  string strID = string("iMFI_") + symbol + string("_") + string(tf) + string("_") + to_string(period);
+  if (paramInputOutputList[iFintecheeUID].handleList.count(strID) == 0) {
+    int handle = jiMFIInit(iFintecheeUID, symbol.c_str(), tf, period);
+    paramInputOutputList[iFintecheeUID].handleList[strID] = handle;
+  }
+  return jiMFI(iFintecheeUID, paramInputOutputList[iFintecheeUID].handleList[strID], shift);
+}
+double iMFI (long symbol, int timeframe, int period, int shift) {
+  return iMFI("", timeframe, period, shift);
 }
 
 double iMomentum (const string symbol, int timeframe, int period, int applied_price, int shift) {
