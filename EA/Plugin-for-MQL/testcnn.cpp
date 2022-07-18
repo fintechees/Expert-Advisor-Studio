@@ -21,8 +21,8 @@ void OnTick(void) {
   currTime = iTime(NULL, 0, 0);
 
   double arr[INPUT_NUM];
-  double highest = 0;
-  double lowest = 9999999999;
+  double highest = -DBL_MAX;
+  double lowest = DBL_MAX;
   for (int i = 1; i <= INPUT_NUM; i++) {
     arr[i - 1] = iMACD(NULL, 0, 12, 26, 9, PRICE_CLOSE, MODE_MAIN, i);
     if (arr[i - 1] > highest) {
