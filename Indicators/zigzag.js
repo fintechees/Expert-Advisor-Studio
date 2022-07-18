@@ -1,4 +1,4 @@
-registerIndicator("zigzag", "ZigZag based on SAR(v1.0)", function (context) {
+registerIndicator("zigzag", "ZigZag based on SAR(v1.01)", function (context) {
   var dataInputHigh = getDataInput(context, 0)
   var dataInputLow = getDataInput(context, 1)
 
@@ -132,7 +132,7 @@ registerIndicator("zigzag", "ZigZag based on SAR(v1.0)", function (context) {
     }
   }
 
-  for (i = calculatedLength - 1; i >= 0; i--) {
+  for (i = arrLen - 1; i >= 0; i--) {
     if (dataOutputZZ[i] != 0) {
       latestZZ = {
         value: dataOutputZZ[i],
@@ -198,6 +198,8 @@ registerIndicator("zigzag", "ZigZag based on SAR(v1.0)", function (context) {
 
     i--
   }
+
+  zigzag.splice(0, 0, latestZZ)
 
   var zzLen = zigzag.length > 1 ? (zigzag.length - 1) : 1
 
