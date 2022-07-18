@@ -1,3 +1,4 @@
+// don't use it for now. has bugs, debugging!!
 registerIndicator("zigzag", "ZigZag based on SAR(v1.01)", function (context) {
   var dataInputHigh = getDataInput(context, 0)
   var dataInputLow = getDataInput(context, 1)
