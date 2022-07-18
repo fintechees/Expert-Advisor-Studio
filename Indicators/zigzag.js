@@ -1,5 +1,4 @@
-// don't use it for now. has bugs, debugging!!
-registerIndicator("zigzag", "ZigZag based on SAR(v1.01)", function (context) {
+registerIndicator("zigzag", "ZigZag based on SAR(v1.02)", function (context) {
   var dataInputHigh = getDataInput(context, 0)
   var dataInputLow = getDataInput(context, 1)
 
@@ -152,11 +151,11 @@ registerIndicator("zigzag", "ZigZag based on SAR(v1.01)", function (context) {
   var lowestZZ = Number.MAX_VALUE
   var highestZZ = -Number.MAX_VALUE
 
-  var bPrevLong = dataOutputIsLong[i]
+  var bNextLong = dataOutputIsLong[i]
 
-  while (i >= 0 && i > latestZZIdx) {
+  while (i >= 0 && i >= latestZZIdx) {
     if (dataOutputIsLong[i]) {
-      if (bPrevLong && i != 0) {
+      if (bNextLong && i != 0) {
         if (dataInputHigh[i] > highestZZ) {
           foundIdx = i
           highestZZ = dataInputHigh[i]
@@ -173,10 +172,10 @@ registerIndicator("zigzag", "ZigZag based on SAR(v1.01)", function (context) {
         lowestZZ = Number.MAX_VALUE
         highestZZ = dataInputHigh[i]
 
-        bPrevLong = true
+        bNextLong = true
       }
     } else {
-      if (!bPrevLong && i != 0) {
+      if (!bNextLong && i != 0) {
         if (dataInputLow[i] < lowestZZ) {
           foundIdx = i
           lowestZZ = dataInputLow[i]
@@ -193,7 +192,7 @@ registerIndicator("zigzag", "ZigZag based on SAR(v1.01)", function (context) {
         lowestZZ = dataInputLow[i]
         highestZZ = -Number.MAX_VALUE
 
-        bPrevLong = false
+        bNextLong = false
       }
     }
 
