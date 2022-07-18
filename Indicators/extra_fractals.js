@@ -155,7 +155,7 @@ registerIndicator("extra_fractals", "An extended Fractals(v1.0)", function (cont
         ((dataInputHigh[ptr] >= dataOutputZZUp[ptr - 2] && dataInputLow[ptr] <= dataOutputZZUp[ptr - 2] && dataInputOpen[ptr] <= dataOutputZZUp[ptr - 2]) ||
         (dataInputOpen[ptr] >= dataOutputZZUp[ptr - 2] && dataInputClose[ptr - 1] < dataOutputZZUp[ptr - 2])) && dataOutputZZ[ptr - 1] == 0 && dataOutputZZ[ptr - 2] == 0) {
       var foundIdx = -1
-      var lowestZZ = 9999999999
+      var lowestZZ = Number.MAX_VALUE
       var idx = dataOutputZZUpIdx[ptr - 2]
 
       for (var i = idx; i < ptr; i++) {
@@ -179,7 +179,7 @@ registerIndicator("extra_fractals", "An extended Fractals(v1.0)", function (cont
         ((dataInputHigh[ptr] >= dataOutputZZDown[ptr - 2] && dataInputLow[ptr] <= dataOutputZZDown[ptr - 2] && dataInputOpen[ptr] >= dataOutputZZDown[ptr - 2]) ||
         (dataInputClose[ptr - 1] > dataOutputZZDown[ptr - 2] && dataInputOpen[ptr] <= dataOutputZZDown[ptr - 2])) && dataOutputZZ[ptr - 1] == 0 && dataOutputZZ[ptr - 2] == 0) {
       var foundIdx = -1
-      var highestZZ = 0
+      var highestZZ = -Number.MAX_VALUE
       var idx = dataOutputZZDownIdx[ptr - 2]
 
       for (var i = idx; i < ptr; i++) {
