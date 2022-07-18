@@ -1,6 +1,6 @@
 registerEA(
 	  "sample_running_cnn_model",
-	  "An EA sample to run neuron model(v1.03)",
+	  "An EA sample to run neuron model(v1.04)",
 	  [{ // parameters
 	    name: "version",
 	    value: 1,
@@ -168,8 +168,8 @@ registerEA(
 	        var arrLen = arrMain.length
 
 	        var input = []
-	        var highVal = 0
-	        var lowVal = 9999999999
+	        var highVal = -Number.MAX_VALUE
+	        var lowVal = Number.MAX_VALUE
 
 	        for (var i = this.inputNum + 1; i >= 2; i--) {
 	          if (arrMain[arrLen - i] > highVal) {
