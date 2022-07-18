@@ -1,4 +1,4 @@
-registerIndicator("extra_fractals", "An extended Fractals(v1.0)", function (context) {
+registerIndicator("extra_fractals", "An extended Fractals(v1.01)", function (context) {
   var dataInputHigh = getDataInput(context, 0)
   var dataInputLow = getDataInput(context, 1)
   var dataInputOpen = getDataInput(context, 2)
@@ -18,6 +18,10 @@ registerIndicator("extra_fractals", "An extended Fractals(v1.0)", function (cont
   var ptr = 0
 
   if (calculatedLength > 0) {
+    dataOutputZZ[calculatedLength - 1] = 0
+    dataOutputZZ2[calculatedLength - 1] = 0
+    dataOutputZZLine[calculatedLength - 1] = 0
+
     ptr = calculatedLength - 4
   } else {
     for (var i = 0; i < dataInputHigh.length; i++) {
