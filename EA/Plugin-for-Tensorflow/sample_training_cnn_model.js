@@ -1,6 +1,6 @@
 registerEA(
 	"sample_training_cnn_model",
-	"An EA sample to train neuron model(v1.04)",
+	"An EA sample to train neuron model(v1.05)",
 	[{
 		name: "version",
 		value: 1,
@@ -363,14 +363,18 @@ registerEA(
           input.push((arrMain[i - j] - lowVal) / height)
         }
 
-        trainingSetI = trainingSetI.concat(input)
+				for (var j = 0; j < input.length; j++) {
+					trainingSetI.push(input[j])
+				}
 
         if (arrOpen[i + 1 + predictNum] - arrOpen[i + 1] >= 0) {
-          trainingSetO = trainingSetO.concat([1, 0])
+					trainingSetO.push(1)
+					trainingSetO.push(0)
           longCount++
           trainingSetP.push(arrOpen[i + 1 + predictNum] - arrOpen[i + 1])
         } else {
-          trainingSetO = trainingSetO.concat([0, 1])
+					trainingSetO.push(0)
+					trainingSetO.push(1)
           shortCount++
           trainingSetP.push(arrOpen[i + 1] - arrOpen[i + 1 + predictNum])
         }
