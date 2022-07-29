@@ -1,4 +1,4 @@
-registerIndicator("zigzag", "ZigZag based on SAR(v1.04)", function (context) {
+registerIndicator("zigzag", "ZigZag based on SAR(v1.03)", function (context) {
   var dataInputHigh = getDataInput(context, 0)
   var dataInputLow = getDataInput(context, 1)
 
