@@ -1,4 +1,4 @@
-registerIndicator("zigzag", "ZigZag based on SAR(v1.02)", function (context) {
+registerIndicator("zigzag", "ZigZag based on SAR(v1.04)", function (context) {
   var dataInputHigh = getDataInput(context, 0)
   var dataInputLow = getDataInput(context, 1)
 
@@ -123,6 +123,19 @@ registerIndicator("zigzag", "ZigZag based on SAR(v1.02)", function (context) {
   if (calculatedLength > 0) {
     dataOutputZZ[calculatedLength - 1] = 0
     dataOutputZZLine[calculatedLength - 1] = 0
+
+    for (i = arrLen - 1; i >= 0; i--) {
+      if (dataOutputZZ[i] != 0) {
+        latestZZ = {
+          value: dataOutputZZ[i],
+          index: i
+        }
+
+        latestZZIdx = i
+
+        break
+      }
+    }
   } else {
     dataOutputZZ[0] = (dataInputHigh[0] + dataInputLow[0]) / 2
     dataOutputZZLine[0] = dataOutputZZ[0]
@@ -130,19 +143,13 @@ registerIndicator("zigzag", "ZigZag based on SAR(v1.02)", function (context) {
     for (i = 1; i < arrLen; i++) {
       dataOutputZZ[i] = 0
     }
-  }
 
-  for (i = arrLen - 1; i >= 0; i--) {
-    if (dataOutputZZ[i] != 0) {
-      latestZZ = {
-        value: dataOutputZZ[i],
-        index: i
-      }
-
-      latestZZIdx = i
-
-      break
+    latestZZ = {
+      value: dataOutputZZ[0],
+      index: 0
     }
+
+    latestZZIdx = 0
   }
 
   i = arrLen - 1
@@ -228,16 +235,16 @@ registerIndicator("zigzag", "ZigZag based on SAR(v1.02)", function (context) {
   dataOutputZZLine[arrLen - 1] = zigzag[zigzag.length - 1].value
 },[{
   name: "acceleration",
-  value: 0.02,
+  value: 0.01,
   required: true,
   type: PARAMETER_TYPE.NUMBER,
-  range: [0.01, 0.1]
+  range: [0.001, 0.1]
 },{
   name: "afMax",
-  value: 0.2,
+  value: 0.05,
   required: true,
   type: PARAMETER_TYPE.NUMBER,
-  range: [0.1, 1]
+  range: [0.01, 1]
 }],
 [{
   name: DATA_NAME.HIGH,
