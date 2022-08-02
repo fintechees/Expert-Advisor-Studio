@@ -1,10 +1,10 @@
-registerIndicator("unrealized_pl", "An indicator to show the unrealized PL of the account(v1.02)", function (context) {
+registerIndicator("unrealized_pl", "An indicator to show the unrealized PL of an account(v1.03)", function (context) {
   var dataInput = getDataInput(context, 0)
   var dataOutputPl = getDataOutput(context, "totalPl")
   var dataOutputPlL = getDataOutput(context, "totalPlL")
   var dataOutputPlS = getDataOutput(context, "totalPlS")
 
-  if (typeof window.accounts != "undefined" && typeof window.accounts[context.chartHandle] != "undefined") {
+  if (typeof window.accounts != "undefined" && typeof window.accounts[context.chartHandle] != "undefined" && typeof window.accounts[context.chartHandle].totalPl != "undefined") {
     context.totalPl = window.accounts[context.chartHandle].totalPl
     context.totalPlL = window.accounts[context.chartHandle].totalPlL
     context.totalPlS = window.accounts[context.chartHandle].totalPlS
@@ -55,7 +55,7 @@ WHERE_TO_RENDER.SEPARATE_WINDOW,
 function (context) { // init
   context.chartHandle = getIndiParameter(context, "chartHandle")
 
-  if (typeof window.accounts != "undefined" && typeof window.accounts[context.chartHandle] != "undefined") {
+  if (typeof window.accounts != "undefined" && typeof window.accounts[context.chartHandle] != "undefined" && typeof window.accounts[context.chartHandle].totalPl != "undefined") {
     context.totalPl = window.accounts[context.chartHandle].totalPl
     context.totalPlL = window.accounts[context.chartHandle].totalPlL
     context.totalPlS = window.accounts[context.chartHandle].totalPlS
@@ -64,7 +64,9 @@ function (context) { // init
   }
 },
 function (context) { // deinit
-  delete window.accounts[context.chartHandle]
+  delete window.accounts[context.chartHandle].totalPl
+  delete window.accounts[context.chartHandle].totalPlL
+  delete window.accounts[context.chartHandle].totalPlS
 },
 function (context) { // render
 })
