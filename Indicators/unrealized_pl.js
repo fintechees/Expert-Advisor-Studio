@@ -60,7 +60,7 @@ function (context) { // init
     context.totalPlL = window.accounts[context.chartHandle].totalPlL
     context.totalPlS = window.accounts[context.chartHandle].totalPlS
   } else {
-    popupErrorMessage("Please note, this indicator can't be used independently. An EA called \"unrealized_pl_viewer\" that serves as an initiator should be used with this one simultaneously. You need to define an window object in the source codes of your EA that tries to refer to this indicator to manage the information about the unrealized PL. Please specify chartHandle as the index number of the window object before getting the handle of this indicator.")
+    popupErrorMessage("Please note, this indicator(unrealized_pl) can't be used independently. An EA called \"unrealized_pl_viewer\" that serves as an initiator should be used with this one simultaneously. You need to define an window object in the source codes of your EA that tries to refer to this indicator to manage the information about the unrealized PL. Please specify chartHandle as the index number of the window object before getting the handle of this indicator.")
   }
 },
 function (context) { // deinit
