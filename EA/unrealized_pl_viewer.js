@@ -1,6 +1,6 @@
 registerEA(
   "unrealized_pl_viewer",
-  "An EA used for watching the information about the unrealized PL of an account(v1.0)",
+  "An EA used for watching the information about the unrealized PL of an account(v1.01)",
   [{ // parameters
     name: "symbolName",
     value: "EUR/USD",
@@ -64,10 +64,16 @@ registerEA(
     if (typeof window.accounts == "undefined") {
       window.accounts = []
     }
-    window.accounts[context.chartHandle] = {
-      totalPl: [],
-      totalPlL: [],
-      totalPlS: []
+    if (typeof window.accounts[context.chartHandle] == "undefined") {
+      window.accounts[context.chartHandle] = {
+        totalPl: [],
+        totalPlL: [],
+        totalPlS: []
+      }
+    } else {
+      window.accounts[context.chartHandle].totalPl = []
+      window.accounts[context.chartHandle].totalPlL = []
+      window.accounts[context.chartHandle].totalPlS = []
     }
     context.unrealizedPlHandle = getIndicatorHandle(context, brokerName, accountId, symbolName, timeFrame, "unrealized_pl", [{
       name: "chartHandle", value: context.chartHandle}])
