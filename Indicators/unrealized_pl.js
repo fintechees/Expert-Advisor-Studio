@@ -1,5 +1,5 @@
-// Please note, this indicator can't be used independently. An EA called "unrealized_pl_viewer" that serves as an initiator should be used with this one simultaneously.
-registerIndicator("unrealized_pl", "An indicator to show the unrealized PL of the account(v1.0)", function (context) {
+registerIndicator("unrealized_pl", "An indicator to show the unrealized PL of the account(v1.01)", function (context) {
+  // Please note, this indicator can't be used independently. An EA called "unrealized_pl_viewer" that serves as an initiator should be used with this one simultaneously.
   var dataInput = getDataInput(context, 0)
   var dataOutputPl = getDataOutput(context, "totalPl")
   var dataOutputPlL = getDataOutput(context, "totalPlL")
@@ -50,7 +50,7 @@ WHERE_TO_RENDER.SEPARATE_WINDOW,
 function (context) { // init
   context.chartHandle = getIndiParameter(context, "chartHandle")
 
-  if (typeof window.accounts[context.chartHandle] != "undefined") {
+  if (typeof window.accounts != "undefined" && typeof window.accounts[context.chartHandle] != "undefined") {
     context.totalPl = window.accounts[context.chartHandle].totalPl
     context.totalPlL = window.accounts[context.chartHandle].totalPlL
     context.totalPlS = window.accounts[context.chartHandle].totalPlS
