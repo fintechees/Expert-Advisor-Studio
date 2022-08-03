@@ -1,4 +1,4 @@
-registerIndicator("equity_curve", "An indicator to show the equity and the balance of an account(v1.0)", function (context) {
+registerIndicator("equity_curve", "An indicator to show the equity and the balance of an account(v1.01)", function (context) {
   var dataInput = getDataInput(context, 0)
   var dataOutputEq = getDataOutput(context, "equity")
   var dataOutputBl = getDataOutput(context, "balance")
@@ -16,8 +16,8 @@ registerIndicator("equity_curve", "An indicator to show the equity and the balan
   }
 
   while (i < dataInput.length) {
-    dataOutputEq[i] = typeof context.equity == "undefined" ? 0 : (typeof context.equity[i] == "undefined" ? 0 : context.equity[i])
-    dataOutputBl[i] = typeof context.balance == "undefined" ? 0 : (typeof context.balance[i] == "undefined" ? 0 : context.balance[i])
+    dataOutputEq[i] = typeof context.equity == "undefined" ? 0 : (typeof context.equity[i] == "undefined" ? (i > 0 ? context.equity[i - 1] : 0) : context.equity[i])
+    dataOutputBl[i] = typeof context.balance == "undefined" ? 0 : (typeof context.balance[i] == "undefined" ? (i > 0 ? context.balance[i - 1] : 0) : context.balance[i])
 
     i++
   }

@@ -1,4 +1,4 @@
-registerIndicator("unrealized_pl", "An indicator to show the unrealized PL of an account(v1.03)", function (context) {
+registerIndicator("unrealized_pl", "An indicator to show the unrealized PL of an account(v1.04)", function (context) {
   var dataInput = getDataInput(context, 0)
   var dataOutputPl = getDataOutput(context, "totalPl")
   var dataOutputPlL = getDataOutput(context, "totalPlL")
@@ -18,9 +18,9 @@ registerIndicator("unrealized_pl", "An indicator to show the unrealized PL of an
   }
 
   while (i < dataInput.length) {
-    dataOutputPl[i] = typeof context.totalPl == "undefined" ? 0 : (typeof context.totalPl[i] == "undefined" ? 0 : context.totalPl[i])
-    dataOutputPlL[i] = typeof context.totalPlL == "undefined" ? 0 : (typeof context.totalPlL[i] == "undefined" ? 0 : context.totalPlL[i])
-    dataOutputPlS[i] = typeof context.totalPlS == "undefined" ? 0 : (typeof context.totalPlS[i] == "undefined" ? 0 : context.totalPlS[i])
+    dataOutputPl[i] = typeof context.totalPl == "undefined" ? 0 : (typeof context.totalPl[i] == "undefined" ? (i > 0 ? context.totalPl[i - 1] : 0) : context.totalPl[i])
+    dataOutputPlL[i] = typeof context.totalPlL == "undefined" ? 0 : (typeof context.totalPlL[i] == "undefined" ? (i > 0 ? context.totalPlL[i - 1] : 0) : context.totalPlL[i])
+    dataOutputPlS[i] = typeof context.totalPlS == "undefined" ? 0 : (typeof context.totalPlS[i] == "undefined" ? (i > 0 ? context.totalPlS[i - 1] : 0) : context.totalPlS[i])
 
     i++
   }
