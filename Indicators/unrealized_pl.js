@@ -1,4 +1,4 @@
-registerIndicator("unrealized_pl", "An indicator to show the unrealized PL of an account(v1.04)", function (context) {
+registerIndicator("unrealized_pl", "An indicator to show the unrealized PL of an account(v1.05)", function (context) {
   var dataInput = getDataInput(context, 0)
   var dataOutputPl = getDataOutput(context, "totalPl")
   var dataOutputPlL = getDataOutput(context, "totalPlL")
@@ -64,9 +64,11 @@ function (context) { // init
   }
 },
 function (context) { // deinit
-  delete window.accounts[context.chartHandle].totalPl
-  delete window.accounts[context.chartHandle].totalPlL
-  delete window.accounts[context.chartHandle].totalPlS
+  if (typeof window.accounts != "undefined" && typeof window.accounts[context.chartHandle] != "undefined" && typeof window.accounts[context.chartHandle].totalPl != "undefined") {
+    delete window.accounts[context.chartHandle].totalPl
+    delete window.accounts[context.chartHandle].totalPlL
+    delete window.accounts[context.chartHandle].totalPlS
+  }
 },
 function (context) { // render
 })

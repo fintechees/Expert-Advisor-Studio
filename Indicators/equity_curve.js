@@ -1,4 +1,4 @@
-registerIndicator("equity_curve", "An indicator to show the equity and the balance of an account(v1.01)", function (context) {
+registerIndicator("equity_curve", "An indicator to show the equity and the balance of an account(v1.02)", function (context) {
   var dataInput = getDataInput(context, 0)
   var dataOutputEq = getDataOutput(context, "equity")
   var dataOutputBl = getDataOutput(context, "balance")
@@ -55,8 +55,10 @@ function (context) { // init
   }
 },
 function (context) { // deinit
-  delete window.accounts[context.chartHandle].equity
-  delete window.accounts[context.chartHandle].balance
+  if (typeof window.accounts != "undefined" && typeof window.accounts[context.chartHandle] != "undefined" && typeof window.accounts[context.chartHandle].equity != "undefined") {
+    delete window.accounts[context.chartHandle].equity
+    delete window.accounts[context.chartHandle].balance
+  }
 },
 function (context) { // render
 })
