@@ -40,6 +40,16 @@
 <br />
 
 ## News!!
+Fintechee.io is our new marketplace for EA developers.
+
+Today(Aug. 12nd, 2022), it's just released! And, we listed an EA(simplescalping, in production, only $10) there.
+The algo is based on Martingale, but it's very stable if you are patient enough to use it on the bigger time frame.
+
+Currently, the payment gateway is connected with Paypal's sandbox.
+We will replace the sandbox version with the live payment gateway by next month(Sep. 2022).
+So, if you have a Paypal test(developer) account, then you can get any EA for free this month.
+
+## FIX Bridge(an individual version of WEB trader's backend)
 We created a new version(FIX Bridge) for individual traders. It's for free FOREVER!!
 
 Download link:
