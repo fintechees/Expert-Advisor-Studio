@@ -42,7 +42,7 @@
 ## News!!
 Fintechee.io is our new marketplace for EA developers.
 Not only C/C++/Mql based EA/indicator can be sold there, but all the digital products can be sold via Fintechee.io.
-The copyrights are protected by the digital signature tech. The download link will expire several minutes after the order is created.
+The copyrights are protected by the digital signature tech. Each download link will expire several minutes after an order is created.
 
 Today(Aug. 12th, 2022), it's just released! And, we listed an EA(simplescalping, in production, only $10) there.
 The algo is based on Martingale, but it's very stable if you are patient enough to use it on the bigger time frame.
