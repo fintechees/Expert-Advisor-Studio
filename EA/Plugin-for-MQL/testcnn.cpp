@@ -5,6 +5,8 @@
 #define ITERATIONS 1000
 #define BATCH_SIZE 512
 
+input bool ext_bTrain = true; // if testing, set false to it
+
 double macdArr[ARR_NUM * INPUT_NUM];
 double oArr[ARR_NUM];
 int cursor = 0;
@@ -43,63 +45,76 @@ void OnTick(void) {
 }
 
 void OnDeinit (const int) {
-  bool res = BuildCNN(NN_NAME, INPUT_NUM, HIDDEN_NUM);
-  if (res) {
-    double trainingSetI[(cursor - 1) * INPUT_NUM];
-    double trainingSetO[(cursor - 1) * 2];
+  double trainingSetI[(cursor - 1) * INPUT_NUM];
+  double trainingSetO[(cursor - 1) * 2];
 
-    for (int i = 0; i < cursor - 1; i++) {
-      for (int j = 0; j < INPUT_NUM; j++) {
-        trainingSetI[i * INPUT_NUM + j] = macdArr[i * INPUT_NUM + j];
-      }
-
-      if (oArr[i] <= oArr[i + 1]) {
-        trainingSetO[i * 2] = 1.0;
-        trainingSetO[i * 2 + 1] = 0.0;
-      } else {
-        trainingSetO[i * 2] = 0.0;
-        trainingSetO[i * 2 + 1] = 1.0;
-      }
-    }
-
-    if (TrainCNN(NN_NAME, trainingSetI, trainingSetO, cursor - 1, INPUT_NUM, ITERATIONS, BATCH_SIZE, false)) {
-      int longWinCnt = 0;
-      int shortWinCnt = 0;
-      int longCnt = 0;
-      int shortCnt = 0;
-
+  if (ext_bTrain) {
+    if (BuildCNN(NN_NAME, INPUT_NUM, HIDDEN_NUM)) {
       for (int i = 0; i < cursor - 1; i++) {
-        double input[INPUT_NUM];
-        double output = trainingSetO[i * 2];
-
         for (int j = 0; j < INPUT_NUM; j++) {
-          input[j] = trainingSetI[i * INPUT_NUM + j];
+          trainingSetI[i * INPUT_NUM + j] = macdArr[i * INPUT_NUM + j];
         }
 
-        double result = RunCNN(NN_NAME, input, INPUT_NUM);
-        bool resWin = ((result >= 0.5 ? 1.0 : 0.0) == output ? true : false);
-
-        if (resWin) {
-          if (output == 1.0) {
-            longCnt++;
-            longWinCnt++;
-          } else {
-            shortCnt++;
-            shortWinCnt++;
-          }
+        if (oArr[i] <= oArr[i + 1]) {
+          trainingSetO[i * 2] = 1.0;
+          trainingSetO[i * 2 + 1] = 0.0;
         } else {
-          if (output == 1.0) {
-            longCnt++;
-          } else {
-            shortCnt++;
-          }
+          trainingSetO[i * 2] = 0.0;
+          trainingSetO[i * 2 + 1] = 1.0;
         }
       }
 
-      int lsCount = longCnt + shortCnt;
+      Print("Please be patient with the training progress.");
 
-      Print("Long: ", longCnt, ", ", (longWinCnt * 1.0 / lsCount));
-      Print("Short: ", shortCnt, ", ", (shortWinCnt * 1.0 / lsCount));
+      if (TrainCNN(NN_NAME, trainingSetI, trainingSetO, cursor - 1, INPUT_NUM, ITERATIONS, BATCH_SIZE, false)) {
+        SaveCNN(NN_NAME);
+      } else {
+        return;
+      }
+    } else {
+      return;
+    }
+  } else {
+    if (!LoadCNN(NN_NAME)) {
+      return;
     }
   }
+
+  int longWinCnt = 0;
+  int shortWinCnt = 0;
+  int longCnt = 0;
+  int shortCnt = 0;
+
+  for (int i = 0; i < cursor - 1; i++) {
+    double input[INPUT_NUM];
+    double output = trainingSetO[i * 2];
+
+    for (int j = 0; j < INPUT_NUM; j++) {
+      input[j] = trainingSetI[i * INPUT_NUM + j];
+    }
+
+    double result = RunCNN(NN_NAME, input, INPUT_NUM);
+    bool resWin = ((result >= 0.5 ? 1.0 : 0.0) == output ? true : false);
+
+    if (resWin) {
+      if (output == 1.0) {
+        longCnt++;
+        longWinCnt++;
+      } else {
+        shortCnt++;
+        shortWinCnt++;
+      }
+    } else {
+      if (output == 1.0) {
+        longCnt++;
+      } else {
+        shortCnt++;
+      }
+    }
+  }
+
+  int lsCount = longCnt + shortCnt;
+
+  Print("Long: ", longCnt, ", ", (longWinCnt * 1.0 / lsCount));
+  Print("Short: ", shortCnt, ", ", (shortWinCnt * 1.0 / lsCount));
 }
