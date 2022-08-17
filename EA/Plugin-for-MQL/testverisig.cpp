@@ -18,4 +18,5 @@ int OnInit (void) {
 }
 
 void OnTick(void) {
+  if (!bVerified) return;
 }
