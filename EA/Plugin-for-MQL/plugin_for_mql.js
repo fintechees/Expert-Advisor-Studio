@@ -1,6 +1,6 @@
 registerEA(
 		"plugin_for_mql",
-		"mql_plugin to make MQL-based programs runnable on Fintechee(v1.04)",
+		"mql_plugin to make MQL-based programs runnable on Fintechee(v1.05)",
 		[],
 		function (context) { // Init()
 			if (typeof window.pluginForMql != "undefined") {
@@ -2859,12 +2859,25 @@ registerEA(
 					}
 	      },
 				showAddedMqlProgram: function (mqlProgram, type) {
-					$("#mql_based_programs_list").DataTable().row.add([
-						mqlProgram.name,
-						mqlProgram.description,
-						type,
-						"Loaded"
-					]).draw(false)
+					var data = $("#mql_based_programs_list").DataTable().rows().data()
+					var rowId = -1
+					for (var i in data) {
+						if (data[i][0] == mqlProgram.name && data[i][2] == type) {
+							rowId = parseInt(i)
+							break
+						}
+					}
+
+					if (rowId != -1) {
+						$("#mql_based_programs_list").dataTable().fnUpdate("Loaded", rowId, 3, false, false)
+					} else {
+						$("#mql_based_programs_list").DataTable().row.add([
+							mqlProgram.name,
+							mqlProgram.description,
+							type,
+							"Loaded"
+						]).draw(false)
+					}
 				},
 				showMqlProgramNewState: function (name, type, state) {
 					var data = $("#mql_based_programs_list").DataTable().rows().data()
