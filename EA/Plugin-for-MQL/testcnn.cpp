@@ -5,6 +5,8 @@
 #define ITERATIONS 1000
 #define BATCH_SIZE 512
 
+input string ext_strSymbol = "EUR/USD";
+input int ext_iPeriod = 60;
 input bool ext_bTrain = true; // if testing, set false to it
 
 double macdArr[ARR_NUM * INPUT_NUM];
@@ -19,14 +21,14 @@ int OnInit (void) {
 
 void OnTick(void) {
   if (cursor >= ARR_NUM) return;
-  if (currTime == iTime(NULL, 0, 0)) return;
-  currTime = iTime(NULL, 0, 0);
+  if (currTime == iTime(ext_strSymbol, ext_iPeriod, 0)) return;
+  currTime = iTime(ext_strSymbol, ext_iPeriod, 0);
 
   double arr[INPUT_NUM];
   double highest = -DBL_MAX;
   double lowest = DBL_MAX;
   for (int i = 1; i <= INPUT_NUM; i++) {
-    arr[i - 1] = iMACD(NULL, 0, 12, 26, 9, PRICE_CLOSE, MODE_MAIN, i);
+    arr[i - 1] = iMACD(ext_strSymbol, ext_iPeriod, 12, 26, 9, PRICE_CLOSE, MODE_MAIN, i);
     if (arr[i - 1] > highest) {
       highest = arr[i - 1];
     }
@@ -40,7 +42,7 @@ void OnTick(void) {
   for (int i = 0; i < INPUT_NUM; i++) {
     macdArr[cursor * INPUT_NUM + i] = (arr[i] - lowest) / height;
   }
-  oArr[cursor] = iOpen(NULL, 0, 0);
+  oArr[cursor] = iOpen(ext_strSymbol, ext_iPeriod, 0);
   cursor++;
 }
 
