@@ -3027,6 +3027,7 @@ double ActivateNeuralNetwork (const string nnName, double* input, int inputNum) 
 }
 
 // Not compatible with MQL
+// If you use neural network(Synaptic or Tensorflow), please call PreventCleanUp at the beginning of OnInit
 void PreventCleanUp () {
   jPreventCleanUp(iFintecheeUID);
 }
