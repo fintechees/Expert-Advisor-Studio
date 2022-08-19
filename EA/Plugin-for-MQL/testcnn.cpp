@@ -16,6 +16,12 @@ datetime currTime = 0;
 
 int OnInit (void) {
   PreventCleanUp();
+  for (int i = 0; i < ARR_NUM * INPUT_NUM; i++) {
+    macdArr[i] = 0;
+  }
+  for (int i = 0; i < ARR_NUM; i++) {
+    oArr[i] = 0;
+  }
   return 0;
 }
 
