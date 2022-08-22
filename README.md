@@ -111,6 +111,8 @@ And, it's much EASIER to run them. Because they are browser-based, so, what you 
 Each file in this repo is indepenedent to each other. You can use them respectively.
 EAs and indicators are stored ONLY on your LOCAL browser and NEVER uploaded to the server side. We use Web LocalStorage. The secrets of your trading strategies are protected.
 
+A simple manual: https://github.com/fintechees/Expert-Advisor-Studio/blob/master/simple_manual.txt
+
 WEB Trader: https://www.fintechee.com/web-trader/
 
 Plugins' usage: https://www.fintechee.com/plugins/
