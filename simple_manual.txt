@@ -1,0 +1,62 @@
+1. Supported Programming Languages
+Fintechee supports JS/C/C++/MQL programming languages.
+
+JS codes can be run straightforward on Fintechee WEB Trader and you DON'T need to compile JS files.
+
+C/C++/MQL codes are required to compile before you run the compiled files on Fintechee WEB Trader.
+
+
+2. How to Run JS Codes?
+Fintechee WEB Trader has a console panel to run JS files. Any JS codes can be run in the console.
+
+Fintechee-runnable EAs/indicators have to be coded in a special form.
+
+We use registerEA and registerIndicator the two APIs to import your custom EA/indicator codes.
+
+Please check the wiki on our Github repo or the samples to know how to code your custom EA/indicators.
+
+
+3. How to Run C/C++/MQL Codes?
+Running C/C++/MQL files is a little bit complicated. We need one more step.
+
+In our WEB Trader, you can find a built-in plugin named "plugin_for_mql".
+
+You need to launch this plugin first and then load the C/C++/MQL compiled files(after you load C/C++/MQL compiled files, you can stop the plugin).
+
+Because a part of C/C++/MQL compiled files are binary-formatted WASMs, so they are not readable and you can't copy-paste the files straightforward to the console.
+
+The correct method to load C/C++/MQL compiled files is to import a JSON string that refers to your C/C++/MQL compiled files.
+
+If you purchase EAs/indicators via Fintechee, the vendors should provide you with a JSON string that is written in the guide of the product that you buy.
+
+If you are a developer, you need to generate the JSON strings for your source codes on your own. You need to copy-paste your original C/C++/MQL codes in Fintechee C/C++ console panel and click "Generate EA" or "Generate Indicator" button to generate the JSON strings. Meanwhile you can find an edited version of your source codes on the right side of the console panel. Copy-paste the edited codes to the left side of the console panel and replace your original version with the edited one. After that, compile it by clicking "Compile EA" or "Compile Indicator" button. If the output has no errors, you are done successfully. Then you can import the JSON string to "plugin_for_mql" and load your C/C++/MQL compiled files.
+To compile C/C++/MQL codes, you need to install this compiler first:
+https://github.com/fintechees/Expert-Advisor-Cpp-Compiler
+
+
+4. How to Run Tensorflow-based EA(JS Codes)?
+Fintechee supports neural networks as well.
+
+Tensorflow is a significant framework that is based on Convolutional Neural Network. The training time is shorter. We recommend you use it for your AI-based EAs/indicators.
+
+All AI-based EAs developed by Fintechee include two parts: one is used to train a model, the other one is used to trade following the signals that the model generates.
+
+Before you train or run the Tensorflow-based EAs, you need to launch a built-in plugin named "plugin_to_load_tensorflow" first(after you receive a success message that notifies you Tensorflow has been loaded, you can stop this plugin).
+
+
+
+5. How to Run Tensorflow-based EA(C/C++/MQL Codes)?
+Fintechee provides 5 extended APIs for C/C++/MQL developers:
+BuildCNN
+LoadCNN
+SaveCNN
+TrainCNN
+RunCNN
+
+Running Tensorflow-based C/C++/MQL files is a little bit complicated. We need TWO more steps.
+
+The two steps are for loading C/C++/MQL compiled files and loading Tensorflow.
+
+Please refer to the 3rd and 4th paragraphs to know how to launch the plugins.
+
+Another important point is, at the beginning of the OnInit function, you need to add a line to call PreventCleanUp(this is an extended API as well, it can make the neural networks' models stord in the context cache not cleared after the backtesting is done). PreventCleanUp is not required for the EAs that are NOT based on neural networks.
