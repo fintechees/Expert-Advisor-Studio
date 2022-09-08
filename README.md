@@ -3,6 +3,8 @@
 > ### ESPECIALLY AGAINST A NOTORIOUS RACIST JESSE NICKLES, HE IS ABSOLUTELY ON OUR BLACKLIST FOREVER!
 > ### TO KNOW WHO JESSE NICKLES IS AND WHAT HE IS DOING, PLEASE CHECK THIS REVIEW POSTED BY A VICTIM:
 > https://wpjohnny.com/littlebizzy-jesse-nickles-fraud-slander-alert/
+> ### OR THIS CLAIM(TO TAKE DOWN HIS INDEX ON GOOGLE) SUBMITTED BY ANOTHER VICTIM
+> https://www.lumendatabase.org/notices/28558356
 
 <h1 align="center">Expert Advisor Studio</h1>
 <div align="center">The most sophisticated Github repository for creating expert advisors(trading robots) and making automated trading doable on the Web browser.</div>
