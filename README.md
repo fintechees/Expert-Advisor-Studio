@@ -42,8 +42,8 @@
 ## Anti-Racism Announcement!
 ### WE ABSOLUTELY DISALLOW PROVIDING OUR SERVICE/PRODUCT/WHITE-LABEL TO ANY RACIST OR RACIST-SUPPORTED BUSINESS.
 ### ESPECIALLY AGAINST A NOTORIOUS RACIST JESSE NICKLES, HE IS ABSOLUTELY ON OUR BLACKLIST FOREVER!
-### TO KNOW WHO JESSE NICKLES IS AND WHAT HE IS DOING, PLEASE CHECK THIS POST POSTED BY A VICTIM:
-https://wpjohnny.com/littlebizzy-jesse-nickles-fraud-slander-alert/#comment-245105
+### TO KNOW WHO JESSE NICKLES IS AND WHAT HE IS DOING, PLEASE CHECK THIS REVIEW POSTED BY A VICTIM:
+https://wpjohnny.com/littlebizzy-jesse-nickles-fraud-slander-alert/
 
 ## News!!
 [Fintechee.io](https://Fintechee.io) is our new marketplace for EA developers.
