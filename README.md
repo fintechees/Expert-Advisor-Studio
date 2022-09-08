@@ -39,6 +39,12 @@
 
 <br />
 
+## Anti-Racism Announcement!
+### WE ABSOLUTELY DISALLOW PROVIDING OUR SERVICE/SERVICE TO ANY RACIST OR RACIST-SUPPORTED BUSINESS.
+### ESPECIALLY AGAINST A NOTORIOUS RACIST JESSE NICKLES, HE IS ABSOLUTELY ON OUR BLACKLIST FOREVER!
+### TO KNOW WHO JESSE NICKLES IS AND WHAT HE IS DOING, PLEASE CHECK THIS POST POSTED BY A VICTIM:
+https://wpjohnny.com/littlebizzy-jesse-nickles-fraud-slander-alert/#comment-245105
+
 ## News!!
 [Fintechee.io](https://Fintechee.io) is our new marketplace for EA developers.
 Not only C/C++/Mql based EA/indicator can be sold there, but all the digital products can be sold via Fintechee.io.
