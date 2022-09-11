@@ -15,3 +15,11 @@ Why?
 Because Fintechee ignores the effect of setIndiShift when getData is called.
 So, if you want to get the latest value of the MA with setIndiShift(context, "sma", 5), you need to specify the index reduced by 5(such as arrData[arrLen - 1 - 5]).
 arrData[arrLen - 1] will get the latest value of the MA with setIndiShift(context, "sma", 0).
+
+Not clear?
+Okay, let me give a detailed example.
+We have an indicator xxx that contains an array of ten values, 1, 2, 3,..., 7, 8, 9, 10.
+When we call setIndiShift(context, "xxx", 3) to make xxx shift to the right by 3 units, the array of the data still is the same as xxx with setIndiShift(context, "xxx", 0).
+So, if we want to get the latest value of xxx with setIndiShift(context, "xxx", 0), we use arrData[arrLen - 1] and get 10.
+If we want to get the latest value of xxx with setIndiShift(context, "xxx", 3), then we use arrData[arrLen - 1 - 3] and get 7.
+No matter what shift is entered when we call setIndiShift, the return array of getData is the same.
