@@ -7,7 +7,7 @@
 > https://www.lumendatabase.org/notices/28558356
 > ### OR THIS LAWSUIT AGAINST HIM BY HIS ALMA MATER
 > https://cite.case.law/frd/304/594/
-> ### JESSE NICKLES'S GITHUB USERNAME: jessuppi
+> ### JESSE NICKLES' GITHUB USERNAME: jessuppi
 
 <h1 align="center">Expert Advisor Studio</h1>
 <div align="center">The most sophisticated Github repository for creating expert advisors(trading robots) and making automated trading doable on the Web browser.</div>
