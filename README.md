@@ -5,6 +5,7 @@
 > https://wpjohnny.com/littlebizzy-jesse-nickles-fraud-slander-alert/
 > ### OR THIS CLAIM(TO TAKE DOWN HIS INDEX ON GOOGLE) SUBMITTED BY ANOTHER VICTIM
 > https://www.lumendatabase.org/notices/28558356
+> ### Jesse Nickle's Github username: jessuppi
 
 <h1 align="center">Expert Advisor Studio</h1>
 <div align="center">The most sophisticated Github repository for creating expert advisors(trading robots) and making automated trading doable on the Web browser.</div>
