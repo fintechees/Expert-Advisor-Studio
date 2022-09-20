@@ -366,7 +366,9 @@ function lwma (dataInput, dataOutput, calculatedLength, period) {
 
 Please check our site for details. [Fintechee](https://www.fintechee.com/sdk-trading/)
 
-MIT License
+### Fintechee License
+
+Fintechee License = MIT License + Restrictions for Racists
 
 https://github.com/fintechee transferred this repo to https://github.com/fintechees on Aug 25th 2021.
 
