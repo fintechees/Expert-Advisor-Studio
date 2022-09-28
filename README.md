@@ -188,12 +188,18 @@ We Added three parameters to this API. They are all callback functions: OnInit, 
 
 And, these callback functions are new features. Other platforms have no these parameters. Fortunately, this API is compatible with the older versions, so, you don't need to modify your old indicators.
 
+Example:
+https://github.com/fintechees/Expert-Advisor-Studio/blob/master/Indicators/chart_elements/line_segment_sample.js
+
 2. registerEA
 
 We added one more parameter to this API, it's a callback function to receive a message when the transaction was triggered.
 For example, if you send an order to the backend, you don't need to block your process. Everything on our platform is ASYNC. So, you can continue to do analysis and just make this callback function available to wait for the notification from the backend. If the order is filled and a new trade is opened, then you will get notified.
 
 And, this callback function is a new feature. Other platforms have no this parameter. Fortunately, this API is compatible with the older versions, so, you don't need to modify your old EAs.
+
+Example:
+https://github.com/fintechees/Expert-Advisor-Studio/blob/master/EA/CopyTrading/copy_trading_for_oanda.js
 
 2021.9.18 Added three APIs useful when the onTransaction event is triggered.
 1. getLatestTransBrokerName
