@@ -1,0 +1,3 @@
+How to read this indicator?
+
+When the orange dasharray is equal to 2, that means the market is going to be reversal.
