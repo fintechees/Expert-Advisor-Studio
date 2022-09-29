@@ -1,5 +1,5 @@
 registerIndicator(
-    "atr_exporter", "A tool to export the data of Average True Range to the window object(v1.0)", function (context) {
+    "atr_exporter", "A tool to export the data of Average True Range to the window object(v1.01)", function (context) {
 		var dataInputClose = getDataInput(context, 0)
 		var dataInputHigh = getDataInput(context, 1)
 		var dataInputLow = getDataInput(context, 2)
@@ -65,11 +65,9 @@ registerIndicator(
     visible: false
     },{
     name: "atr",
-    visible: true,
-    renderType: RENDER_TYPE.LINE,
-    color: "steelblue"
+    visible: false
   }],
-	WHERE_TO_RENDER.SEPARATE_WINDOW,
+	WHERE_TO_RENDER.CHART_WINDOW,
   function (context) { // Init()
     if (typeof window.inventoryForATR == "undefined") {
       window.inventoryForATR = []
