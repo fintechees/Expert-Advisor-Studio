@@ -1,0 +1,23 @@
+Use Case: A provides signals, B follows the signals from A to copy trade. A's account is a Fintechee-based account, B's account is an Oanda-based account.
+
+How to do?
+1. A shares A's investor password with B.
+Please note, enabling investor mode is not required for this step.
+If you enable investor mode, then everyone can check your trading records.
+If you disable investor mode(disabled by default), then only the followers that know your investor password can check your trading records.
+
+2. B signs into both accounts.
+B signs into A's account by entering A's investor password.
+B signs into B's Oanda-based account by launching an EA named oanda_loader.
+You can get oanda_loader on Fintechee's Github repo:
+https://github.com/fintechees/Expert-Advisor-Studio/blob/master/Indicators/Plugin-for-Data-API/oanda_loader.js
+Oanda issues a token as login credential. So, B needs to input it into the corresponding parameter for oanda_loader.
+
+3. B launches copy_trading_for_oanda via Fintechee WEB Trader.
+copy_trading_for_oanda is a built-in EA.
+There are no parameters because the EA will follow all the signals that it receives and trade via B's Oanda account.
+B has logged into A's account in the investor mode, so all the signals that A issues will be seen by B.
+The EA will send orders via the plugin oanda_loader launched in the 2nd step.
+
+Done!
+

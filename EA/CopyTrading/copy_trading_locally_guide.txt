@@ -1,0 +1,22 @@
+Use Case: A provides signals, B follows the signals from A to copy trade. Both accounts are Fintechee-based.
+
+How to do?
+1. A shares A's investor password with B.
+Please note, enabling investor mode is not required for this step.
+If you enable investor mode, then everyone can check your trading records.
+If you disable investor mode(disabled by default), then only the followers that know your investor password can check your trading records.
+
+2. B signs into both accounts.
+B signs into A's account by entering A's investor password.
+B signs into B's own account by entering B's password.
+
+3. B launches copy_trading_locally via Fintechee WEB Trader.
+If copy_trading_locally doesn't exist, you can get it on Fintechee's Github repo:
+https://github.com/fintechees/Expert-Advisor-Studio/blob/master/EA/CopyTrading/copy_trading_locally.js
+Copy the source codes and paste them into Fintechee WEB Trader's Javascript console and run it.
+Then you can find it listed on the EA list and launch it.
+There are two parameters: fromAccountId and toAccountId.
+B sets fromAccountId to A's account ID and sets toAccountId to B's account ID.
+
+Done!
+
