@@ -208,6 +208,9 @@ https://github.com/fintechees/Expert-Advisor-Studio/blob/master/EA/CopyTrading/c
 2. getLatestTransAccountId
 3. getLatestTrans
 
+2022.11.2 Added one API useful when you want to combine several EAs into a workflow.
+1. launchEA
+
 ```javascript
 var BROKER_NAME = {
 	DEMO: "CC Demo"
