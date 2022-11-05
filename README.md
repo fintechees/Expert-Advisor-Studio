@@ -52,7 +52,7 @@
 <br />
 
 ## News!!
-Now we are trying to integrate with the best promising payment platform: BitCartCC(https://bitcartcc.com, https://github.com/bitcartcc/bitcart), the founder Alex is only 18 years old(2022)!!
+Now we are trying to integrate with the most promising payment platform: BitCartCC(https://bitcartcc.com, https://github.com/bitcartcc/bitcart), the founder Alex is only 18 years old(2022)!!
 
 [Fintechee.io](https://Fintechee.io) is our new marketplace for EA developers.
 Not only C/C++/Mql based EA/indicator can be sold there, but all the digital products can be sold via Fintechee.io.
@@ -96,7 +96,7 @@ https://www.fintechee.com/shared.html
 <tr><td><strong>Compatibility</strong></td><td>Compatible with C/C++/MQL</td></tr>
 <tr><td><strong>Any Data</strong></td><td>You can import any data(historical/streaming) as long as you have data source.</td></tr>
 <tr><td><strong>Auto Market Maker</strong></td><td>You can send transactions to blockchains' SWAP smart contracts via Market Maker Bot</td></tr>
-<tr><td><strong>Crypto Payment Gateway</strong></td><td>Integration with crypto wallets(Scatter & Metamask)<br>Now we are trying to integrate with the best promising payment platform: BitCartCC(https://bitcartcc.com, https://github.com/bitcartcc/bitcart), the founder Alex is only 18 years old!!</td></tr>
+<tr><td><strong>Crypto Payment Gateway</strong></td><td>Integration with crypto wallets(Scatter & Metamask)<br>Now we are trying to integrate with the most promising payment platform: BitCartCC(https://bitcartcc.com, https://github.com/bitcartcc/bitcart), the founder Alex is only 18 years old!!</td></tr>
 <tr><td><strong>AI Enabled</strong></td><td>Integration with Artificial Intelligence(AI)</td></tr>
 <tr><td><strong>DEX</strong></td><td>Integration with DEX and Clearing House</td></tr>
 <tr><td><strong>Technical</strong></td><td>Custom Indicators(You can create compound indicators -- make an indicator calculated based on another indicator)</td></tr>
