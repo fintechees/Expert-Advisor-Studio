@@ -213,9 +213,11 @@ https://github.com/fintechees/Expert-Advisor-Studio/blob/master/EA/CopyTrading/c
 2022.11.2 Added one API useful when you want to combine several EAs into a workflow.
 1. launchEA
 
+### Constants
+
 ```javascript
 var BROKER_NAME = {
-	DEMO: "CC Demo"
+	DEMO: "Fintechee Demo"
 }
 
 var TIME_FRAME = {
