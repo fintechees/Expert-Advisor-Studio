@@ -71,8 +71,8 @@ We created a new version(FIX Bridge) for individual traders. It's for free FOREV
 Download link:
 https://www.fintechee.com/assets/fix-api/fintecheefixbridge.7z
 
-## Campaign(2022)
-We started a new campaign(2022). Everyone can get a free license to use our FIX API trading platform individual version if he/she matches any one of the conditions below. The license will expire by the end of 2022.
+## Campaign
+Everyone can get a free license to use our FIX API trading platform individual version if he/she matches any one of the conditions below.
 
 A. Our partners' client
 B. Github user
