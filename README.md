@@ -53,6 +53,14 @@
 
 ## News!!
 
+### FiSDK
+
+We recently released FiSDK, a tool specifically designed for managing the backend. This tool features APIs that are entirely distinct from the APIs used for EA/indicators (Charting System). The APIs provided in this repository are mainly designed for quant traders to stay ahead of market movements and generate trading signals. FiSDK’s APIs, on the other hand, are primarily intended for position monitoring in the backoffice.
+
+For more information on FiSDK, please check out this repository: https://github.com/fintechees/fisdk
+
+Please note that the examples provided in the fisdk repository cannot be used in the WEB-trader’s console panel, and the examples provided here cannot be used in the fisdk repository.
+
 ### Payment Gateway
 
 We have successfully integrated with BitCartCC (https://bitcartcc.com, https://github.com/bitcartcc/bitcart), one of the most promising payment platforms available. It’s worth mentioning that the platform’s founder, Alex, is only 18 years old as of 2022!
