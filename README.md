@@ -52,7 +52,7 @@
 <br />
 
 ## News!!
-Now we are trying to integrate with the most promising payment platform: BitCartCC(https://bitcartcc.com, https://github.com/bitcartcc/bitcart), the founder Alex is only 18 years old(2022)!!
+Now we have managed to integrate with the most promising payment platform: BitCartCC(https://bitcartcc.com, https://github.com/bitcartcc/bitcart), the founder Alex is only 18 years old(2022)!!
 
 [Fintechee.io](https://Fintechee.io) is our new marketplace for EA developers.
 Not only C/C++/Mql based EA/indicator can be sold there, but all the digital products can be sold via Fintechee.io.
