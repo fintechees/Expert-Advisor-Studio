@@ -52,21 +52,22 @@
 <br />
 
 ## News!!
-Now we have managed to integrate with the most promising payment platform: BitCartCC(https://bitcartcc.com, https://github.com/bitcartcc/bitcart), the founder Alex is only 18 years old(2022)!!
 
-[Fintechee.io](https://Fintechee.io) is our new marketplace for EA developers.
-Not only C/C++/Mql based EA/indicator can be sold there, but all the digital products can be sold via Fintechee.io.
-The copyrights are protected by the digital signature tech. Each download link will expire several minutes after an order is created.
+### Payment Gateway
 
-Today(Aug. 12th, 2022), it's just released! And, we listed an EA(simplescalping, in production, only $10) there.
-The algo is based on Martingale, but it's very stable if you are patient enough to use it on the bigger time frame.
+We have successfully integrated with BitCartCC (https://bitcartcc.com, https://github.com/bitcartcc/bitcart), one of the most promising payment platforms available. It’s worth mentioning that the platform’s founder, Alex, is only 18 years old as of 2022!
 
-Currently, the payment gateway is connected with Paypal's sandbox.
-We will replace the sandbox version with the live payment gateway by the end of 2022.
-So, if you have a Paypal test(developer) account, then you can get any EA for free this month.
+### Marketplace(multi-vendor) for EA
 
-## FIX Bridge(an individual version of WEB trader's backend)
-We created a new version(FIX Bridge) for individual traders. It's for free FOREVER!!
+Our new marketplace for EA developers, Fintechee.io, allows you to sell all types of digital products, not just C/C++/Mql based EAs/indicators. The digital signature technology we use ensures that copyright is protected, and each download link expires a few minutes after the order is created.
+
+We launched on Aug. 12th, 2022, and we’ve already listed an EA called SimpleScalping in production for just $10. The algorithm is based on Martingale and is very stable on a larger timeframe with sufficient patience.
+
+Currently, our payment gateway(for the EA marketplace, not for the WEB-trader) is connected to PayPal’s sandbox. If you have a PayPal test (developer) account, you can obtain any EA for free.
+
+### FIX Bridge(an individual version of WEB trader's backend)
+
+we have developed a new version of our FIX Bridge feature for individual traders. It’s free FOREVER!
 
 Download link:
 https://www.fintechee.com/assets/fix-api/fintecheefixbridge.7z
@@ -75,8 +76,11 @@ https://www.fintechee.com/assets/fix-api/fintecheefixbridge.7z
 Everyone can get a free license to use our FIX API trading platform individual version if he/she matches any one of the conditions below.
 
 A. Our partners' client
+
 B. Github user
+
 C. Youtuber
+
 D. Coupon
 
 We have updated our campaign page: https://www.fintechee.com/marketing/campaign/
@@ -119,11 +123,9 @@ https://www.fintechee.com/shared.html
 
 ## Usage
 
-I received a lot of questions that asked how to use the Javasacript files in this repository.
-Actually, the usage is different from Nodejs, so, you DON'T need to use "node xxx.js" to run it.
-And, it's much EASIER to run them. Because they are browser-based, so, what you need to do is just open the WEB trader of Fintechee and copy-paste the source codes into the CONSOLE panel of the WEB trader and then click the RUN button. Then everything is DONE.
-Each file in this repo is indepenedent to each other. You can use them respectively.
-EAs and indicators are stored ONLY on your LOCAL browser and NEVER uploaded to the server side. We use Web LocalStorage. The secrets of your trading strategies are protected.
+I have received several questions about how to utilize the JavaScript files in this repository. However, the usage is not the same as Node.js, so it is unnecessary to use “node xxx.js” to run them. In fact, it’s a much simpler process, as our files are browser-based. All you need to do is open the Fintechee Web Trader, copy and paste the relevant source codes into the Console Panel, and then click the Run Button. It’s that easy!
+
+Each file in this repository is independent and can be used separately. The EAs and indicators are stored solely on your browser and are never uploaded to the server side. We use Web LocalStorage to ensure that the secrets of your trading strategies are protected.
 
 A simple manual: https://github.com/fintechees/Expert-Advisor-Studio/blob/master/simple_manual.txt
 
@@ -188,19 +190,18 @@ Please check this tutorial(https://www.fintechee.com/expert-advisor-cpp-compiler
 
 1. registerIndicator
 
-We Added three parameters to this API. They are all callback functions: OnInit, OnDeinit, and OnRender. We added them to extend the functions in Fintechee and make our indicators much easier to manage and monitor. When you add an indicator to the chart, the OnInit callback function would be called. When you remove an indicator from the chart, the OnDeinit function would be called. After the main callback function is called, the OnRender function would be triggered. The OnRender function is very useful to add your own renderer to the platform. Our platform's renderer is based on D3js. If you are not familiar with it, you can use other alternative JS chart systems, such as ChartJS.
+We added three parameters to this API, all of which are callback functions: OnInit, OnDeinit, and OnRender. We added these to extend the functionality of Fintechee and make it easier to manage and monitor indicators. When you add an indicator to the chart, the OnInit callback function will be called. When you remove an indicator from the chart, the OnDeinit function will be called. After the main callback function is executed, the OnRender function will be triggered. The OnRender function is particularly useful if you want to add your own renderer to the platform. Our platform’s renderer is based on D3.js. If you are not familiar with it, you can use other alternative JS charting systems such as Chart.js.
 
-And, these callback functions are new features. Other platforms have no these parameters. Fortunately, this API is compatible with the older versions, so, you don't need to modify your old indicators.
+These callback functions are new features; other platforms do not have these parameters. Fortunately, this API is compatible with older versions, so you do not need to modify your old indicators.
 
 Example:
 https://github.com/fintechees/Expert-Advisor-Studio/blob/master/Indicators/chart_elements/line_segment_sample.js
 
 2. registerEA
 
-We added one more parameter to this API, it's a callback function to receive a message when the transaction was triggered.
-For example, if you send an order to the backend, you don't need to block your process. Everything on our platform is ASYNC. So, you can continue to do analysis and just make this callback function available to wait for the notification from the backend. If the order is filled and a new trade is opened, then you will get notified.
+We have added a new parameter to this API, namely a callback function that receives a message when a transaction is triggered. For instance, if you want to send an order to the backend and avoid blocking your process, everything on our platform runs asynchronously. Therefore, you can continue with your analysis and leave this callback function in place to receive a notification from the backend when the order is executed and a new trade is opened.
 
-And, this callback function is a new feature. Other platforms have no this parameter. Fortunately, this API is compatible with the older versions, so, you don't need to modify your old EAs.
+This callback function is a new feature; other platforms do not offer this parameter. Fortunately, this API is backward compatible, so you don’t need to modify your old EAs.
 
 Example:
 https://github.com/fintechees/Expert-Advisor-Studio/blob/master/EA/CopyTrading/copy_trading_for_oanda.js
