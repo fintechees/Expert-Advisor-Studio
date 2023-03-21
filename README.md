@@ -46,6 +46,9 @@
 <div align="center">
   <img src="https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/c_cpp_compiler.gif" alt="Expert Advisor Studio Fintechee's C Mql Compiler" align="center" />
 
+<div align="center">
+  <img src="https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/Indicators/extra_fractals/extra_fractals_screenshot.png" alt="Expert Advisor Studio Fintechee's Extra Fractals Indicator" align="center" />
+
   <img src="https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/architecture.png" alt="Expert Advisor Studio Fintechee's Architecture" align="center" />
 </div>
 
