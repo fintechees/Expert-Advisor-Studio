@@ -1,14 +1,14 @@
 registerIndicator(
-"bidask", "Bid and Ask(v1.0)", function (context) {
+"bidask", "Bid and Ask(v1.01)", function (context) {
 	var dataInput = getDataInput(context, 0)
 	if (dataInput.length == 0) return
 	var dataOutputBid = getDataOutput(context, "bid")
 	var dataOutputAsk = getDataOutput(context, "ask")
-	var pips = getIndiParameter(context, "pips")
+	var spread = getIndiParameter(context, "spread")
 
 	var currPrice = dataInput[dataInput.length - 1]
-	var bid = currPrice - pips / 2
-	var ask = currPrice + pips / 2
+	var bid = currPrice - spread / 2
+	var ask = currPrice + spread / 2
 	var dataLen = dataInput.length
 	var barNum = typeof context.barNum == "undefined" ? dataInput.length : context.barNum
 
@@ -17,7 +17,7 @@ registerIndicator(
 		dataOutputAsk[i] = ask
 	}
 },[{
-	name: "pips",
+	name: "spread",
 	value: 0.0001,
 	required: true,
 	type: PARAMETER_TYPE.NUMBER,
