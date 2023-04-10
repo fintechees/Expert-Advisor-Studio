@@ -1,4 +1,4 @@
-registerIndicator("heikin-ask", "Heikin-Ashi(v1.0)", function (context) {
+registerIndicator("heikin-ask", "Heikin-Ashi(v1.01)", function (context) {
   var dataInputO = getDataInput(context, 0)
   var dataInputH = getDataInput(context, 1)
   var dataInputL = getDataInput(context, 2)
@@ -83,13 +83,16 @@ function (context) { // Init()
 },
 function (context) { // Deinit()
   var chartHandle = getChartHandleByContext(context)
+  var canvas = context.heikinAshi.canvas
 
-	context.heikinAshi.canvas.selectAll(".haHL").data([]).exit().remove()
-  context.heikinAshi.canvas.selectAll(".haOC").data([]).exit().remove()
-  if (typeof context.originalOC != "undefined") {
-    context.originalOC.attr("opacity", 1)
-    context.originalHL.attr("opacity", 1)
-  }
+  canvas.selectAll(".haHL").select(function() { return this.parentNode; }).select(function() { return this.parentNode; }).each(function (d, i) {
+    if (i == 0) {
+      d3.select(this).selectAll(".cc_k_c_oc").attr("opacity", 1)
+      d3.select(this).selectAll(".cc_k_c_hl").attr("opacity", 1)
+    }
+  })
+	canvas.selectAll(".haHL").data([]).exit().remove()
+  canvas.selectAll(".haOC").data([]).exit().remove()
 },
 function (context) { // Render()
   var dataOutputO = getDataOutput(context, "ha_open")
@@ -215,15 +218,10 @@ function (context) { // Render()
 
   haOC.exit().remove()
 
-  if (getCalculatedLength(context) == 0) {
-    d3.selectAll(".haHL").select(function() { return this.parentNode; }).select(function() { return this.parentNode; }).each(function (d, i) {
-      if (i == 0) {
-        context.originalOC = d3.select(this).selectAll(".cc_k_c_oc")
-        context.originalHL = d3.select(this).selectAll(".cc_k_c_hl")
-      }
-    })
-  } else {
-    context.originalOC.attr("opacity", 0)
-    context.originalHL.attr("opacity", 0)
-  }
+  canvas.selectAll(".haHL").select(function() { return this.parentNode; }).select(function() { return this.parentNode; }).each(function (d, i) {
+    if (i == 0) {
+      d3.select(this).selectAll(".cc_k_c_oc").attr("opacity", 0)
+      d3.select(this).selectAll(".cc_k_c_hl").attr("opacity", 0)
+    }
+  })
 })
