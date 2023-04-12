@@ -1,4 +1,4 @@
-registerIndicator("heikin-ask", "Heikin-Ashi(v1.01)", function (context) {
+registerIndicator("heikin-ashi", "Heikin-Ashi(v1.01)", function (context) {
   var dataInputO = getDataInput(context, 0)
   var dataInputH = getDataInput(context, 1)
   var dataInputL = getDataInput(context, 2)
