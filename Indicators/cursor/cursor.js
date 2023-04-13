@@ -1,5 +1,5 @@
-// Please note, this indicator will make scrolling chart disabled. So, if you want to scroll the chart, please remove this indicator from the chart.
 registerIndicator("cursor", "Cursor on hover(v1.0)", function (context) {
+  // Please note, this indicator will make scrolling chart disabled. So, if you want to scroll the chart, please remove this indicator from the chart.
 },[{
   name: "color",
   value: "#AAA",
