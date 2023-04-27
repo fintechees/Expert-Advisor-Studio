@@ -1,3 +1,4 @@
+// Deprecated. A new version will be coming soon.
 registerEA(
   "fixapi_oanda_arbitrage",
   "A test EA to trade arbitrage based on the price difference between FIX API and Oanda(v1.10)",
