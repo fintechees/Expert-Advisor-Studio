@@ -1,5 +1,5 @@
 registerIndicator("fintechee_oanda_loader", "A plugin to load Oanda's streaming quotes and transactions(v1.11)", function (context) {
-  // Deprecated. A new version will be coming soon.
+  // Deprecated. A new version has been released. Please refer to EA/Plugin-for-Oanda.
   // Disclaimer: we are not affiliated with the data providers or the API providers.
 },
 [{
