@@ -18,7 +18,7 @@ You can get copy_trading_for_oanda on Fintechee's Github repo:
 https://github.com/fintechees/Expert-Advisor-Studio/blob/master/EA/CopyTrading/copy_trading_for_oanda.js
 There are no parameters because the EA will follow all the signals that it receives and trade via B's Oanda account.
 B has logged into A's account in the investor mode, so all the signals that A issues will be seen by B.
-The EA will send orders via the plugin oanda_loader launched in the 2nd step.
+The EA will send orders via the plugin_for_oanda launched in the 2nd step.
 
 Done!
 
