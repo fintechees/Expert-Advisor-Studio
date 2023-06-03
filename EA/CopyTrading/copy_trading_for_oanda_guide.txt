@@ -8,13 +8,14 @@ If you disable investor mode(disabled by default), then only the followers that 
 
 2. B signs into both accounts.
 B signs into A's account by entering A's investor password.
-B signs into B's Oanda-based account by launching an EA named oanda_loader.
-You can get oanda_loader on Fintechee's Github repo:
-https://github.com/fintechees/Expert-Advisor-Studio/blob/master/Indicators/Plugin-for-Data-API/oanda_loader.js
+B signs into B's Oanda-based account by launching an EA named plugin_for_oanda.
+You can get plugin_for_oanda on Fintechee's Github repo:
+https://github.com/fintechees/Expert-Advisor-Studio/blob/master/EA/Plugin-for-Oanda/plugin_for_oanda.js
 Oanda issues a token as login credential. So, B needs to input it into the corresponding parameter for oanda_loader.
 
 3. B launches copy_trading_for_oanda via Fintechee WEB Trader.
-copy_trading_for_oanda is a built-in EA.
+You can get copy_trading_for_oanda on Fintechee's Github repo:
+https://github.com/fintechees/Expert-Advisor-Studio/blob/master/EA/CopyTrading/copy_trading_for_oanda.js
 There are no parameters because the EA will follow all the signals that it receives and trade via B's Oanda account.
 B has logged into A's account in the investor mode, so all the signals that A issues will be seen by B.
 The EA will send orders via the plugin oanda_loader launched in the 2nd step.
