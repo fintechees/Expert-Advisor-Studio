@@ -179,16 +179,6 @@ Please check this tutorial(https://www.fintechee.com/expert-advisor-cpp-compiler
 
 ![Expert Advisor Studio Fintechee custom indicator](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/analyzestructure.png)
 
-![Expert Advisor Studio Fintechee APP Screenshot1](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/mobile1.png)
-![Expert Advisor Studio Fintechee APP Screenshot2](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/mobile2.png)
-![Expert Advisor Studio Fintechee APP Screenshot3](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/mobile3.png)
-![Expert Advisor Studio Fintechee APP Screenshot4](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/mobile4.png)
-![Expert Advisor Studio Fintechee APP Screenshot0](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/mobile0.png)
-![Expert Advisor Studio Fintechee APP Screenshot5](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/mobile5.png)
-![Expert Advisor Studio Fintechee APP Screenshot6](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/mobile6.png)
-![Expert Advisor Studio Fintechee APP Screenshot7](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/mobile7.png)
-![Expert Advisor Studio Fintechee APP Screenshot8](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/mobile8.png)
-
 ### Release Notes
 2020.7.7 three APIs were modified and added parameters.
 1. sendOrder
