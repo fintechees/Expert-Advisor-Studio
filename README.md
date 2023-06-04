@@ -44,13 +44,13 @@
 </div>
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/c_cpp_compiler.gif" alt="Expert Advisor Studio Fintechee's C Mql Compiler" align="center" />
+  <img src="https://raw.githubusercontent.com/fintechees/Expert-Advisor-Studio/master/c_cpp_compiler.gif" alt="Expert Advisor Studio Fintechee's C Mql Compiler" align="center" />
 </div>
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/Indicators/extra_fractals/extra_fractals_screenshot.png" alt="Expert Advisor Studio Fintechee's Extra Fractals Indicator" align="center" />
+  <img src="https://raw.githubusercontent.com/fintechees/Expert-Advisor-Studio/master/Indicators/extra_fractals/extra_fractals_screenshot.png" alt="Expert Advisor Studio Fintechee's Extra Fractals Indicator" align="center" />
 
-  <img src="https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/architecture.png" alt="Expert Advisor Studio Fintechee's Architecture" align="center" />
+  <img src="https://raw.githubusercontent.com/fintechees/Expert-Advisor-Studio/master/architecture.png" alt="Expert Advisor Studio Fintechee's Architecture" align="center" />
 </div>
 
 <br />
@@ -154,9 +154,9 @@ We started a live stream on Youtube
 Please access our video stream page to see how we trade arbitrage in real-time(FIX API quotes vs Oanda).
 Recommendation:
 https://twitter.com/Fintechee1
-![Expert Advisor Studio Trading Arbitrage(FIX API vs Oanda) via Fintechee](https://github.com/fintechee/Expert-Advisor-Studio/blob/master/arbitrageyoutube.png)
+![Expert Advisor Studio Trading Arbitrage(FIX API vs Oanda) via Fintechee](https://github.com/fintechees/Expert-Advisor-Studio/blob/master/arbitrageyoutube.png)
 
-![Expert Advisor Studio Trading Arbitrage(FIX API vs Oanda) via Fintechee](https://github.com/fintechee/Expert-Advisor-Studio/blob/master/arbitragechance.png)
+![Expert Advisor Studio Trading Arbitrage(FIX API vs Oanda) via Fintechee](https://github.com/fintechees/Expert-Advisor-Studio/blob/master/arbitragechance.png)
 Alternative:
 https://www.fintechee.com/videostreaming/
 
@@ -167,17 +167,17 @@ You don't know how to use these EAs?
 Please check out our Youtube Channel, there are tutorials(https://www.youtube.com/channel/UCjBs_l6rUxhtZlfRhDuVGSg)
 You can find the source codes for the tutorials here: https://github.com/fintechee/tutorials
 
-Please check our [Github wiki](https://github.com/fintechee/Expert-Advisor-Studio/wiki) to know more details about APIs.
+Please check our [Github wiki](https://github.com/fintechees/Expert-Advisor-Studio/wiki) to know more details about APIs.
 
 Please check this tutorial(https://www.fintechee.com/expert-advisor-cpp-compiler) to learn how to use our Nodejs package(https://github.com/fintechee/Expert-Advisor-CPP-Compiler) to compile C/C++/MQL-based programs.
 
 ![Expert Advisor Studio Fintechee Screenshot](https://www.fintechee.com/vpimages/services/newscreenshot1.png)
 
-![Expert Advisor Studio Fintechee's Ecosystem](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/ecosystem.png)
+![Expert Advisor Studio Fintechee's Ecosystem](https://raw.githubusercontent.com/fintechees/Expert-Advisor-Studio/master/ecosystem.png)
 
-![Expert Advisor Studio Expert Advisor C/C++/MQL Compiler](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/cppcompiler.png)
+![Expert Advisor Studio Expert Advisor C/C++/MQL Compiler](https://raw.githubusercontent.com/fintechees/Expert-Advisor-Studio/master/cppcompiler.png)
 
-![Expert Advisor Studio Fintechee custom indicator](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/analyzestructure.png)
+![Expert Advisor Studio Fintechee custom indicator](https://raw.githubusercontent.com/fintechees/Expert-Advisor-Studio/master/analyzestructure.png)
 
 ### Release Notes
 2020.7.7 three APIs were modified and added parameters.
@@ -391,12 +391,12 @@ Fintechee License = MIT License + Restrictions for Racists
 https://github.com/fintechee transferred this repo to https://github.com/fintechees on Aug 25th 2021.
 
 
-![Expert Advisor Studio Fintechee APP Screenshot1](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/screenshot/mobile1.png)
-![Expert Advisor Studio Fintechee APP Screenshot2](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/screenshot/mobile2.png)
-![Expert Advisor Studio Fintechee APP Screenshot3](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/screenshot/mobile3.png)
-![Expert Advisor Studio Fintechee APP Screenshot4](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/screenshot/mobile4.png)
-![Expert Advisor Studio Fintechee APP Screenshot0](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/screenshot/mobile0.png)
-![Expert Advisor Studio Fintechee APP Screenshot5](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/screenshot/mobile5.png)
-![Expert Advisor Studio Fintechee APP Screenshot6](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/screenshot/mobile6.png)
-![Expert Advisor Studio Fintechee APP Screenshot7](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/screenshot/mobile7.png)
-![Expert Advisor Studio Fintechee APP Screenshot8](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/screenshot/mobile8.png)
+![Expert Advisor Studio Fintechee APP Screenshot1](https://raw.githubusercontent.com/fintechees/Expert-Advisor-Studio/master/screenshot/mobile1.png)
+![Expert Advisor Studio Fintechee APP Screenshot2](https://raw.githubusercontent.com/fintechees/Expert-Advisor-Studio/master/screenshot/mobile2.png)
+![Expert Advisor Studio Fintechee APP Screenshot3](https://raw.githubusercontent.com/fintechees/Expert-Advisor-Studio/master/screenshot/mobile3.png)
+![Expert Advisor Studio Fintechee APP Screenshot4](https://raw.githubusercontent.com/fintechees/Expert-Advisor-Studio/master/screenshot/mobile4.png)
+![Expert Advisor Studio Fintechee APP Screenshot0](https://raw.githubusercontent.com/fintechees/Expert-Advisor-Studio/master/screenshot/mobile0.png)
+![Expert Advisor Studio Fintechee APP Screenshot5](https://raw.githubusercontent.com/fintechees/Expert-Advisor-Studio/master/screenshot/mobile5.png)
+![Expert Advisor Studio Fintechee APP Screenshot6](https://raw.githubusercontent.com/fintechees/Expert-Advisor-Studio/master/screenshot/mobile6.png)
+![Expert Advisor Studio Fintechee APP Screenshot7](https://raw.githubusercontent.com/fintechees/Expert-Advisor-Studio/master/screenshot/mobile7.png)
+![Expert Advisor Studio Fintechee APP Screenshot8](https://raw.githubusercontent.com/fintechees/Expert-Advisor-Studio/master/screenshot/mobile8.png)
