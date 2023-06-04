@@ -390,3 +390,12 @@ Fintechee License = MIT License + Restrictions for Racists
 
 https://github.com/fintechee transferred this repo to https://github.com/fintechees on Aug 25th 2021.
 
+![Expert Advisor Studio Fintechee APP Screenshot1](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/screenshot/mobile1.png)
+![Expert Advisor Studio Fintechee APP Screenshot2](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/screenshot/mobile2.png)
+![Expert Advisor Studio Fintechee APP Screenshot3](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/screenshot/mobile3.png)
+![Expert Advisor Studio Fintechee APP Screenshot4](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/screenshot/mobile4.png)
+![Expert Advisor Studio Fintechee APP Screenshot0](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/screenshot/mobile0.png)
+![Expert Advisor Studio Fintechee APP Screenshot5](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/screenshot/mobile5.png)
+![Expert Advisor Studio Fintechee APP Screenshot6](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/screenshot/mobile6.png)
+![Expert Advisor Studio Fintechee APP Screenshot7](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/screenshot/mobile7.png)
+![Expert Advisor Studio Fintechee APP Screenshot8](https://raw.githubusercontent.com/fintechee/Expert-Advisor-Studio/master/screenshot/mobile8.png)
