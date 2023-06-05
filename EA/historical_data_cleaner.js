@@ -1,6 +1,6 @@
 registerEA(
 		"historical_data_cleaner",
-		"An EA only used for clearing historical data stored on your local browser(v1.0)",
+		"An EA only used for clearing historical data stored on your local browser(v1.01)",
 		[],
 		function (context) { // Init()
 			var myDB = null
@@ -9,7 +9,8 @@ registerEA(
 			requestOpen.onsuccess = function (e) {
 				myDB = requestOpen.result
 
-				var requestClear = myDB.transaction("k_o", "readwrite").objectStore("k_o").clear()
+				// var requestClear =myDB.transaction("k_o", "readwrite").objectStore("k_o").clear() // not working
+				var requestClear = window.indexedDB.deleteDatabase("Chart-Coaster")
 
 				requestClear.onsuccess = function () {
 					popupMessage("The data store has been cleared successfully.")
