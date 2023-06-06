@@ -1,0 +1,1 @@
+EA based on Trading Chaos(Bill Williams' book). All of the strategies described in the book have been implemented. Additionally, you may utilize “extra_mfi” as a supplementary tool.
