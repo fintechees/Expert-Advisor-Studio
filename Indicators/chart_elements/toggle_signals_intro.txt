@@ -1,0 +1,1 @@
+toggle_trading_signals is used to toggle the display of circles to indicate when trades are opened and closed.
