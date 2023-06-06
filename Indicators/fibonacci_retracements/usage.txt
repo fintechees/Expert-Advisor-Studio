@@ -1,0 +1,1 @@
+Fibonacci retracements are always used to identify market reversal opportunities. Traditionally, we would check for Fibonacci retracements on the same chart using auxiliary lines. However, this indicator uses a simpler approach by displaying breakout points and auxiliary lines in a separate window.
