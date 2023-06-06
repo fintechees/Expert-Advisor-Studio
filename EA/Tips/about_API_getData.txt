@@ -1,0 +1,25 @@
+Let me share a very important point to use the API getData.
+We didn't update this API's specs, so, no need to sync your codes.
+
+We have an API to set the shift value for indicators to make the indicator shift to the left or to the right.
+The API is called setIndiShift.
+
+Even if you call this API - setIndiShift in your custom indicator codes,  the data received by calling getData in your EA codes will have no difference.
+
+For example:
+You call setIndiShift(context, "sma", 5) in your custom moving average codes to make the MA shift to the right by 5 units.
+And then you call getData in your EA codes to get the edited MA's data.
+The return array data will be the same as the return array from calling a custom MA with setIndiShift(context, "sma", 0)
+
+Why?
+Because Fintechee ignores the effect of setIndiShift when getData is called.
+So, if you want to get the latest value of the MA with setIndiShift(context, "sma", 5), you need to specify the index reduced by 5(such as arrData[arrLen - 1 - 5]).
+arrData[arrLen - 1] will get the latest value of the MA with setIndiShift(context, "sma", 0).
+
+Not clear?
+Okay, let me give a detailed example.
+We have an indicator xxx that contains an array of ten values, 1, 2, 3,..., 7, 8, 9, 10.
+When we call setIndiShift(context, "xxx", 3) to make xxx shift to the right by 3 units, the array of the data still is the same as xxx with setIndiShift(context, "xxx", 0).
+So, if we want to get the latest value of xxx with setIndiShift(context, "xxx", 0), we use arrData[arrLen - 1] and get 10.
+If we want to get the latest value of xxx with setIndiShift(context, "xxx", 3), then we use arrData[arrLen - 1 - 3] and get 7.
+No matter what shift is entered when we call setIndiShift, the return array of getData is the same.
