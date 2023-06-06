@@ -1,0 +1,1 @@
+"cursor" is an implementation to show a cursor on the chart. The function to scroll the chart conflicts with this program. Therefore, if you want to scroll the chart, please remove this indicator from the chart.
