@@ -1,0 +1,8 @@
+To utilize this EA and display the statistics panel regarding the frequencies of arbitrage opportunities, you must first open the “plugin_for_oanda”.
+
+Once you have launched the “plugin_for_oanda”, a panel will appear to set up your Oanda account ID and token information. Simply input the necessary information and hit the “Connect” button. If you successfully log in, two popup messages will appear.
+
+Following this, proceed to run “fintechee_external_arbitrage”. You can specify Oanda as your external trading platform. The price variance is derived from two streaming quotes: one from Fintechee’s FIX API engine, and the other from the external trading platform.
+
+The statistical analysis is based on hourly tallies, with most of the price variation peaks occurring during 12pm-4pm (UTC). If the numerical value appears as green, it denotes that the price variance is positive, and consequently, an arbitrage opportunity has arisen.
+
