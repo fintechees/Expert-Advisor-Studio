@@ -1,0 +1,7 @@
+Why rename the specific EA and indicator?
+
+This is very important to know before you customize your own EA/indicator by referencing the EA/indicator we(Fintechee) provide. Because Fintechee has built-in EAs/indicators, so these built-in programs may be updated automatically when you use the WEB trader. To avoid being overwritten, you need to rename the programs.
+
+How to rename?
+
+You can't rename the programs by simply changing the file names of the programs you find via our Github repo. You need to open the file and find the keyword "registerEA" and "registerIndicator"(actually the keywords are API names). Please change the first parameters of "registerEA" and "registerIndicator"(the first parameter is the name) and then run it on the console panel. This operation will make a copy of the source codes that you want to reference.
