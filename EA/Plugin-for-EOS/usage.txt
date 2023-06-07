@@ -1,0 +1,4 @@
+This folder contains programs that are used for integrating with the EOS blockchain. These programs provide excellent examples for developers who want to understand how the payment gateway works, and they also demonstrate how to interact with a crypto wallet.
+
+Furthermore, it is possible to extend these plugins to support a different blockchain, if needed.
+
