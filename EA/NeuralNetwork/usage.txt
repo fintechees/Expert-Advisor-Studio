@@ -1,0 +1,6 @@
+“sample_training_neuron_model” and “sample_run_neuron_model” are two neural network-based EAs that must be used together. One cannot function without the other.
+“sample_training_neuron_model” trains the model, while “sample_run_neuron_model” generates signals based on the model trained by “sample_training_neuron_model”.
+
+To help understand how a neural network works, we have included a simple example called “nn_example”.
+
+The algorithm implemented in this folder is based on Synaptic, an AI framework. Tensorflow, a more advanced framework, runs convolutional neural networks. For more details on Tensorflow, refer to plugin_for_tensorflow.
