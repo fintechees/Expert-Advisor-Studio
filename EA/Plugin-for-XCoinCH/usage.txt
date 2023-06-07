@@ -1,0 +1,3 @@
+XCoinCH is another product developed by the Fintechee team, with X standing for cross and CH for clearing house. XCoinCH is a semi-decentralized platform for exchanging cryptocurrency tokens, such as USDT, across multiple chains.
+
+This plugin is intended for use with XCoinCH, providing users with a portal to interact with the platform directly from our WEB trader.
