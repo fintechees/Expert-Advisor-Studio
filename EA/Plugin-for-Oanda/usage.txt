@@ -1,0 +1,3 @@
+Oanda is a well-known broker that offers API trading. As a result, we have created a plugin that establishes both a data channel for retrieving real-time quotes from Oanda and a trade channel for sending orders via Oanda’s REST API.
+
+Due to the substantial variance in prices between FIX API, which is utilized by institutions, and retail brokers, there can be arbitrage opportunities. However, arbitrage trading is not easy and requires considerable expenditures to develop appropriate tools. This plugin now allows traders to track market movements between two data sources and trade for arbitrage on their local machines without additional expenses.
