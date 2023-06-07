@@ -1,0 +1,4 @@
+This folder includes programs used for integrating with data providers, specifically crypto data providers.
+
+We plan to refactor the programs within this folder. Additionally, the program for connecting with the Oanda API, which was previously located in this folder, has been moved to a new directory named Plugin-for-Oanda. This directory has also undergone refactoring. If you need to reference the structure of a data provider's connectivity, we suggest referring to Plugin-for-Oanda.
+
