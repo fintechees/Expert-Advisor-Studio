@@ -1,0 +1,5 @@
+This is the most interesting part that we would like to present to our users.
+
+Tensorflow is an AI framework that was utilized to construct the Go bot, AlphaGo. Typically, Market patterns identification is accomplished through neural networks. We can use this Tensorflow plugin to simulate this process, replicating the way our eyes detect market patterns.
+
+Just like the EAs that are included in NeuralNetwork folder, EAs that are based on this plugin must be separated into two parts. One piece for training the model, known as the convolutional neural network, and another is utilized to operate the model that has been trained by the previous element.
