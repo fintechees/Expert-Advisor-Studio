@@ -1,5 +1,5 @@
 registerEA(
-"cryptocurrency_option_trading_platform",
+"plugin_for_deribit",
 "A plugin to trade cryptocurrency options(v0.08)",
 [{
 	name: "interval",
