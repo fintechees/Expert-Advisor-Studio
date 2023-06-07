@@ -1,0 +1,5 @@
+Our platform is compatible with any programming language based on WEB-Assembly. MQL, C++, and Python based programs can be used on our platform. This plugin allows MQL and C++ based programs to be imported into our system and run directly in the browser.
+
+Visit our website, https://fintechee.io, to explore our EA marketplace, which is supported by multiple vendors. If you have an EA that is based on MQL or C++, you can utilize our compiler, https://github.com/fintechees/Expert-Advisor-Cpp-Compiler, to compile and sell it on our marketplace.
+
+Your algo trading strategies can be experienced by clients who can utilize this plugin to import it into our WEB-trader.
