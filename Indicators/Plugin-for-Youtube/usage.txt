@@ -1,0 +1,3 @@
+This plugin is designed to enable the display of YouTube videos, including live streams, within the chart layout. This allows YouTubers to conduct live trading activities and engage with their fans through social media.
+
+With the aid of this plugin, YouTubers can screen share their trading sessions while streaming live on YouTube. This facilitates real-time communication with viewership, while fans comment and ask questions, making the trading experience more engaging.
