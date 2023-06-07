@@ -1,0 +1,1 @@
+You can use this EA to get crypto options' streaming quotes. Crypto options are much more complex than Forex or CFD. So, this plugin is for reference only.
