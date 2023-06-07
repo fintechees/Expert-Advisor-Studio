@@ -1,0 +1,2 @@
+Usually, Martingale strategy involves doubling the bet once a loss occurs and engaging in one-sided trading. In contrast, the “improved_martingale” strategy is a double-sided trading strategy.
+If losses continue to accrue, profits can still be made on one side. This means that the profit on one side can help reduce the overall loss risk.
