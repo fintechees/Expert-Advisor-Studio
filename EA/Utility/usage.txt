@@ -1,0 +1,3 @@
+The “historical_data_cleaner” is designed to clear the OHLC data within the IndexedDB stored on your browser.
+
+On the other hand, the “historical_data_viewer” is solely used during strategy backtesting procedures. It functions by downloading historical data into the platform and replays it to simulate the operation of such data.
