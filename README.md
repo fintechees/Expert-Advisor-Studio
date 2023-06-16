@@ -57,6 +57,12 @@
 
 ## News!!
 
+### Extension
+
+![Extension of Fintechee](https://github.com/fintechees/Expert-Advisor-Studio/blob/master/extension.png)
+
+Added an extra tab for extensions. This means that you can now install the EA/indicator that was released on our Github repository directly from our Web Trader.
+
 ### FiSDK
 
 We recently released FiSDK, a tool specifically designed for managing the backend. This tool features APIs that are entirely distinct from the APIs used for EA/indicators (Charting System). The APIs provided in this repository are mainly designed for quant traders to stay ahead of market movements and generate trading signals. FiSDK’s APIs, on the other hand, are primarily intended for position monitoring in the backoffice.
