@@ -57,6 +57,12 @@
 
 ## News!!
 
+### New Layout!!
+
+![New Layout of Fintechee](https://github.com/fintechees/Expert-Advisor-Studio/blob/master/screenshot/fintechee_new_layout.png)
+
+We release a new version with a new layout today(July 13th, 2023)!
+
 ### Extension
 
 ![Extension of Fintechee](https://github.com/fintechees/Expert-Advisor-Studio/blob/master/extension.png)
