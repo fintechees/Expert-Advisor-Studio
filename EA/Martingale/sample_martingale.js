@@ -1,6 +1,6 @@
 registerEA(
 	"sample_martingale",
-	"A test EA based on Martingale algorithm(v1.01)",
+	"A test EA based on Martingale algorithm(v1.02)",
 	[{ // parameters
 		name: "period",
 		value: 5,
@@ -14,24 +14,21 @@ registerEA(
 		var accountId = getAccountIdOfAccount(account)
 		var symbolName = "EUR/USD"
 
-		window.chartHandle = getChartHandle(context, brokerName, accountId, symbolName, TIME_FRAME.M1)
+		context.chartHandle = getChartHandle(context, brokerName, accountId, symbolName, TIME_FRAME.M1)
 		var period = getEAParameter(context, "period")
-		window.indiHandle = getIndicatorHandle(context, brokerName, accountId, symbolName, TIME_FRAME.M1, "sma", [{
+		context.indiHandle = getIndicatorHandle(context, brokerName, accountId, symbolName, TIME_FRAME.M1, "sma", [{
 			name: "period",
 			value: period
 		}])
 	},
 	function (context) { // Deinit()
-		delete window.currTime
-		delete window.chartHandle
-		delete window.indiHandle
 	},
 	function (context) { // OnTick()
-		var arrTime = getData(context, window.chartHandle, DATA_NAME.TIME)
-		if (typeof window.currTime == "undefined") {
-			window.currTime = arrTime[arrTime.length - 1]
-		} else if (window.currTime != arrTime[arrTime.length - 1]) {
-			window.currTime = arrTime[arrTime.length - 1]
+		var arrTime = getData(context, context.chartHandle, DATA_NAME.TIME)
+		if (typeof context.currTime == "undefined") {
+			context.currTime = arrTime[arrTime.length - 1]
+		} else if (context.currTime != arrTime[arrTime.length - 1]) {
+			context.currTime = arrTime[arrTime.length - 1]
 		} else {
 			return
 		}
@@ -60,8 +57,8 @@ registerEA(
 			if (getOrderType(openTrade) == ORDER_TYPE.OP_SELL) orientation = ORDER_TYPE.OP_SELL
 		}
 
-		var arrClose = getData(context, window.chartHandle, DATA_NAME.CLOSE)
-		var arrSma = getData(context, window.indiHandle, "sma")
+		var arrClose = getData(context, context.chartHandle, DATA_NAME.CLOSE)
+		var arrSma = getData(context, context.indiHandle, "sma")
 
 		var volume = 0.01
 
