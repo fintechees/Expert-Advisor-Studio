@@ -1,6 +1,6 @@
 registerEA(
 	"sample_martingale",
-	"A test EA based on Martingale algorithm(v1.02)",
+	"A test EA based on Martingale algorithm(v1.03)",
 	[{ // parameters
 		name: "period",
 		value: 5,
@@ -75,10 +75,10 @@ registerEA(
 				sendOrder(brokerName, accountId, symbolName, ORDER_TYPE.OP_SELL, 0, 0, volume, 0, 0, "", 0, 0)
 			}
 		} else {
-			if (orientation == ORDER_TYPE.BUY && (lowPrice - arrClose[arrClose.length - 1]) > 0.0005) {
+			if (orientation == ORDER_TYPE.OP_BUY && (lowPrice - arrClose[arrClose.length - 1]) > 0.0005) {
 				sendOrder(brokerName, accountId, symbolName, ORDER_TYPE.OP_BUY, 0, 0, volume, 0, 0, "", 0, 0)
 			}
-			if (orientation == ORDER_TYPE.SELL && (arrClose[arrClose.length - 1] - highPrice) > 0.0005) {
+			if (orientation == ORDER_TYPE.OP_SELL && (arrClose[arrClose.length - 1] - highPrice) > 0.0005) {
 				sendOrder(brokerName, accountId, symbolName, ORDER_TYPE.OP_SELL, 0, 0, volume, 0, 0, "", 0, 0)
 			}
 		}
