@@ -57,6 +57,12 @@
 
 ## News!!
 
+### Copy Trading
+
+We are excited to announce the launch of our latest feature: Copy Trading! What's more, cross-broker functions are now accessible too. With no requirement for issuing authorization tokens to third parties, integrating with independent copy trading platforms is risk-free, operating separately from broker sides. Feel free to explore the new feature by visiting https://fisdk.com/dashboard/.
+
+Our innovative hub structure significantly enhances copy trading performance. Rather than receiving trading requests from third-party copy trading platforms, we utilize a handful of scalable hubs to seamlessly execute the copy trading process.
+
 ### New Layout!!
 
 ![New Layout of Fintechee](https://github.com/fintechees/Expert-Advisor-Studio/blob/master/screenshot/fintechee_new_layout.png)
@@ -79,7 +85,7 @@ Please note that the examples provided in the fisdk repository cannot be used in
 
 ### Payment Gateway
 
-We have successfully integrated with BitCartCC (https://bitcartcc.com, https://github.com/bitcartcc/bitcart), one of the most promising payment platforms available. It’s worth mentioning that the platform’s founder, Alex, is only 18 years old as of 2022!
+Based on the clients' requirements, we can integrate with any payment gateway at no charge.
 
 ### Marketplace(multi-vendor) for EA
 
@@ -124,7 +130,8 @@ https://www.fintechee.com/shared.html
 <tr><td><strong>Compatibility</strong></td><td>Compatible with C/C++/MQL</td></tr>
 <tr><td><strong>Any Data</strong></td><td>You can import any data(historical/streaming) as long as you have data source.</td></tr>
 <tr><td><strong>Auto Market Maker</strong></td><td>You can send transactions to blockchains' SWAP smart contracts via Market Maker Bot</td></tr>
-<tr><td><strong>Crypto Payment Gateway</strong></td><td>Integration with crypto wallets(Scatter & Metamask)<br>Now we have integrated with the most promising payment platform: BitCartCC(https://bitcartcc.com, https://github.com/bitcartcc/bitcart), the founder Alex is only 18 years old!!</td></tr>
+<tr><td><strong>Copy Trading</strong></td><td>Copy Trading is our built-in new feature for now</td></tr>
+<tr><td><strong>Payment Gateway</strong></td><td>Based on the clients' requirements, we can integrate with any payment gateway at no charge</td></tr>
 <tr><td><strong>AI Enabled</strong></td><td>Integration with Artificial Intelligence(AI)</td></tr>
 <tr><td><strong>DEX</strong></td><td>Integration with DEX and Clearing House</td></tr>
 <tr><td><strong>Technical</strong></td><td>Custom Indicators(You can create compound indicators -- make an indicator calculated based on another indicator)</td></tr>
