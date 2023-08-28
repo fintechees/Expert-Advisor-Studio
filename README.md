@@ -59,6 +59,8 @@
 
 ### Copy Trading
 
+![Copy Trading supported by Fintechee](https://github.com/fintechees/Expert-Advisor-Studio/blob/master/screenshot/copytrading.png)
+
 We are excited to announce the launch of our latest feature: Copy Trading! What's more, cross-broker functions are now accessible too. With no requirement for issuing authorization tokens to third parties, integrating with independent copy trading platforms is risk-free, operating separately from broker sides. Feel free to explore the new feature by visiting https://fisdk.com/dashboard/.
 
 Our innovative hub structure significantly enhances copy trading performance. Rather than receiving trading requests from third-party copy trading platforms, we utilize a handful of scalable hubs to seamlessly execute the copy trading process.
