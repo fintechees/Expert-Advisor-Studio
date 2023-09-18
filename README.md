@@ -59,7 +59,9 @@
 
 ### Championship
 
-We will be hosting a Forex trading championship. All participants will use demo accounts, and no real funds will be involved(risk-free). The competition format is knockout-style. Each competition unit consists of 32 participants, meaning one first-place winner will be determined from these 32 participants. The first-place winner of each competition unit will receive a $500 cash prize, which is real money. The competition will have as many units as there are sponsors, typically one sponsor per unit. Registration will begin on Sep 10th, 2023. Please access https://fisdk.com/dashboard to register.
+We are hosting a Forex trading championship. All participants will use demo accounts, and no real funds will be involved(risk-free). The competition format is knockout-style. Each competition unit consists of 32 participants, meaning one first-place winner will be determined from these 32 participants. The first-place winner of each competition unit will receive a $500 cash prize, which is real money. The competition will have as many units as there are sponsors, typically one sponsor per unit. Registration has begun. Please access https://fisdk.com/dashboard to register.
+
+![Forex Trading Championship hosted by Fintechee](https://github.com/fintechees/Expert-Advisor-Studio/blob/master/screenshot/championship.png)
 
 ### Copy Trading
 
