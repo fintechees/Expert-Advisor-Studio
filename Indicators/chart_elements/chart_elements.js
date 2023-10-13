@@ -1,4 +1,4 @@
-registerIndicator("chart_elements", "A manager for the chart elements implemented by using custom indicator(v1.02)", function (context) {
+registerIndicator("chart_elements", "A manager for the chart elements implemented by using custom indicator(v1.03)", function (context) {
 },[{
   name: "color",
   value: "#AAA",
@@ -65,6 +65,7 @@ function (context) { // Init()
       height: [],
       xScale: [],
       yScale: [],
+      timeFrameVal: [],
       save: function () {
         if (typeof localStorage.reservedZone == "undefined") {
           localStorage.reservedZone = JSON.stringify({
@@ -119,10 +120,22 @@ function (context) { // Init()
             endVal: null
           }
 
-          lineSegment.startIdx = Math.floor(xScale.invert(width / 3) + cursor),
-          lineSegment.endIdx = Math.floor(xScale.invert(width * 2 / 3) + cursor),
-          lineSegment.startVal = yScale.invert(height * 2 / 3),
-          lineSegment.endVal = yScale.invert(height / 3),
+          lineSegment.startIdx = Math.floor(xScale.invert(width / 3) + cursor)
+          if (lineSegment.startIdx < 0) {
+            lineSegment.startIdx = 0
+          }
+          if (lineSegment.startIdx >= window.chartElements.timeArr[chartHandle].length) {
+            lineSegment.startIdx = window.chartElements.timeArr[chartHandle].length - 1
+          }
+          lineSegment.endIdx = Math.floor(xScale.invert(width * 2 / 3) + cursor)
+          if (lineSegment.endIdx < 0) {
+            lineSegment.endIdx = 0
+          }
+          if (lineSegment.endIdx >= window.chartElements.timeArr[chartHandle].length) {
+            lineSegment.endIdx = window.chartElements.timeArr[chartHandle].length - 1
+          }
+          lineSegment.startVal = yScale.invert(height * 2 / 3)
+          lineSegment.endVal = yScale.invert(height / 3)
           lineSegment.startTime = timeArr[lineSegment.startIdx]
           lineSegment.endTime = timeArr[lineSegment.endIdx]
 
@@ -142,6 +155,7 @@ function (context) { // Init()
           var height = window.chartElements.height[chartHandle]
           var xScale = window.chartElements.xScale[chartHandle]
           var yScale = window.chartElements.yScale[chartHandle]
+          var timeFrameVal = window.chartElements.timeFrameVal[chartHandle]
 
           var startIdx = Math.round(xScale.invert(x))
           if (startIdx < 0) {
@@ -168,7 +182,11 @@ function (context) { // Init()
             .attr("cx", function (d) {return xScale((d.startIdx + d.endIdx) / 2.0 - cursor)})
             .attr("cy", function (d) {return yScale((d.startVal + d.endVal) / 2.0)})
 
-          d.startTime = timeArr[d.startIdx]
+          if (typeof timeArr[d.startIdx] != "undefined") {
+            d.startTime = timeArr[d.startIdx]
+      		} else {
+      			d.startTime = timeArr[timeArr.length - 1] + timeFrameVal * (d.startIdx - timeArr.length + 1)
+      		}
         },
         dragEnd: function (x, y, d) {
           var chartHandle = d.chartHandle
@@ -179,6 +197,7 @@ function (context) { // Init()
           var height = window.chartElements.height[chartHandle]
           var xScale = window.chartElements.xScale[chartHandle]
           var yScale = window.chartElements.yScale[chartHandle]
+          var timeFrameVal = window.chartElements.timeFrameVal[chartHandle]
 
           var endIdx = Math.round(xScale.invert(x))
           if (endIdx < 0) {
@@ -205,7 +224,11 @@ function (context) { // Init()
             .attr("cx", function (d) {return xScale((d.startIdx + d.endIdx) / 2.0 - cursor)})
             .attr("cy", function (d) {return yScale((d.startVal + d.endVal) / 2.0)})
 
-          d.endTime = timeArr[d.endIdx]
+          if (typeof timeArr[d.endIdx] != "undefined") {
+            d.endTime = timeArr[d.endIdx]
+      		} else {
+      			d.endTime = timeArr[timeArr.length - 1] + timeFrameVal * (d.endIdx - timeArr.length + 1)
+      		}
         },
         render: function (chartHandle) {
           var canvas = window.chartElements.canvas[chartHandle]
@@ -355,6 +378,7 @@ function (context) { // Deinit()
   delete window.chartElements.height[chartHandle]
   delete window.chartElements.xScale[chartHandle]
   delete window.chartElements.yScale[chartHandle]
+  delete window.chartElements.timeFrameVal[chartHandle]
 },
 function (context) { // Render()
   var chartHandle = getChartHandleByContext(context)
@@ -366,6 +390,27 @@ function (context) { // Render()
   var height = getCanvasHeight(context)
   var xScale = getXScale(context)
   var yScale = getYScale(context)
+  var timeFrame = getTimeFrame(context)
+  var timeFrameVal = 0
+
+  if (timeFrame == "M1") {
+    timeFrameVal = 60
+  } else if (timeFrame == "M5") {
+    timeFrameVal = 300
+  } else if (timeFrame == "M15") {
+    timeFrameVal = 900
+  } else if (timeFrame == "M30") {
+    timeFrameVal = 1800
+  } else if (timeFrame == "H1") {
+    timeFrameVal = 3600
+  } else if (timeFrame == "H4") {
+    timeFrameVal = 14400
+  } else if (timeFrame == "D") {
+    timeFrameVal = 86400
+  } else {
+    timeFrameVal = 86400
+  }
+
   var buttons = [{
     chartHandle: chartHandle,
     color: color,
@@ -422,29 +467,37 @@ function (context) { // Render()
         var lineSegment = window.chartElements.data[i]
 
         if (lineSegment.chartHandle == chartHandle) {
-          var j = timeArr.length - 2
-          while (j >= 0) {
+          lineSegment.startIdx = 0
+          var j = 0
+          while (j < (timeArr.length - 1)) {
             if (timeArr[j] <= lineSegment.startTime &&
               timeArr[j+1] > lineSegment.startTime) {
 
+              lineSegment.startIdx = j
               break
             }
 
-            j--
+            j++
           }
-          lineSegment.startIdx = j
+          if (j == (timeArr.length - 1) && timeArr[j] <= lineSegment.startTime) {
+  					lineSegment.startIdx = j + Math.round((lineSegment.startTime - timeArr[j]) / timeFrameVal)
+  				}
 
-          j = timeArr.length - 2
-          while (j >= 0) {
+          lineSegment.endIdx = 0
+          j = 0
+          while (j < (timeArr.length - 1)) {
             if (timeArr[j] <= lineSegment.endTime &&
               timeArr[j+1] > lineSegment.endTime) {
 
+              lineSegment.endIdx = j
               break
             }
 
-            j--
+            j++
           }
-          lineSegment.endIdx = j
+          if (j == (timeArr.length - 1) && timeArr[j] <= lineSegment.endTime) {
+  					lineSegment.endIdx = j + Math.round((lineSegment.endTime - timeArr[j]) / timeFrameVal)
+  				}
         }
       }
     }
@@ -465,6 +518,7 @@ function (context) { // Render()
   window.chartElements.height[chartHandle] = height
   window.chartElements.xScale[chartHandle] = xScale
   window.chartElements.yScale[chartHandle] = yScale
+  window.chartElements.timeFrameVal[chartHandle] = timeFrameVal
 
   window.chartElements.lineSegment.render(chartHandle)
 })
