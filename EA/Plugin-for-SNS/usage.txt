@@ -1,0 +1,4 @@
+1, Launch an EA (Expert Advisor) named "plugin_for_sns".
+2, If you are a publisher, input the topic name and click the "Create" button. The backend system will create a topic for you (if the topic already exists, the creation will fail) and generate a publish token. You can then begin posting your content.
+3, If you are a subscriber, input the topic you wish to subscribe to. Afterward, please add an indicator called "barrage" to the chart. Whenever the publisher posts content, you will see a triangle on the chart. Hover your mouse over the triangle to view the content from the publisher in your social network.
+
