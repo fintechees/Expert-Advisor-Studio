@@ -1,4 +1,4 @@
-registerIndicator("barrage", "A plugin to display barrages on the chart(v1.01)", function(context) {},
+registerIndicator("barrage", "A plugin to display barrages on the chart(v1.02)", function(context) {},
   [{
     name: "color",
     value: "#FAE2BE",
@@ -168,6 +168,7 @@ registerIndicator("barrage", "A plugin to display barrages on the chart(v1.01)",
           })
         },
         render: function(chartHandle) {
+          if (typeof this.data[chartHandle] == "undefined") return
           var data = this.data[chartHandle]
           if (data.length == 0) return
 
