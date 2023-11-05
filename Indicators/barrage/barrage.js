@@ -1,4 +1,4 @@
-registerIndicator("barrage", "A plugin to display barrages on the chart(v1.0)", function(context) {},
+registerIndicator("barrage", "A plugin to display barrages on the chart(v1.01)", function(context) {},
   [{
     name: "color",
     value: "#FAE2BE",
@@ -63,6 +63,7 @@ registerIndicator("barrage", "A plugin to display barrages on the chart(v1.0)", 
       tooltip.html(tooltipTable)
 
       window.fintecheeBarrage = {
+        bSetInterval: false,
         tooltip: tooltip,
         canvas: [],
         timeArr: [],
@@ -128,11 +129,16 @@ registerIndicator("barrage", "A plugin to display barrages on the chart(v1.0)", 
               j++
             }
             if (j == (timeArr.length - 1) && timeArr[j] <= barrageItem.time) {
-              barrageItem.idx = j + Math.round((barrageItem.time - timeArr[j]) / timeFrameVal)
+              var day = new Date(barrageItem.time * 1000).getUTCDay()
+              if (timeArr[j] < barrageItem.time && timeArr[j] + 86400 * 2 >= barrageItem.time && (day == 6 || day == 0)) {
+                barrageItem.idx = j
+              } else {
+                barrageItem.idx = j + Math.round((barrageItem.time - timeArr[j]) / timeFrameVal)
+              }
             }
           }
         },
-        formatDate: function (dt) {
+        formatDate: function(dt) {
           const month = String(dt.getMonth() + 1).padStart(2, '0');
           const day = String(dt.getDate()).padStart(2, '0');
           const hours = String(dt.getHours()).padStart(2, '0');
@@ -149,7 +155,7 @@ registerIndicator("barrage", "A plugin to display barrages on the chart(v1.0)", 
 
           var that = this;
 
-          $.each(content, function (index, item) {
+          $.each(content, function(index, item) {
             var row = $("<tr>")
             row.append($("<td>").text(item.economy))
             row.append($("<td>").text(item.impact))
@@ -162,7 +168,8 @@ registerIndicator("barrage", "A plugin to display barrages on the chart(v1.0)", 
           })
         },
         render: function(chartHandle) {
-          if (this.data.length == 0) return
+          var data = this.data[chartHandle]
+          if (data.length == 0) return
 
           var canvas = this.canvas[chartHandle]
           var timeArr = this.timeArr[chartHandle]
@@ -172,7 +179,6 @@ registerIndicator("barrage", "A plugin to display barrages on the chart(v1.0)", 
           var height = this.height[chartHandle]
           var xScale = this.xScale[chartHandle]
           var yScale = this.yScale[chartHandle]
-          var data = this.data[chartHandle]
 
           var renderingData = []
           for (var i in data) {
@@ -277,40 +283,48 @@ registerIndicator("barrage", "A plugin to display barrages on the chart(v1.0)", 
     }
   },
   function(context) { // Render()
-    if (typeof window.pluginForSns == "undefined") {
+    if (window.fintecheeBarrage.bSetInterval) {
       return
     }
 
-    var chartHandle = getChartHandleByContext(context)
-    var timeFrame = getTimeFrame(context)
-    var timeFrameVal = 0
+    setInterval(function() { // It is not necessary for normal indicators to call setInterval. The reason why we set interval here is because at weekends, the onRender callback function isn't triggered after loading charts.
+      window.fintecheeBarrage.bSetInterval = true
 
-    if (timeFrame == "M1") {
-      timeFrameVal = 60
-    } else if (timeFrame == "M5") {
-      timeFrameVal = 300
-    } else if (timeFrame == "M15") {
-      timeFrameVal = 900
-    } else if (timeFrame == "M30") {
-      timeFrameVal = 1800
-    } else if (timeFrame == "H1") {
-      timeFrameVal = 3600
-    } else if (timeFrame == "H4") {
-      timeFrameVal = 14400
-    } else if (timeFrame == "D") {
-      timeFrameVal = 86400
-    } else {
-      timeFrameVal = 86400
-    }
+      if (typeof window.pluginForSns == "undefined") {
+        return
+      }
 
-    window.fintecheeBarrage.timeArr[chartHandle] = getDataInput(context, 0)
-    window.fintecheeBarrage.barNum[chartHandle] = getBarNum(context)
-    window.fintecheeBarrage.cursor[chartHandle] = getCursor(context)
-    window.fintecheeBarrage.width[chartHandle] = getCanvasWidth(context)
-    window.fintecheeBarrage.height[chartHandle] = getCanvasHeight(context)
-    window.fintecheeBarrage.xScale[chartHandle] = getXScale(context)
-    window.fintecheeBarrage.yScale[chartHandle] = getYScale(context)
-    window.fintecheeBarrage.timeFrameVal[chartHandle] = timeFrameVal
+      var chartHandle = getChartHandleByContext(context)
+      var timeFrame = getTimeFrame(context)
+      var timeFrameVal = 0
 
-    window.fintecheeBarrage.render(chartHandle)
+      if (timeFrame == "M1") {
+        timeFrameVal = 60
+      } else if (timeFrame == "M5") {
+        timeFrameVal = 300
+      } else if (timeFrame == "M15") {
+        timeFrameVal = 900
+      } else if (timeFrame == "M30") {
+        timeFrameVal = 1800
+      } else if (timeFrame == "H1") {
+        timeFrameVal = 3600
+      } else if (timeFrame == "H4") {
+        timeFrameVal = 14400
+      } else if (timeFrame == "D") {
+        timeFrameVal = 86400
+      } else {
+        timeFrameVal = 86400
+      }
+
+      window.fintecheeBarrage.timeArr[chartHandle] = getDataInput(context, 0)
+      window.fintecheeBarrage.barNum[chartHandle] = getBarNum(context)
+      window.fintecheeBarrage.cursor[chartHandle] = getCursor(context)
+      window.fintecheeBarrage.width[chartHandle] = getCanvasWidth(context)
+      window.fintecheeBarrage.height[chartHandle] = getCanvasHeight(context)
+      window.fintecheeBarrage.xScale[chartHandle] = getXScale(context)
+      window.fintecheeBarrage.yScale[chartHandle] = getYScale(context)
+      window.fintecheeBarrage.timeFrameVal[chartHandle] = timeFrameVal
+
+      window.fintecheeBarrage.render(chartHandle)
+    }, 5000)
   })
