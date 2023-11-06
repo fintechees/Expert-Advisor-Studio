@@ -1,4 +1,4 @@
-registerIndicator("barrage", "A plugin to display barrages on the chart(v1.02)", function(context) {},
+registerIndicator("barrage", "A plugin to display barrages on the chart(v1.03)", function(context) {},
   [{
     name: "color",
     value: "#FAE2BE",
@@ -63,7 +63,7 @@ registerIndicator("barrage", "A plugin to display barrages on the chart(v1.02)",
       tooltip.html(tooltipTable)
 
       window.fintecheeBarrage = {
-        bSetInterval: false,
+        bSetInterval: [],
         tooltip: tooltip,
         canvas: [],
         timeArr: [],
@@ -278,53 +278,54 @@ registerIndicator("barrage", "A plugin to display barrages on the chart(v1.02)",
     delete window.fintecheeBarrage.timeFrameVal[chartHandle]
     delete window.fintecheeBarrage.context[chartHandle]
     delete window.fintecheeBarrage.data[chartHandle]
+    delete window.fintecheeBarrage.bSetInterval[chartHandle]
 
     if (typeof window.pluginForSns != "undefined") {
       window.pluginForSns.unsubscribe("barrage")
     }
   },
   function(context) { // Render()
-    if (window.fintecheeBarrage.bSetInterval) {
+    var chartHandle = getChartHandleByContext(context)
+    var timeFrame = getTimeFrame(context)
+    var timeFrameVal = 0
+
+    if (timeFrame == "M1") {
+      timeFrameVal = 60
+    } else if (timeFrame == "M5") {
+      timeFrameVal = 300
+    } else if (timeFrame == "M15") {
+      timeFrameVal = 900
+    } else if (timeFrame == "M30") {
+      timeFrameVal = 1800
+    } else if (timeFrame == "H1") {
+      timeFrameVal = 3600
+    } else if (timeFrame == "H4") {
+      timeFrameVal = 14400
+    } else if (timeFrame == "D") {
+      timeFrameVal = 86400
+    } else {
+      timeFrameVal = 86400
+    }
+
+    window.fintecheeBarrage.timeArr[chartHandle] = getDataInput(context, 0)
+    window.fintecheeBarrage.barNum[chartHandle] = getBarNum(context)
+    window.fintecheeBarrage.cursor[chartHandle] = getCursor(context)
+    window.fintecheeBarrage.width[chartHandle] = getCanvasWidth(context)
+    window.fintecheeBarrage.height[chartHandle] = getCanvasHeight(context)
+    window.fintecheeBarrage.xScale[chartHandle] = getXScale(context)
+    window.fintecheeBarrage.yScale[chartHandle] = getYScale(context)
+    window.fintecheeBarrage.timeFrameVal[chartHandle] = timeFrameVal
+
+    if (typeof window.fintecheeBarrage.bSetInterval[chartHandle] != "undefined") {
       return
     }
 
     setInterval(function() { // It is not necessary for normal indicators to call setInterval. The reason why we set interval here is because at weekends, the onRender callback function isn't triggered after loading charts.
-      window.fintecheeBarrage.bSetInterval = true
+      window.fintecheeBarrage.bSetInterval[chartHandle] = true
 
       if (typeof window.pluginForSns == "undefined") {
         return
       }
-
-      var chartHandle = getChartHandleByContext(context)
-      var timeFrame = getTimeFrame(context)
-      var timeFrameVal = 0
-
-      if (timeFrame == "M1") {
-        timeFrameVal = 60
-      } else if (timeFrame == "M5") {
-        timeFrameVal = 300
-      } else if (timeFrame == "M15") {
-        timeFrameVal = 900
-      } else if (timeFrame == "M30") {
-        timeFrameVal = 1800
-      } else if (timeFrame == "H1") {
-        timeFrameVal = 3600
-      } else if (timeFrame == "H4") {
-        timeFrameVal = 14400
-      } else if (timeFrame == "D") {
-        timeFrameVal = 86400
-      } else {
-        timeFrameVal = 86400
-      }
-
-      window.fintecheeBarrage.timeArr[chartHandle] = getDataInput(context, 0)
-      window.fintecheeBarrage.barNum[chartHandle] = getBarNum(context)
-      window.fintecheeBarrage.cursor[chartHandle] = getCursor(context)
-      window.fintecheeBarrage.width[chartHandle] = getCanvasWidth(context)
-      window.fintecheeBarrage.height[chartHandle] = getCanvasHeight(context)
-      window.fintecheeBarrage.xScale[chartHandle] = getXScale(context)
-      window.fintecheeBarrage.yScale[chartHandle] = getYScale(context)
-      window.fintecheeBarrage.timeFrameVal[chartHandle] = timeFrameVal
 
       window.fintecheeBarrage.render(chartHandle)
     }, 5000)
