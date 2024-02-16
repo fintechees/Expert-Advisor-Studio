@@ -1,6 +1,6 @@
 registerEA(
 	  "plugin_to_load_tensorflow",
-	  "A plugin to load Tensorflow(v1.03)",
+	  "A plugin to load Tensorflow(v1.04)",
 	  [{ // parameters
 	    name: "tfjs",
 	    value: "https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js",
@@ -82,7 +82,9 @@ registerEA(
 	                      name: "Model Training", tab: "Model", styles: { height: "500px" }
 	                    }, ["loss", "val_loss", "acc", "val_acc"])
 	                  }).then(function (result) {
-	                    printMessage("Loss after last Epoch (" + result.epoch.length + ") is: " + result.history.loss[result.epoch.length-1])
+											if (typeof result.history.loss != "undefined") {
+												printMessage("Loss after last Epoch (" + result.epoch.length + ") is: " + result.history.loss[result.epoch.length-1])
+											}
 	                    resolve()
 	                  })
 
@@ -93,7 +95,9 @@ registerEA(
 	                    epochs: epochs,
 	                    shuffle: true
 	                  }).then(function (result) {
-	                    printMessage("Loss after last Epoch (" + result.epoch.length + ") is: " + result.history.loss[result.epoch.length-1])
+											if (typeof result.history.loss != "undefined") {
+	                    	printMessage("Loss after last Epoch (" + result.epoch.length + ") is: " + result.history.loss[result.epoch.length-1])
+											}
 	                    resolve()
 	                  })
 	                }
