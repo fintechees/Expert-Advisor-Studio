@@ -1,6 +1,6 @@
 registerEA(
 	  "plugin_to_load_tensorflow",
-	  "A plugin to load Tensorflow(v1.05)",
+	  "A plugin to load Tensorflow(v1.06)",
 	  [{ // parameters
 	    name: "tfjs",
 	    value: "https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js",
@@ -32,6 +32,7 @@ registerEA(
 	        var script2 = document.createElement("script")
 		      document.body.appendChild(script2)
 		      script2.onload = function () {
+						// Deprecated. It will be retained for compatibility with existing source codes.
 	          window.buildCnn = function (featuresNum, kernelSize, filters, strides) {
 	            return new Promise(function (resolve, reject) {
 	              var tfModel = window.tf.sequential()
@@ -51,6 +52,34 @@ registerEA(
 
 	              tfModel.add(window.tf.layers.dense({
 	                units: 2,
+	                kernelInitializer: "VarianceScaling",
+	                activation: "softmax"
+	              }))
+
+	              return resolve(tfModel)
+	            })
+	          }
+
+						// substitution for buildCnn
+						window.buildExtraCnn = function (featuresNum, kernelSize, filters, strides, units) {
+	            return new Promise(function (resolve, reject) {
+	              var tfModel = window.tf.sequential()
+
+	              tfModel.add(window.tf.layers.conv1d({
+	                inputShape: [featuresNum, 1],
+	                kernelSize: kernelSize,
+	                filters: filters,
+	                strides: strides,
+	                use_bias: true,
+	                activation: "relu",
+	                kernelInitializer: "VarianceScaling"
+	              }))
+
+	              tfModel.add(window.tf.layers.flatten({
+	              }))
+
+	              tfModel.add(window.tf.layers.dense({
+	                units: units,
 	                kernelInitializer: "VarianceScaling",
 	                activation: "softmax"
 	              }))
