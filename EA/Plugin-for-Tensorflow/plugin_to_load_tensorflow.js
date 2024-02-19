@@ -1,6 +1,6 @@
 registerEA(
 	  "plugin_to_load_tensorflow",
-	  "A plugin to load Tensorflow(v1.04)",
+	  "A plugin to load Tensorflow(v1.05)",
 	  [{ // parameters
 	    name: "tfjs",
 	    value: "https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js",
@@ -133,9 +133,20 @@ registerEA(
 							})
 						}
 
+						// Deprecated. It will be retained for compatibility with existing source codes.
 						window.runCnn = function (tfModel, input, inputNum) {
 							try {
 								return tfModel.predict(window.tf.tensor3d(input, [1, inputNum, 1])).arraySync()[0][0]
+							} catch (e) {
+								return -1
+							}
+						}
+
+						// substitution for runCnn
+						window.getArgMaxOfCnn = function (tfModel, input, inputNum) {
+							try {
+								var arr = tfModel.predict(window.tf.tensor3d(input, [1, inputNum, 1])).arraySync()[0]
+								return arr.indexOf(Math.max(...arr))
 							} catch (e) {
 								return -1
 							}
