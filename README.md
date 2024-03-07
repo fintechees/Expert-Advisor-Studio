@@ -59,7 +59,7 @@
 
 ### OpenAI Supported
 
-We've created a plugin called "Plugin for SNS with OpenAI" that encompasses all the functionalities of 'Plugin for SNS'. You can now utilize "Plugin for SNS with OpenAI" to interact with OpenAI (ChatGPT).
+We've created a plugin called "Plugin for SNS with OpenAI" that encompasses all the functionalities of "Plugin for SNS". You can now utilize "Plugin for SNS with OpenAI" to interact with OpenAI (ChatGPT).
 
 ### Social Media on Chart
 
