@@ -57,6 +57,10 @@
 
 ## News!!
 
+### OpenAI Supported
+
+We've created a plugin called "Plugin for SNS with OpenAI" that encompasses all the functionalities of 'Plugin for SNS'. You can now utilize "Plugin for SNS with OpenAI" to interact with OpenAI (ChatGPT).
+
 ### Social Media on Chart
 
 We are proud to announce the release of a highly engaging feature - SNS integration for real-time content publishing. With this new feature, you can now display all the content from your social network directly on the chart.
