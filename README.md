@@ -57,6 +57,10 @@
 
 ## News!!
 
+### Why Trailing Stop Should be Set on The Client Side?
+
+A lot of traders(most of them are beginners) often set trailing stop on the backend. It's not a good way because your bottom line is completely visible. Now a plugin for trailing stop has been created! You can manage your trailing stop on the client side.
+
 ### OpenAI Supported
 
 We've created a plugin called "Plugin for SNS with OpenAI" that encompasses all the functionalities of "Plugin for SNS". You can now utilize "Plugin for SNS with OpenAI" to interact with OpenAI (ChatGPT).
