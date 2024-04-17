@@ -136,7 +136,15 @@ const int WHOLE_ARRAY = 0;
 const int WRONG_VALUE = -1;
 
 enum ENUM_OBJECT {
-  OBJ_ARROW_CHECK = 1
+  OBJ_ARROW_CHECK = 1,
+  OBJ_TREND = 2
+};
+
+enum ENUM_OBJECT_PROPERTY {
+  OBJPROP_TIME1 = 0,
+  OBJPROP_PRICE1 = 1,
+  OBJPROP_TIME2 = 2,
+  OBJPROP_PRICE2 = 3
 };
 
 const char* convertTimeFrame (int timeframe) {
@@ -333,8 +341,10 @@ int (*jiStochasticInit) (int, const char*, const char*, int, int, int, const cha
 double (*jiStochastic) (int, int, const char*, int);
 int (*jiWPRInit) (int, const char*, const char*, int);
 double (*jiWPR) (int, int, int);
-int (*jARROW_CHECKCreate) (int, long, const char*, datetime, double);
-int (*jARROW_CHECKDelete) (int, const char*);
+int (*jObjectCreate) (int, long, const char*, int, datetime, double, datetime, double);
+int (*jObjectDelete) (int, const char*);
+double (*jObjectGet) (int, const char*, int);
+int (*jObjectSet) (int, const char*, int, double);
 int (*jIsTesting) ();
 double (*jMarketInfo) (int, const char*, int);
 int (*jCreateNeuralNetwork) (int, const char*, const char*);
@@ -2102,12 +2112,20 @@ void setjiWPR (double (*f) (int, int, int)) {
   jiWPR = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjARROW_CHECKCreate (int (*f) (int, long, const char*, datetime, double)) {
-  jARROW_CHECKCreate = f;
+void setjObjectCreate (int (*f) (int, long, const char*, int, datetime, double, datetime, double)) {
+  jObjectCreate = f;
 }
 EMSCRIPTEN_KEEPALIVE
-void setjARROW_CHECKDelete (int (*f) (int, const char*)) {
-  jARROW_CHECKDelete = f;
+void setjObjectDelete (int (*f) (int, const char*)) {
+  jObjectDelete = f;
+}
+EMSCRIPTEN_KEEPALIVE
+void setjObjectGet (double (*f) (int, const char*, int)) {
+  jObjectGet = f;
+}
+EMSCRIPTEN_KEEPALIVE
+void setjObjectSet (int (*f) (int, const char*, int, double)) {
+  jObjectSet = f;
 }
 EMSCRIPTEN_KEEPALIVE
 void setjIsTesting (int (*f) ()) {
@@ -2879,10 +2897,10 @@ double iWPR (long symbol, int timeframe, int period, int shift) {
   return iWPR("", timeframe, period, shift);
 }
 
-bool ObjectCreate (long chart_id, const string object_name, ENUM_OBJECT object_type, int sub_window, datetime time, double price) {
+bool ObjectCreate (long chart_id, const string object_name, ENUM_OBJECT object_type, int sub_window, datetime time, double price, datetime time2 = 0, double price2 = 0) {
   if (paramHandleList[iFintecheeUID].bInit) return false;
-  if (object_type == OBJ_ARROW_CHECK) {
-    return jARROW_CHECKCreate(iFintecheeUID, chart_id, object_name.c_str(), time, price) == 1;
+  if (object_type == OBJ_ARROW_CHECK || object_type == OBJ_TREND) {
+    return jObjectCreate(iFintecheeUID, chart_id, object_name.c_str(), object_type, time, price, time2, price2) == 1;
   } else {
     return false;
   }
@@ -2890,10 +2908,20 @@ bool ObjectCreate (long chart_id, const string object_name, ENUM_OBJECT object_t
 
 bool ObjectDelete (const string object_name) {
   if (paramHandleList[iFintecheeUID].bInit) return false;
-  return jARROW_CHECKDelete(iFintecheeUID, object_name.c_str()) == 1;
+  return jObjectDelete(iFintecheeUID, object_name.c_str()) == 1;
 }
 bool ObjectDelete (long chart_id, const string object_name) {
   return ObjectDelete(object_name);
+}
+
+double ObjectGet (const string object_name, int property_index) {
+  if (paramHandleList[iFintecheeUID].bInit) return 0;
+  return jObjectGet(iFintecheeUID, object_name.c_str(), property_index);
+}
+
+bool ObjectSet (const string object_name, int property_index, double value) {
+  if (paramHandleList[iFintecheeUID].bInit) return false;
+  return jObjectSet(iFintecheeUID, object_name.c_str(), property_index, value) == 1;
 }
 
 int OrderSend (const string symbol, int cmd, double volume, double price, int slippage, double stoploss, double takeprofit, const string comment, int magic, datetime expiration, int arrow_color) {

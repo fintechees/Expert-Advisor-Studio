@@ -1,6 +1,6 @@
 registerEA(
 		"plugin_for_mql",
-		"mql_plugin to make MQL-based programs runnable on Fintechee(v1.05)",
+		"mql_plugin to make MQL-based programs runnable on Fintechee(v1.06)",
 		[],
 		function (context) { // Init()
 			if (typeof window.pluginForMql != "undefined") {
@@ -2453,28 +2453,42 @@ registerEA(
 									var arr = getData(obj.context, indiHandle, "wpr")
 									return arr[arr.length - shift - 1]
 								}, "diii")
-								var jARROW_CHECKCreate = Module.addFunction(function (uid, chart_id, object_name, time, price) {
+								var jObjectCreate = Module.addFunction(function (uid, chart_id, object_name, object_type, time, price, time2, price2) {
 									var obj = window.mqlEAsBuffer[uid + ""]
 									var name = window.mqlEAs[obj.name].module.UTF8ToString(object_name)
-									var objId = addSignal(chart_id, name, time, price)
-									if (objId != -1) {
-										obj.objs.push({id: objId, chartId: chart_id, name: name})
-										localStorage.mqlObjs = JSON.stringify(obj.objs)
-										return 1
+									if (object_type == 1) { // OBJ_ARROW_CHECK
+										var objId = addSignal(chart_id, name, time, price)
+										if (objId != -1) {
+											obj.objs.push({id: objId, chartId: chart_id, name: name})
+											localStorage.mqlObjs = JSON.stringify(obj.objs)
+											return 1
+										} else {
+											return 0
+										}
+									} else if (object_type == 2) { // OBJ_TREND
+										var objId = addTrendLine(chart_id, name, time, price, time2, price2)
+										if (objId != -1) {
+											obj.objs.push({id: objId, chartId: chart_id, name: name})
+											localStorage.mqlObjs = JSON.stringify(obj.objs)
+											return 1
+										} else {
+											return 0
+										}
 									} else {
 										return 0
 									}
-								}, "iiiiid")
-								var jARROW_CHECKDelete = Module.addFunction(function (uid, object_name) {
+								}, "iiiiiidid")
+								var jObjectDelete = Module.addFunction(function (uid, object_name) {
 									var obj = window.mqlEAsBuffer[uid + ""]
 									var name = window.mqlEAs[obj.name].module.UTF8ToString(object_name)
 									var success = false
 									for (var i = obj.objs.length - 1; i >= 0; i--) {
 										if (obj.objs[i].name == name) {
-											if (removeSignal(obj.objs[i].chartId, obj.objs[i].id)) {
+											if (removeObject(obj.objs[i].chartId, obj.objs[i].id)) {
 												success = true
 												obj.objs.splice(i, 1)
 											}
+											break
 										}
 									}
 									if (success) {
@@ -2484,6 +2498,50 @@ registerEA(
 										return 0
 									}
 								}, "iii")
+								var jObjectGet = Module.addFunction(function (uid, object_name, property_index) {
+									var obj = window.mqlEAsBuffer[uid + ""]
+									var name = window.mqlEAs[obj.name].module.UTF8ToString(object_name)
+									for (var i = obj.objs.length - 1; i >= 0; i--) {
+										if (obj.objs[i].name == name) {
+											if (property_index == 0) { // OBJPROP_TIME1
+												return getObjectPropTime1(obj.objs[i].chartId, obj.objs[i].id)
+											} else if (property_index == 1) { // OBJPROP_PRICE1
+												return getObjectPropPrice1(obj.objs[i].chartId, obj.objs[i].id)
+											} else if (property_index == 2) { // OBJPROP_TIME2
+												return getObjectPropTime2(obj.objs[i].chartId, obj.objs[i].id)
+											} else if (property_index == 3) { // OBJPROP_PRICE2
+												return getObjectPropPrice2(obj.objs[i].chartId, obj.objs[i].id)
+											}
+										}
+									}
+									return -1
+								}, "diii")
+								var jObjectSet = Module.addFunction(function (uid, object_name, property_index, property_value) {
+									var obj = window.mqlEAsBuffer[uid + ""]
+									var name = window.mqlEAs[obj.name].module.UTF8ToString(object_name)
+									for (var i = obj.objs.length - 1; i >= 0; i--) {
+										if (obj.objs[i].name == name) {
+											if (property_index == 0) { // OBJPROP_TIME1
+												if (setObjectPropTime1(obj.objs[i].chartId, obj.objs[i].id, property_value)) {
+													return 1
+												}
+											} else if (property_index == 1) { // OBJPROP_PRICE1
+												if (setObjectPropPrice1(obj.objs[i].chartId, obj.objs[i].id, property_value)) {
+													return 1
+												}
+											} else if (property_index == 2) { // OBJPROP_TIME2
+												if (setObjectPropTime2(obj.objs[i].chartId, obj.objs[i].id, property_value)) {
+													return 1
+												}
+											} else if (property_index == 3) { // OBJPROP_PRICE2
+												if (setObjectPropPrice2(obj.objs[i].chartId, obj.objs[i].id, property_value)) {
+													return 1
+												}
+											}
+										}
+									}
+									return 0
+								}, "iiiid")
 								var jIsTesting = Module.addFunction(function () {
 									return isTesting() ? 1 : 0
 								}, "i")
@@ -2651,8 +2709,10 @@ registerEA(
 									setjiStochastic: Module.cwrap("setjiStochastic", null, ["number"]),
 									setjiWPRInit: Module.cwrap("setjiWPRInit", null, ["number"]),
 									setjiWPR: Module.cwrap("setjiWPR", null, ["number"]),
-									setjARROW_CHECKCreate: Module.cwrap("setjARROW_CHECKCreate", null, ["number"]),
-									setjARROW_CHECKDelete: Module.cwrap("setjARROW_CHECKDelete", null, ["number"]),
+									setjObjectCreate: Module.cwrap("setjObjectCreate", null, ["number"]),
+									setjObjectDelete: Module.cwrap("setjObjectDelete", null, ["number"]),
+									setjObjectGet: Module.cwrap("setjObjectGet", null, ["number"]),
+									setjObjectSet: Module.cwrap("setjObjectSet", null, ["number"]),
 									setjIsTesting: Module.cwrap("setjIsTesting", null, ["number"]),
 									setjMarketInfo: Module.cwrap("setjMarketInfo", null, ["number"]),
 									setjCreateNeuralNetwork: Module.cwrap("setjCreateNeuralNetwork", null, ["number"]),
@@ -2756,8 +2816,10 @@ registerEA(
 								window.mqlEAs[definition.name].setjiStochastic(jiStochastic)
 								window.mqlEAs[definition.name].setjiWPRInit(jiWPRInit)
 								window.mqlEAs[definition.name].setjiWPR(jiWPR)
-								window.mqlEAs[definition.name].setjARROW_CHECKCreate(jARROW_CHECKCreate)
-								window.mqlEAs[definition.name].setjARROW_CHECKDelete(jARROW_CHECKDelete)
+								window.mqlEAs[definition.name].setjObjectCreate(jObjectCreate)
+								window.mqlEAs[definition.name].setjObjectDelete(jObjectDelete)
+								window.mqlEAs[definition.name].setjObjectGet(jObjectGet)
+								window.mqlEAs[definition.name].setjObjectSet(jObjectSet)
 								window.mqlEAs[definition.name].setjIsTesting(jIsTesting)
 								window.mqlEAs[definition.name].setjMarketInfo(jMarketInfo)
 								window.mqlEAs[definition.name].setjCreateNeuralNetwork(jCreateNeuralNetwork)
