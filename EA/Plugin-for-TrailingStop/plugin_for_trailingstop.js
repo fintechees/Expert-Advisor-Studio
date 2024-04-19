@@ -1,6 +1,6 @@
 registerEA(
 "plugin_for_trailingstop",
-"A plugin to manage trailing stop(v1.01)",
+"A plugin to manage trailing stop(v1.02)",
 [{
 	name: "symbolName", // this parameter to set the symbols that you want to have trailing stops applied
 	value: "EUR/USD", // e.g. EUR/USD,GBP/USD
@@ -43,14 +43,14 @@ function (context) { // OnTick()
 			var toFixed = getSymbolInfo(openTrade.brokerName, openTrade.accountId, openTrade.symbolName).toFixed / 10
 
 			if (openTrade.orderType == "BUY") {
-				if (tick.bid - openTrade.stopLoss > trailingStop / toFixed) {
+				if (tick.bid - Math.max(openTrade.stopLoss, openTrade.price) > trailingStop / toFixed) {
 					openTrade.stopLoss = tick.bid - trailingStop / toFixed
 				} else if (tick.bid <= openTrade.stopLoss) {
 					closeTrade(openTrade.brokerName, openTrade.accountId, openTrade.tradeId, 0, 0)
 					context.openTrades.splice(i, 1)
 				}
 			} else {
-				if (openTrade.stopLoss - tick.ask > trailingStop / toFixed) {
+				if (Math.min(openTrade.stopLoss, openTrade.price) - tick.ask > trailingStop / toFixed) {
 					openTrade.stopLoss = tick.ask + trailingStop / toFixed
 				} else if (tick.ask >= openTrade.stopLoss) {
 					closeTrade(openTrade.brokerName, openTrade.accountId, openTrade.tradeId, 0, 0)
