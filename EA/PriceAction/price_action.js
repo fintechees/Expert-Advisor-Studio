@@ -1,7 +1,7 @@
 // This EA has a built-in trailing stop management system, so, DO NOT use plugin_for_trailingstop at the same time.
 registerEA(
 "price_action",
-"A strategy based on price action(v1.03)",
+"A strategy based on price action(v1.04)",
 [{
 	name: "symbolName", // this parameter to set the symbols that you want to have trailing stops applied
 	value: "EUR/USD", // e.g. EUR/USD,GBP/USD
@@ -173,7 +173,7 @@ function (context) { // Init()
 						}
 					}
 
-					if (tick.bid - support > 2 * getSymbolInfo(tick.brokerName, tick.accountId, symbolName).toFixed / 10) {
+					if (tick.bid - support > 2 / (getSymbolInfo(tick.brokerName, tick.accountId, symbolName).toFixed / 10)) {
 						sendOrder(tick.brokerName, tick.accountId, symbolName, ORDER_TYPE.OP_BUY, 0, 0, this.volume, 0, support, "", 0, 0)
 					}
 				}
@@ -190,7 +190,7 @@ function (context) { // Init()
 						}
 					}
 
-					if (resistance - tick.ask > 2 * getSymbolInfo(tick.brokerName, tick.accountId, symbolName).toFixed / 10) {
+					if (resistance - tick.ask > 2 / (getSymbolInfo(tick.brokerName, tick.accountId, symbolName).toFixed / 10)) {
 						sendOrder(tick.brokerName, tick.accountId, symbolName, ORDER_TYPE.OP_SELL, 0, 0, this.volume, 0, resistance, "", 0, 0)
 					}
 				}
@@ -250,7 +250,7 @@ function (context) { // OnTransaction()
 			orderType: transOrderType,
 			price: transPrice,
 			stopLoss: transSl,
-			trailingStop: context.priceAction.trailingStop * getSymbolInfo(transBrokerName, transAccountId, transSymbolName).toFixed / 10,
+			trailingStop: context.priceAction.trailingStop / (getSymbolInfo(transBrokerName, transAccountId, transSymbolName).toFixed / 10),
 			bSlChanged: false
 		})
 
