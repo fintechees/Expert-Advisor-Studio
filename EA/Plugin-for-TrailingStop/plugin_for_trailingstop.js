@@ -1,6 +1,6 @@
 registerEA(
 "plugin_for_trailingstop",
-"A plugin to manage trailing stop(v1.0)",
+"A plugin to manage trailing stop(v1.01)",
 [{
 	name: "symbolName", // this parameter to set the symbols that you want to have trailing stops applied
 	value: "EUR/USD", // e.g. EUR/USD,GBP/USD
@@ -13,7 +13,7 @@ registerEA(
 	value: 20,
 	required: true,
 	type: "Number",
-	range: null,
+	range: [1, 10000],
 	step: null
 }],
 function (context) { // Init()
