@@ -1,7 +1,7 @@
 // This EA has a built-in trailing stop management system, so, DO NOT use plugin_for_trailingstop at the same time.
 registerEA(
 "price_action",
-"A strategy based on price action(v1.0)",
+"A strategy based on price action(v1.01)",
 [{
 	name: "symbolName", // this parameter to set the symbols that you want to have trailing stops applied
 	value: "EUR/USD", // e.g. EUR/USD,GBP/USD
@@ -24,6 +24,13 @@ registerEA(
 	range: [1, 100],
 	step: null
 }, {
+	name: "trailingStop",
+	value: 20,
+	required: true,
+	type: "Number",
+	range: [1, 10000],
+	step: null
+}, {
 	name: "volume",
 	value: 0.01,
 	required: true,
@@ -38,36 +45,50 @@ function (context) { // Init()
 	var symbolNames = getEAParameter(context, "symbolName").split(",")
 	var timeFrame = getEAParameter(context, "timeFrame")
 	var candleStickNum = getEAParameter(context, "candleStickNum")
+	var trailingStop = getEAParameter(context, "trailingStop")
 	var volume = getEAParameter(context, "volume")
 
 	context.priceAction = {
 		chartHandles: [],
 		candleStickNum: candleStickNum,
+		trailingStop: trailingStop,
 		volume: volume,
 		trendUp: [],
 		trendDown: [],
 		trendUpLines: [],
 		trendDownLines: [],
+		trailingStopLines: [],
 		openTrades: [],
 		checkTrailingStop: function (tick) {
 			var cnt = this.openTrades.length
 
 			for (var i = cnt - 1; i >= 0; i--) {
 				var openTrade = this.openTrades[i]
+				var symbolName = openTrade.symbolName
 
-				if (openTrade.brokerName == tick.brokerName && openTrade.accountId == tick.accountId && openTrade.symbolName == tick.symbolName) {
+				if (openTrade.brokerName == tick.brokerName && openTrade.accountId == tick.accountId && symbolName == tick.symbolName) {
 					if (openTrade.orderType == "BUY") {
-						if (tick.bid - openTrade.stopLoss > openTrade.trailingStop) {
+						if (tick.bid - Math.max(openTrade.stopLoss, openTrade.price) > openTrade.trailingStop) {
 							openTrade.stopLoss = tick.bid - openTrade.trailingStop
 							openTrade.bSlChanged = true
+
+							var chartHandle = this.chartHandles[symbolName]
+							var trailingStopId = this.trailingStopLines[openTrade.tradeId]
+							setObjectPropPrice1(chartHandle, trailingStopId, openTrade.stopLoss)
+							setObjectPropPrice2(chartHandle, trailingStopId, openTrade.stopLoss)
 						} else if (tick.bid <= openTrade.stopLoss && openTrade.bSlChanged) {
 							closeTrade(openTrade.brokerName, openTrade.accountId, openTrade.tradeId, 0, 0)
 							this.openTrades.splice(i, 1)
 						}
 					} else {
-						if (openTrade.stopLoss - tick.ask > openTrade.trailingStop) {
+						if (Math.min(openTrade.stopLoss, openTrade.price) - tick.ask > openTrade.trailingStop) {
 							openTrade.stopLoss = tick.ask + openTrade.trailingStop
 							openTrade.bSlChanged = true
+
+							var chartHandle = this.chartHandles[symbolName]
+							var trailingStopId = this.trailingStopLines[openTrade.tradeId]
+							setObjectPropPrice1(chartHandle, trailingStopId, openTrade.stopLoss)
+							setObjectPropPrice2(chartHandle, trailingStopId, openTrade.stopLoss)
 						} else if (tick.ask >= openTrade.stopLoss && openTrade.bSlChanged) {
 							closeTrade(openTrade.brokerName, openTrade.accountId, openTrade.tradeId, 0, 0)
 							this.openTrades.splice(i, 1)
@@ -112,23 +133,25 @@ function (context) { // Init()
 
 			if (arrClose[arrLen - 2] > arrOpen[arrLen - 2] && arrClose[arrLen - 3] < arrOpen[arrLen - 3] && arrClose[arrLen - 4] < arrOpen[arrLen - 4] && arrClose[arrLen - 2] < arrOpen[arrLen - 4]) {
 				if (typeof this.trendUp[symbolName] == "undefined") {
-					this.trendUpLines[symbolName] = addTrendLine(chartHandle, chartHandle + "_trendUp", arrTime[arrLen - 10], arrHigh[arrLen - 4], arrTime[arrLen - 8], arrHigh[arrLen - 4])
+					this.trendUpLines[symbolName] = addTrendLine(chartHandle, chartHandle + "_trendUp", arrTime[arrLen - 60], arrHigh[arrLen - 4], arrTime[arrLen - 58], arrHigh[arrLen - 4])
 				} else {
-					setObjectPropTime1(chartHandle, this.trendUpLines[symbolName], arrTime[arrLen - 10])
-					setObjectPropPrice1(chartHandle, this.trendUpLines[symbolName], arrHigh[arrLen - 4])
-					setObjectPropTime2(chartHandle, this.trendUpLines[symbolName], arrTime[arrLen - 8])
-					setObjectPropPrice2(chartHandle, this.trendUpLines[symbolName], arrHigh[arrLen - 4])
+					var trendLineId = this.trendUpLines[symbolName]
+					setObjectPropTime1(chartHandle, trendLineId, arrTime[arrLen - 60])
+					setObjectPropPrice1(chartHandle, trendLineId, arrHigh[arrLen - 4])
+					setObjectPropTime2(chartHandle, trendLineId, arrTime[arrLen - 58])
+					setObjectPropPrice2(chartHandle, trendLineId, arrHigh[arrLen - 4])
 				}
 
 				this.trendUp[symbolName] = arrHigh[arrLen - 4]
 			} else if (arrClose[arrLen - 2] < arrOpen[arrLen - 2] && arrClose[arrLen - 3] > arrOpen[arrLen - 3] && arrClose[arrLen - 4] > arrOpen[arrLen - 4] && arrClose[arrLen - 2] > arrOpen[arrLen - 4]) {
 				if (typeof this.trendDown[symbolName] == "undefined") {
-					this.trendDownLines[symbolName] = addTrendLine (chartHandle, chartHandle + "_trendDown", arrTime[arrLen - 10], arrLow[arrLen - 4], arrTime[arrLen - 8], arrLow[arrLen - 4])
+					this.trendDownLines[symbolName] = addTrendLine (chartHandle, chartHandle + "_trendDown", arrTime[arrLen - 60], arrLow[arrLen - 4], arrTime[arrLen - 58], arrLow[arrLen - 4])
 				} else {
-					setObjectPropTime1(chartHandle, this.trendDownLines[symbolName], arrTime[arrLen - 10])
-					setObjectPropPrice1(chartHandle, this.trendDownLines[symbolName], arrLow[arrLen - 4])
-					setObjectPropTime2(chartHandle, this.trendDownLines[symbolName], arrTime[arrLen - 8])
-					setObjectPropPrice2(chartHandle, this.trendDownLines[symbolName], arrLow[arrLen - 4])
+					var trendLineId = this.trendDownLines[symbolName]
+					setObjectPropTime1(chartHandle, trendLineId, arrTime[arrLen - 60])
+					setObjectPropPrice1(chartHandle, trendLineId, arrLow[arrLen - 4])
+					setObjectPropTime2(chartHandle, trendLineId, arrTime[arrLen - 58])
+					setObjectPropPrice2(chartHandle, trendLineId, arrLow[arrLen - 4])
 				}
 
 				this.trendDown[symbolName] = arrLow[arrLen - 4]
@@ -185,6 +208,7 @@ function (context) { // Deinit()
 	for (var i in context.priceAction.chartHandles) {
 		removeObject(context.priceAction.chartHandles[i], context.priceAction.trendUpLines[i])
 		removeObject(context.priceAction.chartHandles[i], context.priceAction.trendDownLines[i])
+		removeObject(context.priceAction.chartHandles[i], context.priceAction.trailingStopLines[i])
 	}
 },
 function (context) { // OnTick()
@@ -222,11 +246,19 @@ function (context) { // OnTransaction()
 			orderType: transOrderType,
 			price: transPrice,
 			stopLoss: transSl,
-			trailingStop: Math.abs(transSl - transPrice),
+			trailingStop: context.priceAction.trailingStop * getSymbolInfo(transBrokerName, transAccountId, transSymbolName).toFixed / 10,
 			bSlChanged: false
 		})
+
+		var chartHandle = context.priceAction.chartHandles[transSymbolName]
+		var arrTime = getData(context, chartHandle, DATA_NAME.TIME)
+		var arrLen = arrTime.length
+		context.priceAction.trailingStopLines[transTradeId] = addTrendLine(chartHandle, transTradeId + "_trailingStop", arrTime[arrLen - 2], transSl, arrTime[arrLen - 1], transSl)
 	} else if (transType == "Trade Closed") {
 		var trans = getLatestTrans(context)
 		context.priceAction.syncOpenTrades(getTradeId(trans))
+
+		var chartHandle = context.priceAction.chartHandles[getSymbolName(trans)]
+		removeObject(chartHandle, context.priceAction.trailingStopLines[getTradeId(trans)])
   }
 })
