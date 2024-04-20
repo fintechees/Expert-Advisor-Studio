@@ -151,7 +151,7 @@ function (context) { // Init()
 				this.trendUp[symbolName] = arrHigh[arrLen - 4]
 			} else if (arrClose[arrLen - 2] < arrOpen[arrLen - 2] && arrClose[arrLen - 3] > arrOpen[arrLen - 3] && arrClose[arrLen - 4] > arrOpen[arrLen - 4] && arrClose[arrLen - 2] > arrOpen[arrLen - 4]) {
 				if (typeof this.trendDown[symbolName] == "undefined") {
-					this.trendDownLines[symbolName] = addTrendLine (chartHandle, chartHandle + "_trendDown", arrTime[arrLen - 60], arrLow[arrLen - 4], arrTime[arrLen - 58], arrLow[arrLen - 4])
+					this.trendDownLines[symbolName] = addTrendLine(chartHandle, chartHandle + "_trendDown", arrTime[arrLen - 60], arrLow[arrLen - 4], arrTime[arrLen - 58], arrLow[arrLen - 4])
 				} else {
 					var trendLineId = this.trendDownLines[symbolName]
 					setObjectPropTime1(chartHandle, trendLineId, arrTime[arrLen - 60])
