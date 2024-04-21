@@ -1,7 +1,7 @@
 // This EA has a built-in trailing stop management system, so, DO NOT use plugin_for_trailingstop at the same time.
 registerEA(
 "price_action",
-"A strategy based on price action(v1.06)",
+"A strategy based on price action(v1.07)",
 [{
 	name: "symbolName", // this parameter to set the symbols that you want to have trailing stops applied
 	value: "EUR/USD", // e.g. EUR/USD,GBP/USD
@@ -213,8 +213,12 @@ function (context) { // Init()
 function (context) { // Deinit()
 	for (var i in context.priceAction.chartHandles) {
 		var chartHandle = context.priceAction.chartHandles[i]
-		removeObject(chartHandle, context.priceAction.trendUpLines[i])
-		removeObject(chartHandle, context.priceAction.trendDownLines[i])
+		if (typeof context.priceAction.trendUpLines[i] != "undefined") {
+			removeObject(chartHandle, context.priceAction.trendUpLines[i])
+		}
+		if (typeof context.priceAction.trendDownLines[i] != "undefined") {
+			removeObject(chartHandle, context.priceAction.trendDownLines[i])
+		}
 
 		for (var j in context.priceAction.trailingStopLines) {
 			removeObject(chartHandle, context.priceAction.trailingStopLines[j])
