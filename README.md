@@ -57,6 +57,10 @@
 
 ## News!!
 
+### Our CRM Supports FIX API Gateway!
+
+Our CRM currently supports the FIX API Gateway! Any broker or liquidity provider can integrate with our CRM via the FIX API. We have the capability to amalgamate all existing trading platforms to create a copy trading platform or assist liquidity providers in building a top-tier platform.
+
 ### Why Trailing Stop Should be Set on The Client Side?
 
 A lot of traders(most of them are beginners) often set trailing stop on the backend. It's not a good way because your bottom line is completely visible. Now a plugin for trailing stop has been created! You can manage your trailing stop on the client side.
