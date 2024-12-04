@@ -1,4 +1,4 @@
-registerIndicator("chart_elements", "A manager for the chart elements implemented by using custom indicator(v1.03)", function (context) {
+registerIndicator("chart_elements", "A manager for the chart elements implemented by using custom indicator(v1.04)", function (context) {
 },[{
   name: "color",
   value: "#AAA",
@@ -457,7 +457,9 @@ function (context) { // Render()
       .attr("textAnchor", "start")
       .style("fontSize", "8px")
       .style("cursor", "pointer")
-      .text("L")
+      .text(function (d) {
+        return d.label
+      })
       .on("click", function (d) {
         window.chartElements.lineSegment.add("lineSegment", d.chartHandle, d.color, d.strokeWidth)
       })
