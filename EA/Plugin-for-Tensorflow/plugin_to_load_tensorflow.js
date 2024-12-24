@@ -1,6 +1,6 @@
 registerEA(
 	  "plugin_to_load_tensorflow",
-	  "A plugin to load Tensorflow(v1.06)",
+	  "A plugin to load Tensorflow(v1.07)",
 	  [{ // parameters
 	    name: "tfjs",
 	    value: "https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js",
@@ -136,11 +136,15 @@ registerEA(
 	            })
 	          }
 
-						window.saveCnn = function (tfModel, tfModelName) {
+						window.saveCnn = function (tfModel, tfModelName, bNotLocal) {
 							return new Promise(function (resolve, reject) {
 								(async () => {
 									try {
-										await tfModel.save("localstorage://" + tfModelName)
+										if (typeof bNotLocal == "undefined" || (typeof bNotLocal == "boolean" && !bNotLocal)) {
+											await tfModel.save("localstorage://" + tfModelName)
+										} else {
+											await tfModel.save("downloads://" + tfModelName)
+										}
 										resolve()
 									} catch (e) {
 										reject(e.message)
@@ -149,11 +153,16 @@ registerEA(
 							})
 						}
 
-						window.loadCnn = function (tfModelName) {
+						window.loadCnn = function (tfModelName, bNotLocal, jsonFile, weightsFile) {
 							return new Promise(function (resolve, reject) {
 								(async () => {
 									try {
-										var tfModel = await window.tf.loadLayersModel("localstorage://" + tfModelName)
+										var tfModel = null
+										if (typeof bNotLocal == "undefined" || (typeof bNotLocal == "boolean" && !bNotLocal)) {
+											tfModel = await window.tf.loadLayersModel("localstorage://" + tfModelName)
+										} else {
+											tfModel = await window.tf.loadLayersModel(window.tf.io.browserFiles([jsonFile, weightsFile]))
+										}
 										resolve(tfModel)
 									} catch (e) {
 										reject(e.message)
