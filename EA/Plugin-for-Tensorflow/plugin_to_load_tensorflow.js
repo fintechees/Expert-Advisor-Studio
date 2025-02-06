@@ -1,6 +1,6 @@
 registerEA(
 	  "plugin_to_load_tensorflow",
-	  "A plugin to load Tensorflow(v1.07)",
+	  "A plugin to load Tensorflow(v1.08)",
 	  [{ // parameters
 	    name: "tfjs",
 	    value: "https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js",
@@ -187,6 +187,13 @@ registerEA(
 								return arr.indexOf(Math.max(...arr))
 							} catch (e) {
 								return -1
+							}
+						}
+
+						window.removeCnn = function (tfModelName) {
+							try {
+								window.tf.io.removeModel("localstorage://" + tfModelName)
+							} catch (e) {
 							}
 						}
 
