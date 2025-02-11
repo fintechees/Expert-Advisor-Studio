@@ -57,6 +57,12 @@
 
 ## News!!
 
+### AI Trader Released!
+
+https://www.fintechee.com/ai-trader/
+
+No need to understand indicators or charts—it's as simple as eating a piece of cake.
+
 ### Our CRM Supports FIX API Gateway!
 
 Our CRM currently supports the FIX API Gateway! Any broker or liquidity provider can integrate with our CRM via the FIX API. We have the capability to amalgamate all existing trading platforms to create a copy trading platform or assist liquidity providers in building a top-tier platform.
