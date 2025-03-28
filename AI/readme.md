@@ -9,3 +9,6 @@ Our models are designed for long-term timeframes, meaning signals are generated 
 
 
 We store backtesting reports in this repo: https://github.com/fintechees/AI-Trader-Backtesting-Report
+
+
+If you are interested in purchasing our paid AI model, please contact us: admin@fintechee.com.
