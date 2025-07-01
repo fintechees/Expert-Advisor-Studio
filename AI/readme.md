@@ -12,3 +12,12 @@ We store backtesting reports in this repo: https://github.com/fintechees/AI-Trad
 
 
 If you are interested in purchasing our paid AI model, please contact us: admin@fintechee.com.
+
+
+Campaign!!
+
+We will provide an Expert Advisor (EA) to the individual trader. Please refer to the M2Report.zip(The file is password-protected, the password is fuckcndictator) file for performance details.
+
+The individual trader is required to have a FIX API account.
+We will set up a dedicated platform for this trader, linked to a single account.
+The monthly fee is $100 USD, which includes cloud service costs.
