@@ -1,6 +1,6 @@
 registerEA(
 	  "plugin_to_load_tensorflow",
-	  "A plugin to load Tensorflow(v1.10)",
+	  "A plugin to load Tensorflow(v1.11)",
 	  [{ // parameters
 	    name: "tfjs",
 	    value: "https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js",
@@ -190,7 +190,7 @@ registerEA(
 							})
 						}
 
-						window.loadRemoteCnn = function (tfModelName, jsonUrl) {
+						window.loadRemoteCnn = function (jsonUrl) {
 							return new Promise(function (resolve, reject) {
 								(async () => {
 									try {
