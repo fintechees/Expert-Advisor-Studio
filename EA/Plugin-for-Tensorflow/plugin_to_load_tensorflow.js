@@ -1,6 +1,6 @@
 registerEA(
 	  "plugin_to_load_tensorflow",
-	  "A plugin to load Tensorflow(v1.08)",
+	  "A plugin to load Tensorflow(v1.09)",
 	  [{ // parameters
 	    name: "tfjs",
 	    value: "https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js",
@@ -135,6 +135,25 @@ registerEA(
 	              }
 	            })
 	          }
+
+						window.checkIfCnnExisted = function (tfModelName) {
+							return new Promise(function (resolve, reject) {
+								(async () => {
+									try {
+										var models = await tf.io.listModels()
+
+										var key = `localstorage://${tfModelName}`
+										if (models[key]) {
+											resolve({res:true})
+										} else {
+											resolve({res:false})
+										}
+									} catch (e) {
+										reject(e.message)
+									}
+								})()
+							})
+						}
 
 						window.saveCnn = function (tfModel, tfModelName, bNotLocal) {
 							return new Promise(function (resolve, reject) {
