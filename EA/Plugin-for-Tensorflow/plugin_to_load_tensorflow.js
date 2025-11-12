@@ -1,6 +1,6 @@
 registerEA(
 	  "plugin_to_load_tensorflow",
-	  "A plugin to load Tensorflow(v1.09)",
+	  "A plugin to load Tensorflow(v1.10)",
 	  [{ // parameters
 	    name: "tfjs",
 	    value: "https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js",
@@ -182,6 +182,20 @@ registerEA(
 										} else {
 											tfModel = await window.tf.loadLayersModel(window.tf.io.browserFiles([jsonFile, weightsFile]))
 										}
+										resolve(tfModel)
+									} catch (e) {
+										reject(e.message)
+									}
+								})()
+							})
+						}
+
+						window.loadRemoteCnn = function (tfModelName, jsonUrl) {
+							return new Promise(function (resolve, reject) {
+								(async () => {
+									try {
+										var tfModel = await window.tf.loadLayersModel(jsonUrl)
+
 										resolve(tfModel)
 									} catch (e) {
 										reject(e.message)
