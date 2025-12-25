@@ -1,23 +1,31 @@
 registerEA(
 	  "plugin_to_load_tensorflow",
-	  "A plugin to load Tensorflow(v1.11)",
+	  "A plugin to load Tensorflow(v1.12)",
 	  [{ // parameters
 	    name: "tfjs",
-	    value: "https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js",
-	    required: true,
+	    value: "https://www.fintechee.com/js/tf/tf.min.js",
+	    required: false,
 	    type: PARAMETER_TYPE.STRING,
 	    range: null
 	  },{
 	    name: "tfvisjs",
-	    value: "https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis",
-	    required: true,
+	    value: "https://www.fintechee.com/js/tf/tfjs-vis.js",
+	    required: false,
 	    type: PARAMETER_TYPE.STRING,
 	    range: null
-	  }],
+	  },{
+			name: "tidyInterval",
+			value: 100,
+			required: false,
+			type: PARAMETER_TYPE.INTEGER,
+	    range: [1, 10000]
+		}],
 	  function (context) { // Init()
 	    if (typeof tf == "undefined") {
 	      var tfjs = getEAParameter(context, "tfjs")
 	      var tfvisjs = getEAParameter(context, "tfvisjs")
+				window.tfTidyInterval = getEAParameter(context, "tidyInterval")
+				window.tfTidyCount = 0
 
 	      var tags = document.getElementsByTagName("script")
 	      for (var i = tags.length - 1; i >= 0; i--) {
@@ -206,20 +214,49 @@ registerEA(
 
 						// Deprecated. It will be retained for compatibility with existing source codes.
 						window.runCnn = function (tfModel, input, inputNum) {
-							try {
-								return tfModel.predict(window.tf.tensor3d(input, [1, inputNum, 1])).arraySync()[0][0]
-							} catch (e) {
-								return -1
+							window.tfTidyCount++
+
+							if (window.tfTidyCount % window.tfTidyInterval == 0) {
+								window.tfTidyCount = 0
+
+								return window.tf.tidy(function () {
+									try {
+										return tfModel.predict(window.tf.tensor3d(input, [1, inputNum, 1])).arraySync()[0][0]
+									} catch (e) {
+										return -1
+									}
+								})
+							} else {
+								try {
+									return tfModel.predict(window.tf.tensor3d(input, [1, inputNum, 1])).arraySync()[0][0]
+								} catch (e) {
+									return -1
+								}
 							}
 						}
 
 						// substitution for runCnn
 						window.getArgMaxOfCnn = function (tfModel, input, inputNum) {
-							try {
-								var arr = tfModel.predict(window.tf.tensor3d(input, [1, inputNum, 1])).arraySync()[0]
-								return arr.indexOf(Math.max(...arr))
-							} catch (e) {
-								return -1
+							window.tfTidyCount++
+
+							if (window.tfTidyCount % window.tfTidyInterval == 0) {
+								window.tfTidyCount = 0
+
+								return window.tf.tidy(function () {
+									try {
+										var arr = tfModel.predict(window.tf.tensor3d(input, [1, inputNum, 1])).arraySync()[0]
+										return arr.indexOf(Math.max(...arr))
+									} catch (e) {
+										return -1
+									}
+								})
+							} else {
+								try {
+									var arr = tfModel.predict(window.tf.tensor3d(input, [1, inputNum, 1])).arraySync()[0]
+									return arr.indexOf(Math.max(...arr))
+								} catch (e) {
+									return -1
+								}
 							}
 						}
 
@@ -228,7 +265,21 @@ registerEA(
 								window.tf.io.removeModel("localstorage://" + tfModelName)
 							} catch (e) {
 							}
-						}
+						};
+
+						(async function () {
+							await window.tf.ready()
+							if (window.tf.getBackend() == "webgl") {
+								window.tf.tensor(0).dataSync()
+
+								try {
+									window.tf.env().registerFlag("WEBGL_DELETE_TEXTURE_THRESHOLD", () => 128 * 1024 * 1024, (val) => {
+									})
+								} catch (e) {
+									window.tf.env().set("WEBGL_DELETE_TEXTURE_THRESHOLD", 128 * 1024 * 1024)
+								}
+							}
+						})()
 
 	          popupMessage("Tensorflow has been loaded successfully!")
 	        }
