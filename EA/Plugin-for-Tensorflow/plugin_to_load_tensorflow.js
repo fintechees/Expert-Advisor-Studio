@@ -13,12 +13,6 @@ registerEA(
 	    required: false,
 	    type: PARAMETER_TYPE.STRING,
 	    range: null
-	  },{
-			name: "tidyInterval",
-			value: 100,
-			required: false,
-			type: PARAMETER_TYPE.INTEGER,
-	    range: [1, 10000]
 		}],
 	  function (context) { // Init()
 	    if (typeof tf == "undefined") {
