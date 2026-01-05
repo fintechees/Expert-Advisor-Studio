@@ -1,6 +1,6 @@
 registerEA(
 	  "plugin_to_load_tensorflow",
-	  "A plugin to load Tensorflow(v1.12)",
+	  "A plugin to load Tensorflow(v1.13)",
 	  [{ // parameters
 	    name: "tfjs",
 	    value: "https://www.fintechee.com/js/tf/tf.min.js",
@@ -24,8 +24,6 @@ registerEA(
 	    if (typeof tf == "undefined") {
 	      var tfjs = getEAParameter(context, "tfjs")
 	      var tfvisjs = getEAParameter(context, "tfvisjs")
-				window.tfTidyInterval = getEAParameter(context, "tidyInterval")
-				window.tfTidyCount = 0
 
 	      var tags = document.getElementsByTagName("script")
 	      for (var i = tags.length - 1; i >= 0; i--) {
@@ -214,50 +212,25 @@ registerEA(
 
 						// Deprecated. It will be retained for compatibility with existing source codes.
 						window.runCnn = function (tfModel, input, inputNum) {
-							window.tfTidyCount++
-
-							if (window.tfTidyCount % window.tfTidyInterval == 0) {
-								window.tfTidyCount = 0
-
-								return window.tf.tidy(function () {
-									try {
-										return tfModel.predict(window.tf.tensor3d(input, [1, inputNum, 1])).arraySync()[0][0]
-									} catch (e) {
-										return -1
-									}
-								})
-							} else {
+							return window.tf.tidy(function () {
 								try {
 									return tfModel.predict(window.tf.tensor3d(input, [1, inputNum, 1])).arraySync()[0][0]
 								} catch (e) {
 									return -1
 								}
-							}
+							})
 						}
 
 						// substitution for runCnn
 						window.getArgMaxOfCnn = function (tfModel, input, inputNum) {
-							window.tfTidyCount++
-
-							if (window.tfTidyCount % window.tfTidyInterval == 0) {
-								window.tfTidyCount = 0
-
-								return window.tf.tidy(function () {
-									try {
-										var arr = tfModel.predict(window.tf.tensor3d(input, [1, inputNum, 1])).arraySync()[0]
-										return arr.indexOf(Math.max(...arr))
-									} catch (e) {
-										return -1
-									}
-								})
-							} else {
+							return window.tf.tidy(function () {
 								try {
 									var arr = tfModel.predict(window.tf.tensor3d(input, [1, inputNum, 1])).arraySync()[0]
 									return arr.indexOf(Math.max(...arr))
 								} catch (e) {
 									return -1
 								}
-							}
+							})
 						}
 
 						window.removeCnn = function (tfModelName) {
