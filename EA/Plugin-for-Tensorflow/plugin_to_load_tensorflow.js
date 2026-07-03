@@ -1,6 +1,6 @@
 registerEA(
 	  "plugin_to_load_tensorflow",
-	  "A plugin to load Tensorflow(v1.13)",
+	  "A plugin to load Tensorflow(v1.14)",
 	  [{ // parameters
 	    name: "tfjs",
 	    value: "https://www.fintechee.com/js/tf/tf.min.js",
@@ -61,7 +61,9 @@ registerEA(
 	          }
 
 						// substitution for buildCnn
-						window.buildExtraCnn = function (featuresNum, kernelSize, filters, strides, units) {
+						// classification: units = 2, activation = "softmax"
+						// regression: units = 1, activation = "linear"
+						window.buildExtraCnn = function (featuresNum, kernelSize, filters, strides, units = 2, activation = "softmax") {
 	            return new Promise(function (resolve, reject) {
 	              var tfModel = window.tf.sequential()
 
@@ -81,14 +83,16 @@ registerEA(
 	              tfModel.add(window.tf.layers.dense({
 	                units: units,
 	                kernelInitializer: "VarianceScaling",
-	                activation: "softmax"
+	                activation: activation
 	              }))
 
 	              return resolve(tfModel)
 	            })
 	          }
 
-	          window.trainCnn = function (tfModel, trainingSet, epochs, batchSize, bMonitor) {
+						// classification: loss = "categoricalCrossentropy", metrics = "accuracy"
+						// regression: loss = "meanSquaredError" or "meanAbsoluteError", metrics = "mse" or "mae"
+	          window.trainCnn = function (tfModel, trainingSet, epochs, batchSize, bMonitor, loss = "categoricalCrossentropy", metrics = "accuracy") {
 	            if (bMonitor) {
 	              printMessage("Summary: ")
 	              tfModel.summary()
@@ -98,8 +102,8 @@ registerEA(
 	              try {
 	                tfModel.compile({
 	                  optimizer: window.tf.train.adam(),
-	                  loss: "categoricalCrossentropy",
-	                  metrics: ["accuracy"]
+	                  loss: loss,
+	                  metrics: [metrics]
 	                })
 
 	                if (bMonitor) {
