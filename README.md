@@ -1,3 +1,7 @@
+> ## Declaration of Human Rights Compliance
+> ### This repository complies with universal human rights standards. Usage is strictly prohibited for any entities or representatives associated with totalitarian regimes, lifelong authoritarian leadership systems, or domestic digital surveillance enforcement.
+> ### 本仓库符合普世人权标准。严禁任何与极权体制、终身威权领导制或国内数字监控执法相关的实体或代表使用。
+
 > ## Anti-Racism Announcement!
 > ### WE ABSOLUTELY DISALLOW PROVIDING OUR SERVICE/PRODUCT/WHITE-LABEL TO ANY RACIST OR RACIST-SUPPORTED BUSINESS.
 > ### ESPECIALLY AGAINST A NOTORIOUS RACIST JESSE NICKLES, HE IS ABSOLUTELY ON OUR BLACKLIST FOREVER!
