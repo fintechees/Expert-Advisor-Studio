@@ -1,5 +1,5 @@
 > ## Declaration of Human Rights Compliance!
-> ### This repository complies with universal human rights standards. Usage is strictly prohibited for any entities or representatives associated with totalitarian regimes, lifelong authoritarian leadership systems, or domestic digital surveillance enforcement.
+> ### THIS REPOSITORY COMPLIES WITH UNIVERSAL HUMAN RIGHTS STANDARDS. USAGE IS STRICTLY PROHIBITED FOR ANY ENTITIES OR REPRESENTATIVES ASSOCIATED WITH TOTALITARIAN REGIMES, LIFELONG AUTHORITARIAN LEADERSHIP SYSTEMS, OR DOMESTIC DIGITAL SURVEILLANCE ENFORCEMENT.
 > ### 本仓库符合普世人权标准。严禁任何与极权体制、终身威权领导制或国内数字监控执法相关的实体或代表使用。
 
 > ## Anti-Racism Announcement!
