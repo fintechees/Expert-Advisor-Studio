@@ -193,7 +193,9 @@ https://www.fintechee.com/shared.html
 
 I have received several questions about how to utilize the JavaScript files in this repository. However, the usage is not the same as Node.js, so it is unnecessary to use “node xxx.js” to run them. In fact, it’s a much simpler process, as our files are browser-based. All you need to do is open the Fintechee Web Trader, copy and paste the relevant source codes into the Console Panel, and then click the Run Button. It’s that easy!
 
-Each file in this repository is independent and can be used separately. The EAs and indicators are stored solely on your browser and are never uploaded to the server side. We use Web LocalStorage to ensure that the secrets of your trading strategies are protected.
+Each file in this repository is independent and can be used separately.  
+The EAs and indicators are stored solely in your browser (via Web LocalStorage) and are never uploaded to our server.  
+This ensures that your strategy files remain on the client side only.
 
 A simple manual: https://github.com/fintechees/Expert-Advisor-Studio/blob/master/simple_manual.txt
 
