@@ -1,3 +1,9 @@
+<div align="center">
+  <a href="https://violinist.ai/">
+    <img src="https://raw.githubusercontent.com/fintechees/Expert-Advisor-Studio/master/screenshot/violinistai.png" alt="Violinist AI - Embodied Robotics" align="center" />
+  </a>
+</div>
+
 > ## Declaration of Human Rights Compliance!
 > ### THIS REPOSITORY COMPLIES WITH UNIVERSAL HUMAN RIGHTS STANDARDS. USAGE IS STRICTLY PROHIBITED FOR ANY ENTITIES OR REPRESENTATIVES ASSOCIATED WITH TOTALITARIAN REGIMES, LIFELONG AUTHORITARIAN LEADERSHIP SYSTEMS, OR DOMESTIC DIGITAL SURVEILLANCE ENFORCEMENT.
 > ### 本仓库符合普世人权标准。严禁任何与极权体制、终身威权领导制或国内数字监控执法相关的实体或代表使用。
